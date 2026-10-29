@@ -405,6 +405,73 @@ a{color:inherit}
 .sbrk.a{left:var(--gutter);top:76px;border-right:0;border-bottom:0}.sbrk.b{right:var(--gutter);top:76px;border-left:0;border-bottom:0}
 .sbrk.c{left:var(--gutter);bottom:24px;border-right:0;border-top:0}.sbrk.d{right:var(--gutter);bottom:24px;border-left:0;border-top:0}
 @media (max-width:760px){.tape{display:none}}
+/* hero road and the rider */
+.hero{--road:clamp(64px,10svh,92px);padding-top:calc(var(--road) + clamp(20px,4vh,48px))}
+.road{position:absolute;left:0;right:0;top:0;height:var(--road);overflow:hidden;
+  background:linear-gradient(rgba(232,238,244,.5),rgba(232,238,244,.5)) 0 6px/100% 2px no-repeat,linear-gradient(rgba(232,238,244,.5),rgba(232,238,244,.5)) 0 calc(100% - 6px)/100% 2px no-repeat,#19212A;
+  border-bottom:1px solid var(--border)}
+.lane{position:absolute;left:0;right:-90px;top:50%;height:3px;margin-top:-1.5px;
+  background:repeating-linear-gradient(90deg,rgba(232,238,244,.55) 0 40px,transparent 40px 90px)}
+.rider{position:absolute;top:50%;left:0;width:calc(var(--road) * 2.1);aspect-ratio:1200/810;translate:calc(64vw - 50%) -50%}
+.rider img{position:relative;width:100%;height:100%;filter:drop-shadow(0 6px 6px rgba(0,0,0,.6)) drop-shadow(0 0 10px rgba(53,224,240,.25))}
+.beam{position:absolute;left:96%;top:50%;width:150%;height:110%;translate:0 -50%;
+  background:radial-gradient(60% 50% at 0 50%,rgba(255,246,216,.42),rgba(255,246,216,.12) 55%,transparent 75%);
+  clip-path:polygon(0 42%,100% 0,100% 100%,0 58%)}
+@media (max-width:899px){.rider{translate:calc(50vw - 50%) -50%}.hero{padding-top:calc(var(--road) + 24px)}}
+@media (prefers-reduced-motion:no-preference){
+  .lane{animation:lane .5s linear infinite}
+  .boot .rider{animation:ridein 1.6s 3.1s cubic-bezier(.16,1,.3,1) both}
+  .rider{animation:none}
+}
+.still .lane{animation-play-state:paused}
+@keyframes lane{to{translate:-90px 0}}
+@keyframes ridein{from{translate:-40vw -50%}}
+
+/* on your bike: the annotated motorcycle */
+.bikefig{position:relative;margin:0 auto clamp(40px,6vh,64px);max-width:980px}
+.bikefig img{width:100%;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55))}
+.bikefig .lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bikefig .lines path{fill:none;vector-effect:non-scaling-stroke}
+.bikefig .bt{stroke:var(--info);stroke-width:2;stroke-dasharray:6 7;filter:drop-shadow(0 0 4px rgba(79,168,255,.8))}
+.bikefig .ld{stroke:rgba(232,238,244,.6);stroke-width:1}
+.dev{position:absolute;translate:-50% -50%;border-radius:3px}
+.dev.phone{left:73.5%;top:50%;width:4.2%;height:15%;background:#0A0F14;border:2px solid var(--accent);
+  box-shadow:0 0 14px 2px rgba(53,224,240,.55),inset 0 0 8px rgba(53,224,240,.45)}
+.dev.obd{left:38%;top:50%;width:3.6%;height:5.5%;background:#13324D;border:2px solid var(--info);box-shadow:0 0 12px rgba(79,168,255,.7)}
+.chip{position:absolute;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+  font:600 clamp(.66rem,1.3vw,.9rem)/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text);
+  background:rgba(14,20,26,.88);border:1px solid var(--border);padding:.55em .8em .5em}
+.chip b{font:600 1em/1 var(--num);color:#04161A;background:var(--accent);padding:.2em .45em}
+.chip.c2 b{background:var(--info)}
+.chip.c1{left:80%;top:80%;translate:-30% 0}
+.chip.c2{left:26%;top:17%;translate:-50% -100%}
+@media (max-width:640px){.chip.c1{left:auto;right:0;translate:0 0;top:86%}.chip.c2{left:0;translate:0 -100%;top:12%}}
+@media (prefers-reduced-motion:no-preference){
+  .js .bikefig .bt{stroke-dashoffset:0;animation:bt 1s linear infinite}
+  .js .bikefig .ld,.js .bikefig .chip{opacity:0;transition:opacity .5s var(--out)}
+  .js .bikefig.done .ld,.js .bikefig.done .chip{opacity:1}
+  .js .bikefig.done .chip.c2{transition-delay:.25s}
+  .dev{animation:devpulse 2.2s ease-in-out infinite}
+  .dev.obd{animation-delay:.4s}
+}
+.still .bikefig .bt,.still .dev{animation-play-state:paused}
+@keyframes bt{to{stroke-dashoffset:-26}}
+@keyframes devpulse{50%{box-shadow:0 0 22px 6px rgba(53,224,240,.75),inset 0 0 8px rgba(53,224,240,.45)}}
+
+/* bikes on the section lines */
+.jetline{height:86px}
+.jetline .j{top:36%}
+.jetline .bk{position:absolute;left:0;top:70%;width:70px;height:auto;margin-top:-24px;translate:calc(100cqw - 150px) 0;filter:drop-shadow(0 3px 3px rgba(0,0,0,.6)) drop-shadow(0 0 8px rgba(53,224,240,.35))}
+@media (prefers-reduced-motion:no-preference){
+  .js .jetline .bk{translate:-80px 0}
+  .jetline.go .bk{animation:crossb 1.9s .15s cubic-bezier(.45,0,.4,1) both}
+}
+@keyframes crossb{from{translate:-80px 0}to{translate:calc(100cqw + 80px) 0}}
+
+/* the bike on the runway */
+.tbike{--bl:calc(var(--jw,120px) * .78);position:absolute;left:0;top:0;width:var(--bl);height:calc(var(--bl) * .675);z-index:1;rotate:-90deg;
+  translate:calc(50vw - var(--bl) * 1.3) 66svh;--jw:clamp(86px,13vw,150px)}
+.tbike img{width:100%;height:100%;filter:drop-shadow(-6px 4px 4px rgba(0,0,0,.6))}
 @keyframes burst{0%{opacity:.9;scale:1}100%{opacity:0;scale:1.35 1.9}}
 
 footer{border-top:1px solid var(--border);padding:36px var(--gutter) 48px;color:var(--text-dim);font-size:.85rem}
@@ -430,10 +497,11 @@ footer p{margin:.4em 0;max-width:60em}
 <section class="hero" id="hero" aria-labelledby="h1">
   <div class="streaks" aria-hidden="true"><i style="--y:8%;--d:1.70s;--dl:2.29s;--w:22vw"></i><i style="--y:51%;--d:2.51s;--dl:2.38s;--w:22vw"></i><i style="--y:80%;--d:2.15s;--dl:0.06s;--w:21vw"></i><i style="--y:77%;--d:1.88s;--dl:2.56s;--w:21vw"></i><i style="--y:54%;--d:1.47s;--dl:2.55s;--w:11vw"></i><i style="--y:52%;--d:1.42s;--dl:0.48s;--w:23vw"></i><i style="--y:20%;--d:2.72s;--dl:1.79s;--w:24vw"></i><i style="--y:38%;--d:2.31s;--dl:1.13s;--w:9vw"></i><i style="--y:12%;--d:1.6s;--dl:0s;--w:16vw"></i><i style="--y:23%;--d:2.3s;--dl:0.7s;--w:10vw"></i><i style="--y:37%;--d:1.3s;--dl:1.1s;--w:22vw"></i><i style="--y:48%;--d:2.8s;--dl:0.2s;--w:12vw"></i><i style="--y:61%;--d:1.8s;--dl:1.5s;--w:18vw"></i><i style="--y:72%;--d:2.1s;--dl:0.4s;--w:9vw"></i><i style="--y:84%;--d:1.5s;--dl:0.9s;--w:20vw"></i><i style="--y:93%;--d:2.6s;--dl:1.9s;--w:14vw"></i><i style="--y:30%;--d:3.1s;--dl:2.4s;--w:8vw"></i><i style="--y:66%;--d:2.4s;--dl:2.9s;--w:11vw"></i></div>
   <div class="flyby" aria-hidden="true"><div class="j w1"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j15"/></svg></div><div class="j"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div><div class="j w2"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j4"/></svg></div></div>
+  <div class="road" aria-hidden="true"><span class="lane"></span><span class="rider"><span class="beam"></span><img src="assets/bike-top-480.webp" alt="" width="480" height="324"></span></div>
   <div class="scan" aria-hidden="true"></div>
   <button type="button" class="motion" id="motion" aria-pressed="false">Pause motion</button>
   <div class="copy">
-    <p class="tag"><span class="tk">//</span>For Android · on Google Play</p>
+    <p class="tag"><span class="tk">//</span>Motorcycle dashboard app · Android</p>
     <h1 id="h1">The <span class="nw">fighter-jet</span> cockpit for your motorcycle.</h1>
     <p class="lede">F-43 Moto OS turns the Android phone on your handlebar into an instrument panel. <strong>Speed, lean and heading</strong> come from the phone itself. Plug an <strong>OBD-II adapter</strong> into your bike's diagnostic port and the cockpit reads the engine's own computer: revs, coolant, voltage, fuel trims and fault codes.</p>
     <div class="ctas">
@@ -442,7 +510,7 @@ footer p{margin:.4em 0;max-width:60em}
       </a>
       <a class="ghost" href="#screens">See the screens</a>
     </div>
-    <p class="fine">Free to download. No account, no cloud, no ads.</p>
+    <p class="fine">Free to download. 54 India-spec bike presets, or add your own. No account, no cloud, no ads.</p>
   </div>
 
   <div class="inst">
@@ -484,6 +552,43 @@ footer p{margin:.4em 0;max-width:60em}
   </div>
 </section>
 
+<section class="sec onbike" aria-labelledby="how-h">
+  <div class="head">
+    <p class="tag"><span class="tk">//</span>On your bike</p>
+    <h2 id="how-h">Your phone becomes the dashboard</h2>
+    <p>F-43 Moto OS is a motorcycle app. It runs on the Android phone mounted on your handlebar, and reads your bike's engine through a small OBD-II Bluetooth adapter.</p>
+  </div>
+  <figure class="bikefig" id="bikefig">
+    <img src="assets/bike-top-1200.webp" srcset="assets/bike-top-480.webp 480w, assets/bike-top-1200.webp 1200w" sizes="(min-width:1100px) 980px, 92vw" width="1200" height="810" alt="A motorcycle seen from above, with the phone on the handlebar and the OBD-II adapter under the seat." loading="lazy" decoding="async">
+    <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path class="bt" d="M38 50 Q55 14 73.5 50"/>
+      <path class="ld" d="M73.5 56 L80 80"/>
+      <path class="ld" d="M38 45 L26 17"/>
+    </svg>
+    <span class="dev phone" aria-hidden="true"></span>
+    <span class="dev obd" aria-hidden="true"></span>
+    <figcaption>
+      <span class="chip c1"><b>1</b>Phone on the handlebar</span>
+      <span class="chip c2"><b>2</b>OBD-II adapter, in the diagnostic port</span>
+    </figcaption>
+  </figure>
+  <ol class="steps">
+    <li>
+      <h3>Mount the phone</h3>
+      <p>Put your Android phone on the handlebar, in landscape. Speed, lean angle and heading work straight away, from the phone's own sensors.</p>
+    </li>
+    <li>
+      <h3>Plug in an adapter</h3>
+      <p>Plug an OBD-II Bluetooth adapter into your bike's diagnostic port (often under the seat or a side panel) and pair it once. The cockpit now reads the engine: revs, coolant, voltage, fuel trims and fault codes.</p>
+    </li>
+    <li>
+      <h3>Pick your bike</h3>
+      <p>Choose from 54 India-spec presets or add your own. Switch on, the self-test runs, six lamps light and go out, and you're cleared to ride.</p>
+      <p class="note">Set it up before you ride. Hands on the bars, eyes on the road.</p>
+    </li>
+  </ol>
+</section>
+<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j9"/></svg><img class="bk" src="assets/bike-top-480.webp" alt="" width="480" height="324" loading="lazy"></div>
 <section class="tray" id="screens" aria-labelledby="screens-h">
   <div class="sticky">
     <div class="head">
@@ -516,28 +621,7 @@ footer p{margin:.4em 0;max-width:60em}
   </div>
 </section>
 
-<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j9"/></svg></div>
-<section class="sec" aria-labelledby="how-h">
-  <div class="head">
-    <p class="tag"><span class="tk">//</span>Setup</p>
-    <h2 id="how-h">From the box to the road</h2>
-  </div>
-  <ol class="steps">
-    <li>
-      <h3>Mount the phone</h3>
-      <p>Put your Android phone on the handlebar, in landscape. Speed, the artificial horizon and the compass work straight away, from the phone's own sensors.</p>
-    </li>
-    <li>
-      <h3>Plug in an adapter</h3>
-      <p>Plug an OBD-II Bluetooth adapter into your bike's diagnostic port and pair it once. The cockpit now reads the engine's computer: revs, coolant, voltage, fuel trims and fault codes.</p>
-    </li>
-    <li>
-      <h3>Pick your bike</h3>
-      <p>Choose from 54 India-spec presets or add your own. Switch on, the needles sweep, six lamps light and go out, and you're cleared.</p>
-      <p class="note">Set it up before you ride. Hands on the bars, eyes on the road.</p>
-    </li>
-  </ol>
-</section>
+
 
 <section class="sec" aria-labelledby="free-h" style="padding-top:0">
   <div class="head">
@@ -580,7 +664,7 @@ footer p{margin:.4em 0;max-width:60em}
   <p class="terms">Engine data, fault codes and the ECU Report need an OBD-II adapter. What Learn your bike can find depends on what your bike broadcasts. Navigation and weather need a data connection.</p>
 </section>
 
-<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j13"/></svg></div>
+<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j13"/></svg><img class="bk" src="assets/bike-top-480.webp" alt="" width="480" height="324" loading="lazy"></div>
 <section class="sec quiet" aria-label="Privacy">
   <p class="big">No account. No cloud. <span>No ads. No analytics.</span></p>
   <p class="small">Your rides, logs and bike data stay on your phone. Read the <a href="privacy/">privacy policy</a>.</p>
@@ -598,6 +682,7 @@ footer p{margin:.4em 0;max-width:60em}
     </div>
     <div class="tape l" aria-hidden="true"><i></i></div><div class="tape r" aria-hidden="true"><i></i></div>
     <span class="sbrk a" aria-hidden="true"></span><span class="sbrk b" aria-hidden="true"></span><span class="sbrk c" aria-hidden="true"></span><span class="sbrk d" aria-hidden="true"></span>
+    <div class="tbike" id="tbike" aria-hidden="true"><img src="assets/bike-top-480.webp" alt="" width="480" height="324" loading="lazy"></div>
     <div class="tjet" id="tjet" aria-hidden="true">
       <svg class="shadow" viewBox="0 0 100 100"><use href="#jet"/></svg>
       <div class="body"><span class="ab l"></span><span class="ab r"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div>
@@ -606,7 +691,7 @@ footer p{margin:.4em 0;max-width:60em}
     <div class="tko-head">
       <p class="tag"><span class="tk">//</span>Runway 27</p>
       <h2 id="end-h">Cleared for take-off.</h2>
-      <p>F-43 Moto OS, on Google Play.</p>
+      <p>Your bike&#39;s cockpit, on Google Play.</p>
       <div class="ctas">
         <span class="pad" id="pad"><a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
@@ -710,7 +795,7 @@ footer p{margin:.4em 0;max-width:60em}
       for (let k = 0; k <= total; k++) setTimeout(() => { b.textContent = k; }, 90 * k + 120);
     }
   }), { threshold: 0.35 });
-  document.querySelectorAll('[data-check], .jetline').forEach((el) => {
+  document.querySelectorAll('[data-check], .jetline, #bikefig').forEach((el) => {
     if (!reduce.matches && el.matches('[data-check]')) el.querySelector('[data-count]').textContent = '0';
     io.observe(el);
   });
@@ -744,6 +829,7 @@ footer p{margin:.4em 0;max-width:60em}
   const stage = document.getElementById('stage');
   const rwy = document.getElementById('rwy');
   const tj = document.getElementById('tjet');
+  const tb = document.getElementById('tbike');
   const pad = document.getElementById('pad');
   const call = document.getElementById('call');
   const CALLS = [[0, 'Line up and wait'], [.07, 'Take-off power'], [.36, 'V1'], [.47, 'Rotate'], [.58, 'Positive climb'], [.72, 'Gear up'], [.86, 'Get it on Google Play']];
@@ -789,6 +875,14 @@ footer p{margin:.4em 0;max-width:60em}
     tj.style.setProperty('--sy', (9 + 120 * alt).toFixed(1) + 'px');
     tj.style.setProperty('--ss', (1 - .35 * alt).toFixed(3));
     tj.querySelector('.shadow').style.opacity = (.55 * (1 - alt)).toFixed(3);
+
+    // the bike rolls beside the jet, drops back, and stays on the ground as the runway falls away
+    const bw = tb.offsetWidth, bh = tb.offsetHeight, rwW = rwy.offsetWidth;
+    const gs = 1 - .42 * alt, ox = W / 2, oy = .804 * H;
+    const bx0 = W / 2 - rwW * .26 + shake * .6, by0 = .66 * H + 40 * roll + 90 * smooth((p - .5) / .3);
+    tb.style.translate = `${(ox + gs * (bx0 - ox) - bw / 2).toFixed(1)}px ${(oy + gs * (by0 - oy) - bh / 2).toFixed(1)}px`;
+    tb.style.scale = gs.toFixed(3);
+    tb.style.opacity = (1 - .45 * alt).toFixed(3);
 
     let c = CALLS[0][1];
     for (const [at, txt] of CALLS) if (p >= at) c = txt;
