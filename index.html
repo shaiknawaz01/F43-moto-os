@@ -2,615 +2,541 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>F-43 Moto OS — The Fighter-Jet Cockpit for Your Motorcycle</title>
-<meta name="description" content="Turn your phone into a fighter-jet cockpit for your motorcycle. Live OBD-II dashboard, RIDE mode, engine wear analysis, voice navigation and crash SOS — built for Indian bikes.">
-<meta property="og:title" content="F-43 Moto OS">
-<meta property="og:description" content="The fighter-jet cockpit for your motorcycle. Live OBD dashboard · RIDE mode · Engine wear analysis · Crash SOS.">
-<meta property="og:type" content="website">
-<link rel="icon" type="image/png" href="brand/favicon_64.png">
-<link rel="apple-touch-icon" href="brand/icon_512.png">
-<!--
-  og:image and og:url must be absolute. Link scrapers (WhatsApp, Slack, X)
-  do not resolve relative paths, so the previous "brand/..." value produced a
-  blank share card — the one place the brand most needs to show up.
--->
-<meta property="og:url" content="https://f43moto.in/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-43 Moto OS · The fighter-jet cockpit for your motorcycle</title>
+<meta name="description" content="F-43 Moto OS turns the Android phone on your handlebar into a fighter-jet cockpit. Speed, lean and heading from the phone; engine data and fault codes with an OBD-II adapter. On Google Play.">
+<meta name="theme-color" content="#0E141A">
 <link rel="canonical" href="https://f43moto.in/">
-<meta property="og:image" content="https://f43moto.in/brand/wordmark_dark_1600x400.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://f43moto.in/">
+<meta property="og:title" content="F-43 Moto OS">
+<meta property="og:description" content="The fighter-jet cockpit for your motorcycle. On Google Play.">
+<meta property="og:image" content="https://f43moto.in/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Titillium+Web:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/Rajdhani-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MobileApplication","name":"F-43 Moto OS","operatingSystem":"Android","applicationCategory":"TravelApplication","author":{"@type":"Organization","name":"Hangar 43"},"url":"https://f43moto.in/","installUrl":"https://play.google.com/store/apps/details?id=in.nawaz.f43moto"}
+</script>
 <style>
-  :root{
-    --bg:#070b10; --bg2:#0b1119; --surface:#0e1620; --surface2:#121c28;
-    --border:#1c2a3a; --accent:#22d3ee; --accent-dim:#0e7f92;
-    --ok:#34d399; --warn:#f59e0b; --hot:#ef4444;
-    --text:#e6edf3; --text2:#8fa3b8; --dim:#54677c;
-    --hud:'Rajdhani',sans-serif; --body:'Titillium Web',sans-serif;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--bg); color:var(--text); font-family:var(--body);
-    overflow-x:hidden;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(34,211,238,.07), transparent),
-      repeating-linear-gradient(45deg, rgba(255,255,255,.012) 0 2px, transparent 2px 6px),
-      repeating-linear-gradient(-45deg, rgba(0,0,0,.25) 0 2px, transparent 2px 6px);
-  }
-  ::selection{background:rgba(34,211,238,.3)}
+@font-face{font-family:"Rajdhani";src:url(assets/fonts/Rajdhani-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Rajdhani";src:url(assets/fonts/Rajdhani-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Oxanium";src:url(assets/fonts/Oxanium-Variable.woff2) format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Inter";src:url(assets/fonts/Inter-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
 
-  /* ── chamfered panel primitive ─────────────────────────────── */
-  .chamfer{
-    position:relative; background:var(--surface);
-    clip-path:polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
-  }
-  .chamfer::before{
-    content:""; position:absolute; inset:0; pointer-events:none;
-    clip-path:polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px,
-      16px 1.5px, 1.5px 17px, 1.5px calc(100% - 1.5px), calc(100% - 17px) calc(100% - 1.5px),
-      calc(100% - 1.5px) calc(100% - 17px), calc(100% - 1.5px) 1.5px, 16px 1.5px);
-    background:var(--border);
-  }
-  .chamfer.glow::before{background:linear-gradient(135deg,var(--accent),var(--border) 55%)}
+:root{
+  --bg:#0E141A; --surface:#171F27; --surface-alt:#222C36; --border:#35424F;
+  --text:#E8EEF4; --text-2:#8A99A8; --text-dim:#647282;
+  --accent:#35E0F0; --ok:#22D27A; --caution:#F5B731; --warn:#FF7A2F; --critical:#FF2D46; --info:#4FA8FF;
+  --label:"Rajdhani",system-ui,sans-serif; --num:"Oxanium","Rajdhani",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
+  --out:cubic-bezier(.16,1,.3,1);
+  --gutter:clamp(16px,5vw,64px);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.6 var(--body);
+  overflow-x:clip;text-rendering:geometricPrecision;
+  background-image:
+    linear-gradient(rgba(232,238,244,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(232,238,244,.04) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:#04161A;padding:8px 14px;z-index:99}
+.skip:focus{left:8px}
 
-  .label{font-family:var(--hud);font-weight:600;letter-spacing:.35em;font-size:.72rem;color:var(--accent);text-transform:uppercase}
-  .h-big{font-family:var(--hud);font-weight:700;text-transform:uppercase;line-height:1.02}
+/* chamfer: the app's cut corners, top-left and bottom-right */
+.cham{clip-path:polygon(var(--c,14px) 0,100% 0,100% calc(100% - var(--c,14px)),calc(100% - var(--c,14px)) 100%,0 100%,0 var(--c,14px))}
+.tag{font:600 .78rem/1 var(--label);letter-spacing:.22em;text-transform:uppercase;color:var(--text-2)}
+.tag .tk{color:var(--accent);letter-spacing:.05em;margin-right:.5em;font-style:italic}
 
-  /* ── top bar ───────────────────────────────────────────────── */
-  header{
-    position:fixed;top:0;left:0;right:0;z-index:50;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 5vw;background:rgba(7,11,16,.82);backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-  }
-  .logo{font-family:var(--hud);font-weight:700;font-size:1.15rem;letter-spacing:.2em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:10px}
-  .logo img{width:30px;height:30px;clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
-  .logo b{color:var(--accent)}
-  .logo .slashes{color:var(--accent);margin-right:8px}
-  nav a{font-family:var(--hud);font-weight:600;letter-spacing:.14em;font-size:.8rem;color:var(--text2);text-decoration:none;margin-left:26px;text-transform:uppercase}
-  nav a:hover{color:var(--accent)}
-  nav a.cta{
-    color:#04141a;background:var(--accent);padding:9px 18px;
-    clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
-  }
-  nav a.cta:hover{background:#4be0f7;color:#04141a}
-  @media(max-width:760px){nav a:not(.cta){display:none}}
-  nav a.cta{white-space:nowrap}
-  @media(max-width:420px){.logo{font-size:1rem;letter-spacing:.14em;white-space:nowrap}.logo .slashes{display:none}nav a.cta{margin-left:10px;padding:9px 14px}}
+/* buttons */
+.play{
+  --c:12px;display:inline-flex;align-items:center;gap:.7em;text-decoration:none;
+  background:var(--accent);color:#04161A;font:700 1.05rem/1 var(--label);letter-spacing:.14em;text-transform:uppercase;
+  padding:1.05em 1.6em 1em;transition:background-color .2s,translate .2s var(--out);
+}
+.play svg{width:1.05em;height:1.05em;flex:none}
+.play:hover{background:#7DEBF6;translate:0 -2px}
+.ghost{font:600 1rem/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:1.05em .2em;border-bottom:1px solid var(--border)}
+.ghost:hover{border-color:var(--accent)}
 
-  /* ── hero ──────────────────────────────────────────────────── */
-  .hero{
-    min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;gap:4vw;
-    align-items:center;padding:120px 6vw 60px;position:relative;
-  }
-  .hero::after{ /* drifting HUD scanline */
-    content:"";position:absolute;left:4vw;right:4vw;height:2px;top:14%;
-    background:linear-gradient(90deg,transparent,rgba(34,211,238,.22),transparent);
-    animation:scan 10s linear infinite;pointer-events:none;
-  }
-  @keyframes scan{0%{top:14%}100%{top:90%}}
-  /* jet flyby: streaks across the hero, then rests */
-  #flyjet{
-    position:fixed;top:0;left:0;z-index:40;pointer-events:none;
-    animation:flyby 16s linear 1.2s infinite;opacity:0;
-    filter:drop-shadow(0 0 8px rgba(34,211,238,.7));
-  }
-  @keyframes flyby{
-    0%{transform:translate(-16vw,88vh) rotate(-21deg);opacity:0}
-    2%{opacity:1}
-    38%{opacity:1}
-    42%{transform:translate(114vw,4vh) rotate(-21deg);opacity:0}
-    100%{transform:translate(114vw,4vh) rotate(-21deg);opacity:0}
-  }
-  @media (prefers-reduced-motion: reduce){
-    #flyjet,.radar,.hero::after{animation:none;opacity:0}
-  }
-  .hero .brackets{position:absolute;inset:90px 3vw 30px;pointer-events:none;opacity:.5}
-  .hero .brackets i{position:absolute;width:34px;height:34px;border:2px solid var(--accent)}
-  .hero .brackets i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0}
-  .hero .brackets i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0}
-  .hero .brackets i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0}
-  .hero .brackets i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0}
-  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem)}
-  .hero h1 .thin{color:var(--text2);font-weight:500}
-  .hero h1 .accent{color:var(--accent)}
-  .tagline{margin:22px 0 14px;font-size:clamp(1.02rem,1.6vw,1.25rem);color:var(--text2);max-width:34rem;font-weight:300}
-  .tagline b{color:var(--text);font-weight:600}
-  .hero-ctas{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
-  .btn{
-    font-family:var(--hud);font-weight:700;letter-spacing:.18em;font-size:.86rem;
-    text-transform:uppercase;text-decoration:none;padding:15px 26px;display:inline-block;
-    clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);
-  }
-  .btn.primary{background:var(--accent);color:#04141a}
-  .btn.primary:hover{background:#4be0f7}
-  .btn.ghost{background:var(--surface);color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent-dim)}
-  .btn.ghost:hover{box-shadow:inset 0 0 0 1.5px var(--accent)}
-  .hero-stats{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap}
-  .hstat .v{font-family:var(--hud);font-weight:700;font-size:1.9rem;color:var(--text)}
-  .hstat .v em{color:var(--accent);font-style:normal}
-  .hstat .k{font-family:var(--hud);letter-spacing:.25em;font-size:.66rem;color:var(--dim);text-transform:uppercase}
+/* top bar */
+.bar{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:10px var(--gutter);background:rgba(14,20,26,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(53,66,79,.6);
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.05rem/1 var(--label);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+.brand img{width:36px;height:36px}
+.bar .play{font-size:.82rem;padding:.85em 1.1em .8em;--c:9px}
+@media (max-width:420px){.bar .play span.long{display:none}}
 
-  /* hero dial */
-  .dial-wrap{display:flex;justify-content:center;position:relative}
-  .radar{
-    position:absolute;top:50%;left:50%;width:min(430px,82vw);aspect-ratio:1;
-    transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
-    background:conic-gradient(from 0deg, rgba(34,211,238,.16), transparent 75deg);
-    animation:radar 7s linear infinite;opacity:.55;filter:blur(1px);
-  }
-  @keyframes radar{to{transform:translate(-50%,-50%) rotate(360deg)}}
-  .dial{width:min(420px,80vw);filter:drop-shadow(0 0 40px rgba(34,211,238,.14))}
-  .dial .track{fill:none;stroke:var(--surface2);stroke-width:14;stroke-linecap:round}
-  .dial .arc{
-    fill:none;stroke:var(--accent);stroke-width:14;stroke-linecap:round;
-    stroke-dasharray:565; stroke-dashoffset:565;
-    filter:drop-shadow(0 0 8px rgba(34,211,238,.8));
-  }
-  .dial .red{fill:none;stroke:var(--hot);stroke-width:14;stroke-linecap:round;opacity:.85;transition:filter .25s}
-  .dial-wrap.hot .dial{animation:dialshake .13s linear infinite}
-  .dial-wrap.hot .red{filter:drop-shadow(0 0 12px rgba(239,68,68,.95))}
-  @keyframes dialshake{25%{transform:translate(1.3px,-1px)}75%{transform:translate(-1.3px,1px)}}
-  .dial .gear{transition:fill .15s}
-  .dial .gear.pop{fill:#fff}
-  /* speed streaks: wind lines that appear under hard acceleration */
-  .streaks{position:absolute;inset:8% 0;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .35s}
-  .dial-wrap.rush .streaks{opacity:1}
-  .streaks i{position:absolute;height:2px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.75));border-radius:2px;animation:streak .55s linear infinite}
-  .streaks i:nth-child(1){top:26%;width:26%;animation-delay:0s}
-  .streaks i:nth-child(2){top:50%;width:19%;animation-delay:.18s}
-  .streaks i:nth-child(3){top:74%;width:30%;animation-delay:.36s}
-  @keyframes streak{0%{left:108%}100%{left:-34%}}
-  @media (prefers-reduced-motion: reduce){.streaks{display:none}.dial-wrap.hot .dial{animation:none}}
-  .dial text{font-family:var(--hud)}
-  .dial .speed{font-size:88px;font-weight:700;fill:var(--text)}
-  .dial .unit{font-size:20px;letter-spacing:8px;fill:var(--text2)}
-  .dial .rpmlab{font-size:15px;letter-spacing:5px;fill:var(--dim)}
-  .dial .tick{stroke:var(--dim);stroke-width:2}
-  .dial .num{font-size:17px;fill:var(--text2)}
-  .dial .gear{font-size:30px;font-weight:700;fill:var(--accent)}
-  .dial .gearbox{fill:rgba(34,211,238,.08);stroke:rgba(34,211,238,.55)}
+/* ───────────────── hero ───────────────── */
+.hero{
+  position:relative;min-height:calc(100svh - 57px);display:grid;align-items:center;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,5vw,72px);
+  padding:clamp(28px,6vh,72px) var(--gutter) clamp(40px,8vh,96px);overflow:hidden;
+  background:radial-gradient(60% 70% at 72% 45%,rgba(53,224,240,.07),transparent 70%);
+}
+.hero h1{
+  margin:.35em 0 .45em;font:700 clamp(2.6rem,6.4vw,5.6rem)/.92 var(--label);text-transform:uppercase;letter-spacing:.01em;
+  max-width:11ch;text-wrap:balance;
+}
+.nw{white-space:nowrap}
+.hero .lede{max-width:34em;color:var(--text-2);font-size:clamp(1rem,1.2vw,1.12rem);margin:0 0 2em}
+.hero .lede strong{color:var(--text);font-weight:500}
+.ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px}
+.fine{margin:1.6em 0 0;font-size:.85rem;color:var(--text-dim)}
 
-  section{padding:90px 6vw;position:relative}
-  .sec-head{margin-bottom:46px}
-  .sec-head h2{font-size:clamp(1.7rem,3.4vw,2.6rem);margin-top:10px}
-  .sec-head p{color:var(--text2);max-width:44rem;margin-top:12px;font-weight:300;font-size:1.02rem}
+/* the instrument */
+.inst{position:relative;justify-self:center;width:min(100%,520px);display:grid;gap:22px}
+.inst button{all:unset;cursor:pointer;display:block;position:relative}
+.inst button:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:50%}
+.dial{width:100%;height:auto;overflow:visible}
+.dial .face{fill:url(#dome)}
+.dial .bezel{fill:none;stroke:var(--border);stroke-width:1.5}
+.dial .halo{fill:none;stroke:var(--accent);stroke-width:1.5;opacity:.85;filter:drop-shadow(0 0 5px rgba(53,224,240,.6))}
+.dial .track{fill:none;stroke:var(--surface-alt);stroke-width:10;stroke-linecap:butt}
+.dial .sweep{fill:none;stroke:var(--accent);stroke-width:10;stroke-dasharray:100 100;stroke-dashoffset:100;filter:drop-shadow(0 0 4px rgba(53,224,240,.55))}
+.dial .red{fill:none;stroke:#4A1A22;stroke-width:10}
+.dial .t{stroke:var(--text-dim);stroke-width:1.6}
+.dial .t.M{stroke:var(--text-2);stroke-width:2.6}
+.dial .t.R{stroke:#7A2632}
+.dial .needle{transform-box:view-box;transform-origin:200px 200px}
+.dial .needle polygon{fill:var(--text);filter:drop-shadow(2px 3px 2px rgba(0,0,0,.55))}
+.dial .hub{fill:var(--surface-alt);stroke:var(--border);stroke-width:1.5}
+.dial .hub2{fill:var(--accent)}
+.dial text{font-family:var(--label);font-weight:700;text-anchor:middle;letter-spacing:.24em;text-transform:uppercase}
+.dial .st{font-size:15px;fill:var(--text-2)}
+.dial .st.go{fill:var(--accent);font-size:19px}
+.dial .st.test{opacity:0}
+.dial .sub{font-size:10px;fill:var(--text-dim);letter-spacing:.3em}
 
-  /* ── features grid ─────────────────────────────────────────── */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px}
-  .card{padding:26px 24px}
-  .card svg{width:30px;height:30px;stroke:var(--accent);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;margin-bottom:16px}
-  .card h3{font-family:var(--hud);font-weight:700;letter-spacing:.08em;font-size:1.06rem;text-transform:uppercase}
-  .card p{color:var(--text2);font-size:.92rem;margin-top:8px;font-weight:300;line-height:1.55}
-  .card .pro-tag{
-    float:right;font-family:var(--hud);font-weight:700;font-size:.62rem;letter-spacing:.22em;
-    color:#04141a;background:var(--accent);padding:3px 9px;
-    clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px);
+.lamps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:0;padding:0;list-style:none}
+.lamps li{display:grid;justify-items:center;gap:7px}
+.lamps i{
+  width:clamp(16px,3.4vw,22px);aspect-ratio:1;border-radius:50%;background:var(--surface-alt);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.06),inset 0 -2px 4px rgba(0,0,0,.5);
+}
+.lamps span{font:600 .62rem/1 var(--label);letter-spacing:.16em;color:var(--text-dim);text-transform:uppercase}
+.lamps [data-c=amber]{--lamp:var(--caution)} .lamps [data-c=red]{--lamp:var(--critical)} .lamps [data-c=blue]{--lamp:var(--info)}
+
+.brk{position:absolute;width:26px;height:26px;border:1.5px solid rgba(53,224,240,.55)}
+.brk.a{left:-6px;top:-6px;border-right:0;border-bottom:0}
+.brk.b{right:-6px;top:-6px;border-left:0;border-bottom:0}
+.brk.c{left:-6px;bottom:-6px;border-right:0;border-top:0}
+.brk.d{right:-6px;bottom:-6px;border-left:0;border-top:0}
+.scan{position:absolute;inset:0;pointer-events:none;opacity:0}
+.scan::after{content:"";position:absolute;left:0;right:0;top:0;height:40px;
+  background:linear-gradient(rgba(53,224,240,0),rgba(53,224,240,.08));border-bottom:1px solid rgba(53,224,240,.3)}
+
+/* the power-on self-test (only when motion is welcome; the static page is the cleared state) */
+@media (prefers-reduced-motion:no-preference){
+  .boot .dial .t{animation:tickIn .5s var(--out) both;animation-delay:calc(var(--i,0) * 6ms)}
+  .boot .dial .needle{animation:needle 1.9s .55s both}
+  .boot .dial .sweep{animation:sweep 1.9s .55s both}
+  .boot .dial .red{animation:redline 1.9s .55s both}
+  .boot .dial .halo{animation:halo 2.9s both}
+  .boot .dial .st.test{animation:showThenHide 2.6s both}
+  .boot .dial .st.go{animation:hideThenShow 2.9s both}
+  .boot .lamps i{animation:lamp 2.15s both;animation-delay:calc(.62s + var(--n) * 66ms)}
+  .boot .scan{animation:scan 1.1s 2.75s var(--out) both}
+  .boot .lede,.boot .ctas,.boot .fine{animation:rise .6s var(--out) both}
+  .boot .ctas{animation-delay:.08s}.boot .fine{animation-delay:.16s}
+}
+@keyframes tickIn{from{opacity:0}}
+@keyframes needle{
+  0%{rotate:0deg;animation-timing-function:cubic-bezier(.3,.05,.2,1)}
+  38%{rotate:270deg}
+  50%{rotate:270deg;animation-timing-function:cubic-bezier(.55,0,.35,1)}
+  100%{rotate:0deg}
+}
+@keyframes sweep{
+  0%{stroke-dashoffset:100;animation-timing-function:cubic-bezier(.3,.05,.2,1)}
+  38%{stroke-dashoffset:0}
+  50%{stroke-dashoffset:0;animation-timing-function:cubic-bezier(.55,0,.35,1)}
+  100%{stroke-dashoffset:100}
+}
+@keyframes redline{0%,30%{stroke:#4A1A22}36%,52%{stroke:var(--critical);filter:drop-shadow(0 0 6px rgba(255,45,70,.7))}62%,100%{stroke:#4A1A22}}
+@keyframes lamp{
+  0%{background:var(--surface-alt)}
+  3%,82%{background:var(--lamp);box-shadow:0 0 14px 1px color-mix(in srgb,var(--lamp) 70%,transparent),inset 0 2px 3px rgba(255,255,255,.35)}
+  86%,100%{background:var(--surface-alt)}
+}
+@keyframes halo{0%,88%{opacity:0}100%{opacity:.85}}
+@keyframes showThenHide{0%{opacity:0}8%,90%{opacity:1}100%{opacity:0}}
+@keyframes hideThenShow{0%,90%{opacity:0;letter-spacing:.6em}100%{opacity:1}}
+@keyframes scan{0%{opacity:1;translate:0 -40px}100%{opacity:0;translate:0 100%}}
+@keyframes rise{from{opacity:0;translate:0 18px}}
+
+@media (max-width:899px){
+  .hero{grid-template-columns:1fr;min-height:0;padding-top:28px}
+  .inst{order:-1;width:min(74vw,300px)}
+  .lamps span{font-size:.5rem;letter-spacing:.1em}
+  .hero h1{max-width:13ch}
+}
+
+/* ───────────────── sections ───────────────── */
+.sec{padding:clamp(72px,12vh,140px) var(--gutter)}
+.head{max-width:44rem;margin:0 0 clamp(28px,5vh,48px)}
+.head h2{margin:.5em 0 .35em;font:700 clamp(2rem,4.4vw,3.4rem)/1 var(--label);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+.head p{margin:0;color:var(--text-2);max-width:38em}
+
+/* ── the tray: real screens, panned by scroll on wide screens ── */
+.tray{--n:7;position:relative}
+.tray .sticky{padding:clamp(72px,12vh,120px) var(--gutter) 48px}
+.frame{
+  --c:18px;position:relative;width:min(100%,1180px);margin:0 auto;background:var(--border);padding:1.5px;
+}
+.frame-in{--c:17px;background:#070A0D;overflow:hidden}
+.track{display:flex}
+.slide{flex:0 0 100%;margin:0}
+.slide img{width:100%;aspect-ratio:1920/860;object-fit:cover;background:#070A0D}
+.caps{position:relative;width:min(100%,1180px);margin:18px auto 0;min-height:5.2em}
+.cap{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:baseline}
+.cap b{font:700 1.25rem/1.1 var(--label);letter-spacing:.12em;text-transform:uppercase}
+.cap .pill{justify-self:start;text-transform:uppercase;font:700 .7rem/1 var(--label);letter-spacing:.2em;padding:.45em .7em .4em;border:1px solid var(--border);color:var(--text-2)}
+.cap .pill.pro{border-color:rgba(245,183,49,.55);color:var(--caution)}
+.cap .pill.free{border-color:rgba(34,210,122,.5);color:var(--ok)}
+.cap p{grid-column:1/-1;margin:0;color:var(--text-2);max-width:46em}
+.ruler{position:relative;width:min(100%,1180px);margin:22px auto 0;height:14px;
+  background:repeating-linear-gradient(90deg,var(--text-dim) 0 1px,transparent 1px calc(100% / 42));opacity:.9}
+.ruler::before{content:"";position:absolute;inset:auto 0 0 0;height:1px;background:var(--border)}
+.ruler i{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform-origin:left;scale:var(--p,0) 1;box-shadow:0 0 6px rgba(53,224,240,.6)}
+.ruler-n{width:min(100%,1180px);margin:8px auto 0;display:flex;justify-content:space-between;font:500 .8rem/1 var(--num);color:var(--text-dim);font-variant-numeric:tabular-nums}
+
+/* small screens and reduced motion: a swipeable strip, each screen with its caption */
+.tray .track{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:0}
+.tray .track::-webkit-scrollbar{display:none}
+.slide{scroll-snap-align:center}
+.slide figcaption{padding:16px 2px 0}
+.caps,.ruler,.ruler-n{display:none}
+.swipe{width:min(100%,1180px);margin:14px auto 0;color:var(--text-dim);font-size:.85rem}
+
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  .tray{height:calc(var(--n) * 62vh + 100vh)}
+  .tray .sticky{position:sticky;top:0;height:100vh;padding-top:84px;padding-bottom:24px;display:flex;flex-direction:column;justify-content:center}
+  .tray .head{margin-bottom:22px}
+  .tray .frame,.caps,.ruler,.ruler-n{width:min(100%,calc((100vh - 480px) * 2.233),1180px)}
+  .tray .head h2{font-size:clamp(2rem,3.4vw,2.8rem)}
+  .tray .track{overflow:visible;scroll-snap-type:none;width:calc(var(--n) * 100%);translate:calc(var(--p,0) * -100% * (var(--n) - 1) / var(--n)) 0}
+  .slide{flex-basis:calc(100% / var(--n))}
+  .slide figcaption{display:none}
+  .caps,.ruler,.ruler-n{display:block}.ruler-n{display:flex}
+  .swipe{display:none}
+  .cap{position:absolute;inset:0 0 auto 0;opacity:0;transition:opacity .25s,translate .35s var(--out);translate:0 6px}
+  .cap.on{opacity:1;translate:0 0}
+}
+@supports ((animation-timeline:view()) and (animation-range:0% 100%)){
+  @media (min-width:900px) and (prefers-reduced-motion:no-preference){
+    .tray{view-timeline:--tray block}
+    .tray .track{animation:pan linear both;animation-timeline:--tray;animation-range:contain 0% contain 100%}
+    .ruler i{animation:fill linear both;animation-timeline:--tray;animation-range:contain 0% contain 100%}
   }
+}
+@keyframes pan{from{translate:0 0}to{translate:calc(-100% * (var(--n) - 1) / var(--n)) 0}}
+@keyframes fill{from{scale:0 1}to{scale:1 1}}
 
-  /* ── wear strip (app-style cards) ──────────────────────────── */
-  .wear-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:8px}
-  .wcard{padding:18px 18px 16px}
-  .wcard .row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-  .wcard .t{font-family:var(--hud);font-weight:600;letter-spacing:.12em;font-size:.74rem;color:var(--text);text-transform:uppercase}
-  .chip{font-family:var(--hud);font-weight:700;font-size:.6rem;letter-spacing:.2em;padding:3px 8px;border:1px solid}
-  .chip.good{color:var(--ok);border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.1)}
-  .chip.watch{color:var(--warn);border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.1)}
-  .wcard .v{font-family:var(--hud);font-weight:700;font-size:1.15rem}
-  .wcard .v.good{color:var(--ok)} .wcard .v.watch{color:var(--warn)}
-  .wcard .d{color:var(--text2);font-size:.84rem;margin-top:6px;font-weight:300;line-height:1.5}
+/* ── steps ── */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px);margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{position:relative;padding-top:22px;border-top:1px solid var(--border)}
+.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);position:absolute;top:-1px;left:0;
+  font:600 .9rem/1 var(--num);color:var(--accent);background:var(--bg);padding:0 10px 0 0;translate:0 -50%}
+.steps h3{margin:.2em 0 .45em;font:700 1.55rem/1.05 var(--label);text-transform:uppercase;letter-spacing:.04em}
+.steps p{margin:0;color:var(--text-2)}
+.steps .note{margin-top:.9em;color:var(--text);font-size:.92rem}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
 
-  /* seg bar */
-  .seg{display:flex;gap:3px;margin-top:14px}
-  .seg i{height:7px;flex:1;background:var(--surface2)}
-  .seg i.on{background:var(--accent);box-shadow:0 0 6px rgba(34,211,238,.6)}
-  .seg.green i.on{background:var(--ok);box-shadow:0 0 6px rgba(52,211,153,.6)}
+/* ── preflight checklist ── */
+.check{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,36px)}
+.list{--c:16px;background:var(--surface);padding:clamp(20px,3vw,34px)}
+.list.pro{background:linear-gradient(180deg,rgba(245,183,49,.06),transparent 40%),var(--surface)}
+.list h3{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 6px;font:700 1.6rem/1 var(--label);text-transform:uppercase;letter-spacing:.06em}
+.list h3 small{font:600 .78rem/1 var(--label);letter-spacing:.2em;color:var(--text-2)}
+.list .sum{margin:0 0 14px;color:var(--text-2);font-size:.95rem}
+.list ul{list-style:none;margin:0;padding:0}
+.list li{display:grid;grid-template-columns:22px 1fr;gap:4px 14px;padding:13px 0;border-top:1px dashed rgba(53,66,79,.8)}
+.list li b{font:700 1.02rem/1.25 var(--label);letter-spacing:.08em;text-transform:uppercase}
+.list li span{grid-column:2;color:var(--text-2);font-size:.92rem;line-height:1.5}
+.box{grid-row:1/span 2;width:18px;height:18px;margin-top:1px;border:1.5px solid var(--border);display:grid;place-items:center}
+.box svg{width:12px;height:12px;stroke:var(--ok);stroke-width:2.6;fill:none;stroke-dasharray:20;stroke-dashoffset:0}
+.list.pro .box svg{stroke:var(--caution)}
+@media (prefers-reduced-motion:no-preference){
+  .js .list .box svg{stroke-dashoffset:20;transition:stroke-dashoffset .28s var(--out);transition-delay:calc(var(--k) * 90ms)}
+  .js .list .box{transition:border-color .2s;transition-delay:calc(var(--k) * 90ms)}
+  .js .list.done .box svg{stroke-dashoffset:0}
+}
+.list.done .box{border-color:rgba(34,210,122,.55)}
+.list.pro.done .box{border-color:rgba(245,183,49,.55)}
+.terms{margin:22px 0 0;color:var(--text-2);font-size:.92rem;max-width:52em}
+@media (max-width:860px){.check{grid-template-columns:1fr}}
 
-  /* ── pricing ───────────────────────────────────────────────── */
-  .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:900px;margin:0 auto}
-  .plan{padding:34px 30px}
-  .plan h3{font-family:var(--hud);font-weight:700;letter-spacing:.2em;font-size:1rem;color:var(--text2)}
-  .plan .price{font-family:var(--hud);font-weight:700;font-size:3rem;margin:12px 0 2px}
-  .plan .per{color:var(--dim);font-size:.85rem;margin-bottom:22px}
-  .plan ul{list-style:none}
-  .plan li{padding:7px 0;color:var(--text2);font-size:.94rem;font-weight:300;line-height:1.5}
-  .plan li::before{content:"// ";font-family:var(--hud);font-weight:700;color:var(--accent);font-size:.8rem;margin-right:6px}
-  .plan li b{color:var(--text)}
-  .plan.pro{background:linear-gradient(160deg,var(--surface2),var(--surface))}
-  .plan.pro .price{color:var(--accent)}
-  .plan .btn{margin-top:26px;width:100%;text-align:center}
-  .safety-note{
-    text-align:center;margin-top:34px;color:var(--ok);
-    font-family:var(--hud);letter-spacing:.18em;font-size:.8rem;text-transform:uppercase;
-  }
+/* ── privacy band ── */
+.quiet{border-block:1px solid var(--border);background:var(--surface);text-align:left}
+.quiet p.big{margin:0;font:700 clamp(1.9rem,5vw,4rem)/1 var(--label);text-transform:uppercase;letter-spacing:.02em;max-width:18ch}
+.quiet p.big span{display:block;color:var(--text-dim)}
+.quiet p.small{margin:1.2em 0 0;color:var(--text-2);max-width:40em}
 
-  /* ── specs strip ───────────────────────────────────────────── */
-  .specs{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  .spec{
-    font-family:var(--hud);font-weight:600;letter-spacing:.14em;font-size:.78rem;
-    color:var(--text2);text-transform:uppercase;padding:12px 20px;background:var(--surface);
-    clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
-  }
-  .spec b{color:var(--accent);font-weight:700}
+/* ── end card ── */
+.end{text-align:center;display:grid;justify-items:center;padding-block:clamp(80px,14vh,160px)}
+.badge{position:relative;width:min(70vw,300px);aspect-ratio:1}
+.badge img{width:100%;height:100%}
+.badge::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%) no-repeat;background-size:250% 100%;background-position:120% 0;
+  -webkit-mask:url(assets/badge-640.webp) center/contain no-repeat;mask:url(assets/badge-640.webp) center/contain no-repeat;mix-blend-mode:screen}
+@media (prefers-reduced-motion:no-preference){.badge.lit::after{animation:glint 1.3s .2s var(--out) both}}
+@keyframes glint{to{background-position:-20% 0}}
+.end h2{margin:.5em 0 .25em;font:700 clamp(1.9rem,7vw,4.6rem)/1 var(--label);text-transform:uppercase;letter-spacing:.04em;text-wrap:balance}
+.end p{margin:0 0 2em;color:var(--text-2)}
+.end .ctas{justify-content:center}
 
-  footer{
-    border-top:1px solid var(--border);padding:44px 6vw;color:var(--dim);
-    font-size:.82rem;font-weight:300;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
-  }
-  footer a{color:var(--text2);text-decoration:none}
-  footer a:hover{color:var(--accent)}
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
-
-  /* ── phone layout ──────────────────────────────────────────── */
-  @media(max-width:900px){
-    .hero{
-      grid-template-columns:1fr;gap:30px;min-height:auto;
-      padding:96px 6vw 40px;
-    }
-    .hero .brackets{inset:80px 3vw 16px}
-    .dial-wrap{order:2}
-    .dial{width:min(320px,78vw)}
-    .radar{width:min(330px,80vw)}
-    .hero-stats{gap:20px 28px;margin-top:32px}
-    .hstat .v{font-size:1.6rem}
-    .hero-ctas .btn{flex:1;text-align:center;padding:15px 12px}
-    section{padding:64px 5vw}
-    .sec-head{margin-bottom:30px}
-    header{padding:12px 4vw}
-    .logo{font-size:1rem;letter-spacing:.14em}
-    .logo img{width:26px;height:26px}
-    #flyjet{transform-origin:center;animation-duration:13s}
-    #flyjet svg,#flyjet{width:104px}
-    .plan .price{font-size:2.4rem}
-    footer{flex-direction:column}
-    footer div[style*="text-align:right"]{text-align:left!important}
-  }
-  @media(max-width:430px){
-    .hero h1{font-size:2.35rem}
-    .tagline{font-size:.98rem}
-    .grid{grid-template-columns:1fr}
-    .wear-strip{grid-template-columns:1fr}
-  }
+footer{border-top:1px solid var(--border);padding:36px var(--gutter) 48px;color:var(--text-dim);font-size:.85rem}
+footer nav{display:flex;flex-wrap:wrap;gap:10px 26px;margin-bottom:18px}
+footer nav a{color:var(--text-2);text-decoration:none;font:600 .95rem/1 var(--label);letter-spacing:.14em;text-transform:uppercase}
+footer nav a:hover{color:var(--accent)}
+footer p{margin:.4em 0;max-width:60em}
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<header>
-  <a class="logo" href="#"><img src="brand/favicon_64.png" alt=""><span><span class="slashes">//</span>F-43 <b>MOTO OS</b></span></a>
-  <nav>
-    <a href="#features">Features</a>
-    <a href="#wear">Wear Analysis</a>
-    <a href="#pro">Pro</a>
-    <a class="cta" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Get the App</a>
-  </nav>
+<header class="bar">
+  <a class="brand" href="./" aria-label="F-43 Moto OS home"><img src="assets/badge-320.webp" alt="" width="36" height="36">F-43 Moto OS</a>
+  <a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>
+    <span><span class="long">Get it on </span>Google Play</span>
+  </a>
 </header>
 
-<!-- ═══ HERO ═══ -->
-<div class="hero">
-  <div class="brackets"><i></i><i></i><i></i><i></i></div>
+<main id="main">
+<section class="hero" id="hero" aria-labelledby="h1">
+  <div class="scan" aria-hidden="true"></div>
   <div>
-    <div class="label">// Live OBD-II Cockpit · For Indian Motorcycles</div>
-    <h1 class="h-big">The <span class="accent">fighter-jet<br>cockpit</span><br><span class="thin">for your motorcycle</span></h1>
-    <p class="tagline">Clip an <b>ELM327 adapter</b> to your bike, mount your phone, and ride with a
-      <b>live dashboard</b>, a distraction-free <b>RIDE mode</b>, an engine that
-      <b>explains itself in plain language</b> — and a crash-SOS system standing watch.</p>
-    <div class="hero-ctas">
-      <a class="btn primary" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">▶ Get it on Google Play</a>
-      <a class="btn ghost" href="#features">Explore the cockpit</a>
+    <p class="tag"><span class="tk">//</span>For Android · on Google Play</p>
+    <h1 id="h1">The <span class="nw">fighter-jet</span> cockpit for your motorcycle.</h1>
+    <p class="lede">F-43 Moto OS turns the Android phone on your handlebar into an instrument panel. <strong>Speed, lean and heading</strong> come from the phone itself. Plug an <strong>OBD-II adapter</strong> into your bike's diagnostic port and the cockpit reads the engine's own computer: revs, coolant, voltage, fuel trims and fault codes.</p>
+    <div class="ctas">
+      <a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
+      </a>
+      <a class="ghost" href="#screens">See the screens</a>
     </div>
-    <div class="hero-stats">
-      <div class="hstat"><div class="v">14<em>+</em></div><div class="k">Bike presets</div></div>
-      <div class="hstat"><div class="v">16<em>+</em></div><div class="k">Live engine PIDs</div></div>
-      <div class="hstat"><div class="v">8</div><div class="k">Wear checks</div></div>
-      <div class="hstat"><div class="v"><em>₹0</em></div><div class="k">Every safety feature</div></div>
-    </div>
+    <p class="fine">Free to download. No account, no cloud, no ads.</p>
   </div>
 
-  <div class="dial-wrap" id="dialWrap">
-    <div class="radar" aria-hidden="true"></div>
-    <div class="streaks" aria-hidden="true"><i></i><i></i><i></i></div>
-    <svg class="dial" viewBox="0 0 400 400" role="img" aria-label="Live RPM dial">
-      <!-- ticks -->
-      <g class="ticks"></g>
-      <!-- track: 270° arc -->
-      <path class="track" d="M 100 300 A 141 141 0 1 1 300 300"/>
-      <path class="red"   d="M 260.5 328.5 A 141 141 0 0 0 300 300" opacity=".9"/>
-      <path class="arc" id="rpmArc" d="M 100 300 A 141 141 0 1 1 300 300"/>
-      <text class="rpmlab" x="200" y="132" text-anchor="middle">RPM ×1000</text>
-      <text class="speed" x="200" y="228" text-anchor="middle" id="speedNum">0</text>
-      <text class="unit"  x="200" y="262" text-anchor="middle">KM/H</text>
-      <rect class="gearbox" x="176" y="284" width="48" height="44" rx="6"/>
-      <text class="gear" id="gearNum" x="200" y="316" text-anchor="middle">N</text>
-    </svg>
-  </div>
-</div>
-
-<!-- jet flyby (fixed, crosses the viewport on a loop) -->
-<svg id="flyjet" width="150" height="44" viewBox="0 0 150 44" aria-hidden="true">
-  <defs>
-    <linearGradient id="ct" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#22d3ee" stop-opacity="0"/>
-      <stop offset="1" stop-color="#22d3ee" stop-opacity=".85"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="20" width="98" height="3.4" rx="1.7" fill="url(#ct)"/>
-  <!-- top-view fighter pointing right -->
-  <path fill="#e6edf3" d="M148 22 L120 18.5 L114 17 L100 4 L96 4 L104 16
-    L90 14.5 L82 8 L84 15 L84 29 L82 36 L90 29.5 L104 28 L96 40 L100 40
-    L114 27 L120 25.5 Z"/>
-</svg>
-
-<!-- ═══ FEATURES ═══ -->
-<section id="features">
-  <div class="sec-head reveal">
-    <div class="label">// Mission Systems</div>
-    <h2 class="h-big">Everything the bike knows,<br>the way a rider needs it</h2>
-    <p>F-43 Moto OS speaks directly to your ECU over Bluetooth OBD-II — no cloud, no account,
-       no subscription. Data stays on your phone.</p>
-  </div>
-  <div class="grid">
-    <div class="chamfer card reveal">
-      <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 12l5-5"/><circle cx="12" cy="12" r="1.6"/></svg>
-      <h3>Live Cockpit</h3>
-      <p>RPM, speed, gear, coolant, O2, fuel trims, load and more — eight gauge styles, from classic needle to the faceted HYPER dial, the fighter HUD ladder and the jet-turbine N1 — tuned for sunlight and night.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <svg viewBox="0 0 24 24"><path d="M4 17l4-10 4 7 3-4 5 7"/><path d="M2 21h20"/></svg>
-      <h3>RIDE Mode</h3>
-      <p>Above 8 km/h the cockpit morphs into a minimal HUD: big speed, lean angle, vitals, ride clock and phone battery — nothing you don't need at 80 km/h. On by default, yours to toggle.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <span class="pro-tag">PRO</span>
-      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4.5 4.5 0 0 0-6.4 6.4L3 18v3h3l5.3-5.3a4.5 4.5 0 0 0 6.4-6.4z"/></svg>
-      <h3>Engine Wear Analysis</h3>
-      <p>Eight continuous mechanic-grade checks — idle vacuum, O2 ageing, charging, wiring drop, air-filter breathing — reported in plain language.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <span class="pro-tag">PRO</span>
-      <svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>
-      <h3>Voice Navigation</h3>
-      <p>Turn-by-turn OSM navigation with premium spoken guidance in your helmet — ducks your music, never cuts it.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <span class="pro-tag">PRO</span>
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M7 14c2-3 4-1 6-4s4-1 4-1"/><path d="M7 18h6"/></svg>
-      <h3>Flight Debrief</h3>
-      <p>Every ride becomes a shareable mission card — GPS trace, top speed, lean angle, economy — rendered in full cockpit style for your group chat.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
-      <h3>Crash SOS</h3>
-      <p>Detects a crash from motion + telemetry, counts down, then fires a pre-filled SOS text to your emergency contacts with your live location — one visible tap sends it (no hidden permissions). Always free.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <svg viewBox="0 0 24 24"><path d="M3 20V8l4-4h8l4 4v12"/><path d="M8 20v-6h8v6"/><circle cx="12" cy="9" r="1.5"/></svg>
-      <h3>Fuel &amp; Maintenance</h3>
-      <p>Jet fuel synoptic — quantity tape, live sloshing tank and a feed line to the engine — plus a fill-up log with real mileage, cost per 100 km, and chain &amp; service reminders that follow your odometer.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-      <h3>Predictive Health</h3>
-      <p>Watches every signal while you ride and warns early — weak charging, running lean, overheating, even an ECU that rebooted mid-ride — before they strand you.</p>
-    </div>
-    <div class="chamfer card reveal">
-      <svg viewBox="0 0 24 24"><path d="M5 3h14l-2 7H7z"/><path d="M7 10l-2 11h14l-2-11"/></svg>
-      <h3>Guided First Flight</h3>
-      <p>Pick your brand &amp; model (14 presets) or name your own bike, pair the ELM327, and watch your bike's live signals light up — then the cockpit goes live.</p>
-    </div>
+  <div class="inst">
+    <span class="brk a" aria-hidden="true"></span><span class="brk b" aria-hidden="true"></span><span class="brk c" aria-hidden="true"></span><span class="brk d" aria-hidden="true"></span>
+    <button type="button" id="replay" aria-label="Run the power-on self-test again">
+      <svg class="dial" viewBox="0 0 400 400" role="img" aria-labelledby="dialt">
+        <title id="dialt">Power-on self-test: the needle sweeps to the stop and back, six warning lamps light and go out.</title>
+        <defs>
+          <radialGradient id="dome" cx="35%" cy="28%" r="80%">
+            <stop offset="0" stop-color="#26313C"/><stop offset=".55" stop-color="#141B22"/><stop offset="1" stop-color="#0A0F14"/>
+          </radialGradient>
+        </defs>
+        <circle class="face" cx="200" cy="200" r="190"/>
+        <circle class="bezel" cx="200" cy="200" r="190"/>
+        <circle class="halo" cx="200" cy="200" r="196"/>
+        <path class="track" d="M81.21 318.79A168 168 0 1 1 318.79 318.79"/>
+        <path class="red" d="M365.93 173.72A168 168 0 0 1 318.79 318.79"/>
+        <path class="sweep" pathLength="100" d="M81.21 318.79A168 168 0 1 1 318.79 318.79"/>
+        <g class="ticks"><line class="t M" x1="93.9" y1="306.1" x2="82.6" y2="317.4"/><line class="t" x1="77.5" y1="301.4" x2="72.1" y2="305.8"/><line class="t" x1="68.5" y1="289.4" x2="62.7" y2="293.3"/><line class="t" x1="60.7" y1="276.6" x2="54.5" y2="280.0"/><line class="t" x1="54.1" y1="263.1" x2="47.7" y2="265.9"/><line class="t M" x1="57.3" y1="246.4" x2="42.1" y2="251.3"/><line class="t" x1="44.8" y1="234.7" x2="38.0" y2="236.2"/><line class="t" x1="42.3" y1="219.9" x2="35.3" y2="220.8"/><line class="t" x1="41.1" y1="205.0" x2="34.1" y2="205.2"/><line class="t" x1="41.3" y1="190.0" x2="34.3" y2="189.6"/><line class="t M" x1="51.8" y1="176.5" x2="36.0" y2="174.0"/><line class="t" x1="46.0" y1="160.5" x2="39.2" y2="158.7"/><line class="t" x1="50.4" y1="146.1" x2="43.8" y2="143.8"/><line class="t" x1="56.1" y1="132.3" x2="49.8" y2="129.3"/><line class="t" x1="63.1" y1="119.1" x2="57.1" y2="115.5"/><line class="t M" x1="78.6" y1="111.8" x2="65.7" y2="102.4"/><line class="t" x1="80.7" y1="94.9" x2="75.5" y2="90.2"/><line class="t" x1="91.2" y1="84.1" x2="86.4" y2="79.0"/><line class="t" x1="102.5" y1="74.4" x2="98.3" y2="68.8"/><line class="t" x1="114.8" y1="65.8" x2="111.1" y2="59.8"/><line class="t M" x1="131.9" y1="66.3" x2="124.6" y2="52.1"/><line class="t" x1="141.5" y1="52.2" x2="138.9" y2="45.7"/><line class="t" x1="155.6" y1="47.3" x2="153.7" y2="40.6"/><line class="t" x1="170.2" y1="43.8" x2="168.9" y2="36.9"/><line class="t" x1="185.0" y1="41.7" x2="184.4" y2="34.7"/><line class="t M" x1="200.0" y1="50.0" x2="200.0" y2="34.0"/><line class="t" x1="215.0" y1="41.7" x2="215.6" y2="34.7"/><line class="t" x1="229.8" y1="43.8" x2="231.1" y2="36.9"/><line class="t" x1="244.4" y1="47.3" x2="246.3" y2="40.6"/><line class="t" x1="258.5" y1="52.2" x2="261.1" y2="45.7"/><line class="t M" x1="268.1" y1="66.3" x2="275.4" y2="52.1"/><line class="t" x1="285.2" y1="65.8" x2="288.9" y2="59.8"/><line class="t" x1="297.5" y1="74.4" x2="301.7" y2="68.8"/><line class="t" x1="308.8" y1="84.1" x2="313.6" y2="79.0"/><line class="t" x1="319.3" y1="94.9" x2="324.5" y2="90.2"/><line class="t M" x1="321.4" y1="111.8" x2="334.3" y2="102.4"/><line class="t" x1="336.9" y1="119.1" x2="342.9" y2="115.5"/><line class="t" x1="343.9" y1="132.3" x2="350.2" y2="129.3"/><line class="t" x1="349.6" y1="146.1" x2="356.2" y2="143.8"/><line class="t" x1="354.0" y1="160.5" x2="360.8" y2="158.7"/><line class="t M R" x1="348.2" y1="176.5" x2="364.0" y2="174.0"/><line class="t R" x1="358.7" y1="190.0" x2="365.7" y2="189.6"/><line class="t R" x1="358.9" y1="205.0" x2="365.9" y2="205.2"/><line class="t R" x1="357.7" y1="219.9" x2="364.7" y2="220.8"/><line class="t R" x1="355.2" y1="234.7" x2="362.0" y2="236.2"/><line class="t M R" x1="342.7" y1="246.4" x2="357.9" y2="251.3"/><line class="t R" x1="345.9" y1="263.1" x2="352.3" y2="265.9"/><line class="t R" x1="339.3" y1="276.6" x2="345.5" y2="280.0"/><line class="t R" x1="331.5" y1="289.4" x2="337.3" y2="293.3"/><line class="t R" x1="322.5" y1="301.4" x2="327.9" y2="305.8"/><line class="t M R" x1="306.1" y1="306.1" x2="317.4" y2="317.4"/></g>
+        <text class="st test" x="200" y="296">Self-test</text>
+        <text class="st go" x="200" y="298">Cleared</text>
+        <text class="sub" x="200" y="322">F-43 Moto OS</text>
+        <g class="needle"><g transform="rotate(135 200 200)"><polygon points="188,196 352,199.2 352,200.8 188,204"/></g></g>
+        <circle class="hub" cx="200" cy="200" r="17"/>
+        <circle class="hub2" cx="200" cy="200" r="4"/>
+      </svg>
+    </button>
+    <ul class="lamps" aria-hidden="true">
+      <li data-c="amber" style="--n:0"><i></i><span>Engine</span></li>
+      <li data-c="amber" style="--n:1"><i></i><span>ABS</span></li>
+      <li data-c="red" style="--n:2"><i></i><span>Battery</span></li>
+      <li data-c="red" style="--n:3"><i></i><span>Coolant</span></li>
+      <li data-c="amber" style="--n:4"><i></i><span>Fuel</span></li>
+      <li data-c="blue" style="--n:5"><i></i><span>OBD</span></li>
+    </ul>
   </div>
 </section>
 
-<!-- ═══ HOW IT WORKS ═══ -->
-<section id="how" style="padding-top:20px">
-  <div class="sec-head reveal">
-    <div class="label">// First Flight · Two Minutes to Take-Off</div>
-    <h2 class="h-big">From box to cockpit,<br>guided all the way</h2>
-  </div>
-  <div class="grid reveal">
-    <div class="chamfer card">
-      <div class="label" style="letter-spacing:.2em">01 · PAIR</div>
-      <p style="margin-top:10px">Plug a ₹300 ELM327 Bluetooth adapter into your bike's OBD port and pair it once in Android settings.</p>
+<section class="tray" id="screens" aria-labelledby="screens-h">
+  <div class="sticky">
+    <div class="head">
+      <p class="tag"><span class="tk">//</span>Real screens</p>
+      <h2 id="screens-h">This is the app, not a mock-up.</h2>
+      <p>Every screen here is a capture from a phone running F-43 Moto OS, with the app's demo data standing in for a bike.</p>
     </div>
-    <div class="chamfer card">
-      <div class="label" style="letter-spacing:.2em">02 · FIRST FLIGHT</div>
-      <p style="margin-top:10px">Tell the app your name, pick your brand &amp; model (or name your own), grant clearances, link the scanner — and watch your bike's live signals light up one by one.</p>
-    </div>
-    <div class="chamfer card">
-      <div class="label" style="letter-spacing:.2em">03 · TAKE OFF</div>
-      <p style="margin-top:10px">Your brand's logo animation plays and the cockpit goes live — greeting you by name every ride after.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ WEAR ═══ -->
-<section id="wear" style="background:var(--bg2)">
-  <div class="sec-head reveal">
-    <div class="label">// F-43 Pro Flagship</div>
-    <h2 class="h-big">A mechanic that rides with you</h2>
-    <p>While you ride, the wear engine quietly measures what a workshop would put your bike on a bench
-       for — and tells you the verdict in words, not codes.</p>
-  </div>
-  <div class="wear-strip">
-    <div class="chamfer wcard reveal">
-      <div class="row"><span class="t">Idle vacuum · engine sealing</span><span class="chip good">GOOD</span></div>
-      <div class="v good">42 kPa at idle</div>
-      <div class="d">Strong idle vacuum — intake sealing, valves and compression all look healthy.</div>
-      <div class="seg green" data-fill="16"></div>
-    </div>
-    <div class="chamfer wcard reveal">
-      <div class="row"><span class="t">Charging · reg/rec · stator</span><span class="chip good">GOOD</span></div>
-      <div class="v good">14.3 V at revs</div>
-      <div class="d">Charging voltage is right where it should be.</div>
-      <div class="seg green" data-fill="17"></div>
-    </div>
-    <div class="chamfer wcard reveal">
-      <div class="row"><span class="t">ECU supply drop · wiring</span><span class="chip watch">WATCH</span></div>
-      <div class="v watch">1.2 V below battery rail</div>
-      <div class="d">The ECU receives noticeably less than the battery provides — ageing ignition-switch contacts. Mention at next service.</div>
-      <div class="seg" data-fill="11"></div>
-    </div>
-    <div class="chamfer wcard reveal">
-      <div class="row"><span class="t">Intake breathing · air filter</span><span class="chip watch">WATCH</span></div>
-      <div class="v watch">86% fill at full throttle</div>
-      <div class="d">Airflow is mildly restricted. Air-filter cleaning is due — cheap, and restores power.</div>
-      <div class="seg" data-fill="12"></div>
-    </div>
+    <div class="frame cham"><div class="frame-in cham">
+      <div class="track" id="track" tabindex="0" aria-label="App screens. Swipe or scroll to see more.">
+        <figure class="slide"><img src="assets/shots/01-cockpit-1600.webp" srcset="assets/shots/01-cockpit-880.webp 880w, assets/shots/01-cockpit-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="The F-43 cockpit: speed 65 km/h in gear 6, rev gauge, health checks 100 of 100, coolant 87 °C and fuel left." loading="lazy" decoding="async">
+          <figcaption class="cap"><b>Cockpit</b><span class="pill free">Free</span><p>Speed, estimated gear, the rev gauge and engine tiles on one screen. Health checks, coolant and fuel left sit beside the speed.</p></figcaption></figure>
+        <figure class="slide"><img src="assets/shots/02-ride-horizon-1600.webp" srcset="assets/shots/02-ride-horizon-880.webp 880w, assets/shots/02-ride-horizon-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="HORIZON RIDE face: 84 km/h, 4200 rpm, gear 6, artificial horizon, with an amber coolant warning strip." fetchpriority="low" decoding="async">
+          <figcaption class="cap"><b>RIDE · Horizon</b><span class="pill pro">Pro</span><p>Above walking pace the screen declutters into a flight display: speed tape, artificial horizon and revs. Warnings still reach you, like this coolant alert.</p></figcaption></figure>
+        <figure class="slide"><img src="assets/shots/03-ride-dogfight-1600.webp" srcset="assets/shots/03-ride-dogfight-880.webp 880w, assets/shots/03-ride-dogfight-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="DOGFIGHT RIDE face: speed dial at 61 km/h and rev dial at 7872 rpm with fuel, coolant and battery between them." fetchpriority="low" decoding="async">
+          <figcaption class="cap"><b>RIDE · Dogfight</b><span class="pill pro">Pro</span><p>Twin needle dials, speed and revs, with the engine data between them.</p></figcaption></figure>
+        <figure class="slide"><img src="assets/shots/04-ride-apex-1600.webp" srcset="assets/shots/04-ride-apex-880.webp 880w, assets/shots/04-ride-apex-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="APEX RIDE face: rev band to 10,000 rpm, 104 km/h ground speed, gear 4." fetchpriority="low" decoding="async">
+          <figcaption class="cap"><b>RIDE · Apex</b><span class="pill pro">Pro</span><p>A swept rev band across the top and ground speed in the middle, for the open road.</p></figcaption></figure>
+        <figure class="slide"><img src="assets/shots/05-ride-collection-1600.webp" srcset="assets/shots/05-ride-collection-880.webp 880w, assets/shots/05-ride-collection-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="The RIDE collection: BLADES, CLUSTER, MONOLITH, STRIP, CLASSIC, TWIN SPOOL, DOGFIGHT and APEX faces." fetchpriority="low" decoding="async">
+          <figcaption class="cap"><b>Ten RIDE faces</b><span class="pill free">5 free</span><p>Pick the instruments you ride with. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free.</p></figcaption></figure>
+        <figure class="slide"><img src="assets/shots/06-rpm-gauges-1600.webp" srcset="assets/shots/06-rpm-gauges-880.webp 880w, assets/shots/06-rpm-gauges-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="The rev gauge picker with eleven styles, five marked Pro." fetchpriority="low" decoding="async">
+          <figcaption class="cap"><b>Eleven rev gauges</b><span class="pill free">6 free</span><p>ARC, BAR, NEON, LED, NEEDLE and HYPER are free. HUD, TURBINE, VECTOR, NOZZLE and RADAR come with Pro.</p></figcaption></figure>
+        <figure class="slide"><img src="assets/shots/07-ecu-faults-1600.webp" srcset="assets/shots/07-ecu-faults-880.webp 880w, assets/shots/07-ecu-faults-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="ECU fault list showing two codes in plain language: O2 sensor slow response, and system voltage low." fetchpriority="low" decoding="async">
+          <figcaption class="cap"><b>Fault codes</b><span class="pill free">Free</span><p>Stored engine faults in plain language, with the checks to do next. Always free.</p></figcaption></figure>
+      </div>
+    </div></div>
+    <div class="ruler" aria-hidden="true"><i></i></div>
+    <div class="ruler-n" aria-hidden="true"><span>01</span><span>07</span></div>
+    <div class="caps" aria-hidden="true"><div class="cap on"><b>Cockpit</b><span class="pill free">Free</span><p>Speed, estimated gear, the rev gauge and engine tiles on one screen. Health checks, coolant and fuel left sit beside the speed.</p></div><div class="cap"><b>RIDE · Horizon</b><span class="pill pro">Pro</span><p>Above walking pace the screen declutters into a flight display: speed tape, artificial horizon and revs. Warnings still reach you, like this coolant alert.</p></div><div class="cap"><b>RIDE · Dogfight</b><span class="pill pro">Pro</span><p>Twin needle dials, speed and revs, with the engine data between them.</p></div><div class="cap"><b>RIDE · Apex</b><span class="pill pro">Pro</span><p>A swept rev band across the top and ground speed in the middle, for the open road.</p></div><div class="cap"><b>Ten RIDE faces</b><span class="pill free">5 free</span><p>Pick the instruments you ride with. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free.</p></div><div class="cap"><b>Eleven rev gauges</b><span class="pill free">6 free</span><p>ARC, BAR, NEON, LED, NEEDLE and HYPER are free. HUD, TURBINE, VECTOR, NOZZLE and RADAR come with Pro.</p></div><div class="cap"><b>Fault codes</b><span class="pill free">Free</span><p>Stored engine faults in plain language, with the checks to do next. Always free.</p></div></div>
+    <p class="swipe">Swipe for more screens.</p>
   </div>
 </section>
 
-<!-- ═══ PRO / PRICING ═══ -->
-<section id="pro">
-  <div class="sec-head reveal" style="text-align:center;margin-left:auto;margin-right:auto">
-    <div class="label">// One purchase · Yours forever</div>
-    <h2 class="h-big">Free where it matters.<br><span style="color:var(--accent)">Pro</span> where it delights.</h2>
-    <p style="margin-top:14px"><b>Every install starts with a 7-day full-Pro trial</b> — ride with everything unlocked, then keep what you love for one payment.</p>
+<section class="sec" aria-labelledby="how-h">
+  <div class="head">
+    <p class="tag"><span class="tk">//</span>Setup</p>
+    <h2 id="how-h">From the box to the road</h2>
   </div>
-  <div class="price-grid">
-    <div class="chamfer plan reveal">
-      <h3>BASIC</h3>
-      <div class="price">₹0</div>
-      <div class="per">forever · no account · no ads</div>
+  <ol class="steps">
+    <li>
+      <h3>Mount the phone</h3>
+      <p>Put your Android phone on the handlebar, in landscape. Speed, the artificial horizon and the compass work straight away, from the phone's own sensors.</p>
+    </li>
+    <li>
+      <h3>Plug in an adapter</h3>
+      <p>Plug an OBD-II Bluetooth adapter into your bike's diagnostic port and pair it once. The cockpit now reads the engine's computer: revs, coolant, voltage, fuel trims and fault codes.</p>
+    </li>
+    <li>
+      <h3>Pick your bike</h3>
+      <p>Choose from 54 India-spec presets or add your own. Switch on, the needles sweep, six lamps light and go out, and you're cleared.</p>
+      <p class="note">Set it up before you ride. Hands on the bars, eyes on the road.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="sec" aria-labelledby="free-h" style="padding-top:0">
+  <div class="head">
+    <p class="tag"><span class="tk">//</span>Pre-flight checklist</p>
+    <h2 id="free-h">What's free, and what's Pro</h2>
+    <p>Safety features and fault codes are free for every rider. F-43 Pro adds deeper analysis and more instruments.</p>
+  </div>
+  <div class="check">
+    <div class="list cham" data-check>
+      <h3>Free <small>Always</small></h3>
+      <p class="sum">Everything you need to ride with your bike's data in view.</p>
       <ul>
-        <li>Full live OBD dashboard, all classic gauges</li>
-        <li>RIDE mode (SPORT)</li>
-        <li>Crash SOS + all warnings &amp; callouts</li>
-        <li>OSM turn-by-turn navigation + chime</li>
-        <li>Fuel log, animated tank, maintenance hub</li>
-        <li>Diagnostics, fault codes, backup &amp; restore</li>
-        <li>9 guided multimeter tests — cross-checked against the ECU&rsquo;s own reading</li>
-        <li>Ride logbook — GPS trace, personal bests, GPX export</li>
-        <li>All 14 bike presets</li>
+        <li style="--k:0"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Cockpit</b><span>Speed, estimated gear and engine tiles, with six rev gauge styles.</span></li>
+        <li style="--k:1"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Horizon and compass</b><span>Bank, pitch and heading from the phone's sensors. No adapter needed.</span></li>
+        <li style="--k:2"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>RIDE mode</b><span>The screen declutters above walking pace. Five RIDE faces.</span></li>
+        <li style="--k:3"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Fault codes</b><span>Read and clear, in plain language, with freeze frame, readiness monitors and Bus Scan.</span></li>
+        <li style="--k:4"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Crash detection</b><span>Counts down, then opens a ready-to-send SOS text with your location for your emergency contacts.</span></li>
+        <li style="--k:5"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Mayday and warnings</b><span>A one-tap MAYDAY button, priority warnings and guided multimeter tests.</span></li>
+        <li style="--k:6"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Logs and navigation</b><span>Fuel, service and chain logs, a trip computer, and turn-by-turn navigation on OpenStreetMap.</span></li>
+        <li style="--k:7"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Mission Complete</b><span>After a ride, your route draws itself and the stats count up.</span></li>
       </ul>
-      <a class="btn ghost" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Download Free</a>
     </div>
-    <div class="chamfer glow plan pro reveal">
-      <h3 style="color:var(--accent)">F-43 PRO</h3>
-      <div class="price">₹299</div>
-      <div class="per">7-day free trial · one-time · no subscription · ever</div>
+    <div class="list pro cham" data-check>
+      <h3>F-43 Pro <small>One-time unlock</small></h3>
+      <p class="sum">No subscription. A 7-day trial of everything starts the first time your bike connects.</p>
       <ul>
-        <li><b>Flight Debrief</b> — shareable mission card of every ride</li>
-        <li><b>HUD &amp; TURBINE gauges</b> — fighter head-up display + jet N1 dial</li>
-        <li><b>Living Bike Synoptic</b> — piston, chain &amp; heat move with real data</li>
-        <li><b>Multi-bike garage</b> — each bike keeps its own odometer, service &amp; fuel log</li>
-        <li><b>Engine Wear Analysis</b> — 9 mechanic-grade checks</li>
-        <li><b>Voice navigation</b> in your helmet</li>
-        <li>RIDE variants: PERFORMANCE · CRUISE · CYBERPUNK</li>
-        <li>6 HYPER colourways incl. AFTERBURNER · RAPTOR · VELOCITY</li>
-        <li>Every future Pro feature included</li>
+        <li style="--k:0"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>ECU Report</b><span>The engine computer's own self-tests: misfire counters, O2 sensor response, fuelling and charging.</span></li>
+        <li style="--k:1"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Live Analysis</b><span>Long-window wear checks and a guided idle test.</span></li>
+        <li style="--k:2"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Learn your bike</b><span>Finds what your bike broadcasts on its CAN bus, one signal at a time, and shows you before it saves.</span></li>
+        <li style="--k:3"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>CAN sniffer</b><span>Every ID and byte, with mark, filter and save.</span></li>
+        <li style="--k:4"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>More instruments</b><span>Five more RIDE faces, five more rev gauges and six more HYPER colourways.</span></li>
+        <li style="--k:5"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Flight Debrief</b><span>A share card for every ride, plus Dyno and Flight Recorder.</span></li>
+        <li style="--k:6"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Voice guidance</b><span>Spoken navigation and the nav radar scope.</span></li>
+        <li style="--k:7"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Garage</b><span>More than one bike, each with its own logs.</span></li>
       </ul>
-      <a class="btn primary" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Unlock F-43 Pro</a>
     </div>
   </div>
-  <div class="safety-note reveal">// Safety features are free for every rider. Always. //</div>
+  <p class="terms">Engine data, fault codes and the ECU Report need an OBD-II adapter. What Learn your bike can find depends on what your bike broadcasts. Navigation and weather need a data connection.</p>
 </section>
 
-<!-- ═══ SPECS ═══ -->
-<section style="padding-top:0">
-  <div class="specs reveal">
-    <span class="spec"><b>ELM327</b> Bluetooth OBD-II</span>
-    <span class="spec">Android <b>8.0+</b></span>
-    <span class="spec"><b>Offline</b> — no account, no cloud</span>
-    <span class="spec"><b>OpenStreetMap</b> navigation</span>
-    <span class="spec">Day / Night <b>ambient auto-theme</b></span>
-    <span class="spec"><b>Helmet-tuned</b> audio</span>
-    <span class="spec"><b>First Flight</b> guided setup</span>
+<section class="sec quiet" aria-label="Privacy">
+  <p class="big">No account. No cloud. <span>No ads. No analytics.</span></p>
+  <p class="small">Your rides, logs and bike data stay on your phone. Read the <a href="privacy/">privacy policy</a>.</p>
+</section>
+
+<section class="end" aria-labelledby="end-h">
+  <div class="badge" id="badge"><img src="assets/badge-640.webp" alt="F-43 badge" width="640" height="640" loading="lazy"></div>
+  <h2 id="end-h">Cleared for take-off.</h2>
+  <p>F-43 Moto OS, on Google Play.</p>
+  <div class="ctas">
+    <a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
+    </a>
+    <a class="ghost" href="https://www.instagram.com/f43_moto_os/">Follow @f43_moto_os</a>
   </div>
 </section>
+</main>
 
 <footer>
-  <div>
-    <span style="font-family:var(--hud);letter-spacing:.2em;color:var(--text2)">// F-43 MOTO OS</span><br><br>
-    Built by a rider, for riders. Ride safe — the dashboard can wait.<br>
-    © 2026 Shaik Nawaz · <a href="mailto:shaiksart@gmail.com">shaiksart@gmail.com</a>
-  </div>
-  <div style="text-align:right">
-    Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors<br>
-    Sounds: freesound.org (CC0) · Textures: Freepik<br>
-    <a href="privacy/">Privacy Policy</a> · <a href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Play Store Listing</a>
-  </div>
+  <nav aria-label="Footer">
+    <a href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Google Play</a>
+    <a href="https://www.instagram.com/f43_moto_os/">Instagram</a>
+    <a href="privacy/">Privacy policy</a>
+    <a href="mailto:shaiksart@gmail.com">Contact</a>
+  </nav>
+  <p>F-43 Moto OS is made by Hangar 43. © 2026 Shaik Nawaz.</p>
+  <p>Bike presets are for riders of those models. F-43 Moto OS is not affiliated with or endorsed by any motorcycle maker. Map data © OpenStreetMap contributors.</p>
 </footer>
 
 <script>
-  // Dial ticks (0–9 ×1000 rpm over 270°)
-  (function(){
-    const g=document.querySelector('.ticks');const cx=200,cy=200,r1=168,r2=178,rn=152;
-    let out='';
-    for(let i=0;i<=9;i++){
-      const a=(135+i*30)*Math.PI/180;
-      const x1=cx+r1*Math.cos(a),y1=cy+r1*Math.sin(a);
-      const x2=cx+r2*Math.cos(a),y2=cy+r2*Math.sin(a);
-      const xn=cx+rn*Math.cos(a),yn=cy+rn*Math.sin(a);
-      out+=`<line class="tick" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
-      out+=`<text class="num" x="${xn}" y="${yn+5}" text-anchor="middle" ${i>=8?'fill="#ef4444"':''}>${i}</text>`;
-    }
-    g.innerHTML=out;
-  })();
+(() => {
+  document.documentElement.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
-  // Living ride: launch through the gears, cruise, periodic redline burst.
-  (function(){
-    const arc=document.getElementById('rpmArc');
-    const speedEl=document.getElementById('speedNum');
-    const gearEl=document.getElementById('gearNum');
-    const wrap=document.getElementById('dialWrap');
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-      arc.style.strokeDashoffset=212;speedEl.textContent='73';gearEl.textContent='5';
-      return;
-    }
-    const LEN=565,RL=9000,K=[0,6,10,14,18.5,22,25]; // km/h per 1000 rpm
-    let speed=0,gear=0,mode='launch',phase=0,last=performance.now()+600;
-    function shift(g){
-      gear=g;gearEl.textContent=g<=0?'N':g;
-      gearEl.classList.add('pop');setTimeout(()=>gearEl.classList.remove('pop'),140);
-    }
-    function frame(now){
-      const dt=Math.min(0.05,Math.max(0,(now-last)/1000));last=now;
-      if(dt>0){
-        if(mode==='launch'){
-          if(gear===0)shift(1);
-          speed+=Math.max(6,(30-0.18*speed))*dt;
-          if(gear<5&&speed>7.2*K[gear])shift(gear+1); // upshift ~7200 rpm
-          if(speed>=92){speed=92;shift(5);mode='cruise';phase=now+6000+Math.random()*3500;}
-        }else if(mode==='cruise'){
-          speed=92+Math.sin(now/900)*1.6+Math.sin(now/347)*0.7;
-          if(now>phase){mode='burst';shift(4);} // downshift, pin it
-        }else if(mode==='burst'){
-          speed+=21*dt;
-          if(speed*1000/K[gear]>=8750){mode='recover';phase=now+850;}
-        }else if(mode==='recover'){ // hold at the redline, shaking
-          speed+=2*dt;
-          if(now>=phase){shift(5);mode='settle';}
-        }else if(mode==='settle'){
-          speed-=13*dt;
-          if(speed<=93){mode='cruise';phase=now+7000+Math.random()*4000;}
-        }
-      }
-      const rpm=gear>0?Math.min(RL,speed*1000/K[gear])+Math.sin(now/70)*40:900;
-      arc.style.strokeDashoffset=LEN*(1-Math.min(1,rpm/RL));
-      speedEl.textContent=Math.max(0,Math.round(speed));
-      wrap.classList.toggle('hot',rpm>7850);
-      wrap.classList.toggle('rush',mode==='burst'||mode==='recover'||(mode==='launch'&&speed>55));
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  })();
+  // Power-on self-test on load; tap the dial to run it again.
+  const hero = document.getElementById('hero');
+  const boot = () => { hero.classList.remove('boot'); void hero.offsetWidth; hero.classList.add('boot'); };
+  // Number the ticks so they draw in around the dial.
+  document.querySelectorAll('.dial .t').forEach((t, i) => t.style.setProperty('--i', i));
+  if (!reduce.matches) boot();
+  document.getElementById('replay').addEventListener('click', boot);
 
-  // Reveal on scroll + seg bars
-  const io=new IntersectionObserver(es=>es.forEach(e=>{
-    if(!e.isIntersecting)return;
-    e.target.classList.add('in');
-    e.target.querySelectorAll?.('.seg[data-fill]').forEach(seg=>{
-      if(seg.dataset.done)return;seg.dataset.done=1;
-      const n=20,fill=+seg.dataset.fill;
-      for(let i=0;i<n;i++){const b=document.createElement('i');seg.appendChild(b);
-        if(i<fill)setTimeout(()=>b.classList.add('on'),120+i*45);}
-    });
+  // Checklist ticks once per list, and the badge glint.
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add(e.target.id === 'badge' ? 'lit' : 'done');
     io.unobserve(e.target);
-  }),{threshold:.25});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  }), { threshold: 0.35 });
+  document.querySelectorAll('[data-check], #badge').forEach((el) => io.observe(el));
+
+  // The screen tray: scroll pans the screens on wide screens.
+  const tray = document.getElementById('screens');
+  const track = document.getElementById('track');
+  const caps = [...document.querySelectorAll('.caps .cap')];
+  const ruler = document.querySelector('.ruler i');
+  const wide = matchMedia('(min-width: 900px) and (prefers-reduced-motion: no-preference)');
+  const native = CSS.supports('(animation-timeline: view()) and (animation-range: 0% 100%)');
+  const n = caps.length;
+  let ticking = false, last = -1;
+  const update = () => {
+    ticking = false;
+    if (!wide.matches) return;
+    const r = tray.getBoundingClientRect();
+    const span = r.height - innerHeight;
+    const p = Math.min(1, Math.max(0, -r.top / span));
+    if (!native) { track.style.setProperty('--p', p); ruler.style.setProperty('--p', p); }
+    const k = Math.min(n - 1, Math.round(p * (n - 1)));
+    if (k !== last) { caps.forEach((c, j) => c.classList.toggle('on', j === k)); last = k; }
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', update);
+  wide.addEventListener('change', update);
+  update();
+})();
 </script>
 </body>
 </html>
