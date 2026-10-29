@@ -83,7 +83,7 @@ a{color:inherit}
 
 /* ───────────────── hero ───────────────── */
 .hero{
-  position:relative;min-height:calc(100svh - 57px);display:grid;align-items:center;
+  position:relative;min-height:calc(90svh - 57px);display:grid;align-items:center;
   grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,5vw,72px);
   padding:clamp(28px,6vh,72px) var(--gutter) clamp(40px,8vh,96px);overflow:hidden;
   background:radial-gradient(60% 70% at 72% 45%,rgba(53,224,240,.07),transparent 70%);
@@ -405,28 +405,6 @@ a{color:inherit}
 .sbrk.a{left:var(--gutter);top:76px;border-right:0;border-bottom:0}.sbrk.b{right:var(--gutter);top:76px;border-left:0;border-bottom:0}
 .sbrk.c{left:var(--gutter);bottom:24px;border-right:0;border-top:0}.sbrk.d{right:var(--gutter);bottom:24px;border-left:0;border-top:0}
 @media (max-width:760px){.tape{display:none}}
-/* hero road and the rider */
-.hero{--road:clamp(64px,10svh,92px);padding-top:calc(var(--road) + clamp(20px,4vh,48px))}
-.road{position:absolute;left:0;right:0;top:0;height:var(--road);overflow:hidden;
-  background:linear-gradient(rgba(232,238,244,.5),rgba(232,238,244,.5)) 0 6px/100% 2px no-repeat,linear-gradient(rgba(232,238,244,.5),rgba(232,238,244,.5)) 0 calc(100% - 6px)/100% 2px no-repeat,#19212A;
-  border-bottom:1px solid var(--border)}
-.lane{position:absolute;left:0;right:-90px;top:50%;height:3px;margin-top:-1.5px;
-  background:repeating-linear-gradient(90deg,rgba(232,238,244,.55) 0 40px,transparent 40px 90px)}
-.rider{position:absolute;top:50%;left:0;width:calc(var(--road) * 2.1);aspect-ratio:1200/810;translate:calc(64vw - 50%) -50%}
-.rider img{position:relative;width:100%;height:100%;filter:drop-shadow(0 6px 6px rgba(0,0,0,.6)) drop-shadow(0 0 10px rgba(53,224,240,.25))}
-.beam{position:absolute;left:96%;top:50%;width:150%;height:110%;translate:0 -50%;
-  background:radial-gradient(60% 50% at 0 50%,rgba(255,246,216,.42),rgba(255,246,216,.12) 55%,transparent 75%);
-  clip-path:polygon(0 42%,100% 0,100% 100%,0 58%)}
-@media (max-width:899px){.rider{translate:calc(50vw - 50%) -50%}.hero{padding-top:calc(var(--road) + 24px)}}
-@media (prefers-reduced-motion:no-preference){
-  .lane{animation:lane .5s linear infinite}
-  .boot .rider{animation:ridein 1.6s 3.1s cubic-bezier(.16,1,.3,1) both}
-  .rider{animation:none}
-}
-.still .lane{animation-play-state:paused}
-@keyframes lane{to{translate:-90px 0}}
-@keyframes ridein{from{translate:-40vw -50%}}
-
 /* on your bike: the annotated motorcycle */
 .bikefig{position:relative;margin:0 auto clamp(40px,6vh,64px);max-width:980px}
 .bikefig img{width:100%;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55))}
@@ -497,7 +475,6 @@ footer p{margin:.4em 0;max-width:60em}
 <section class="hero" id="hero" aria-labelledby="h1">
   <div class="streaks" aria-hidden="true"><i style="--y:8%;--d:1.70s;--dl:2.29s;--w:22vw"></i><i style="--y:51%;--d:2.51s;--dl:2.38s;--w:22vw"></i><i style="--y:80%;--d:2.15s;--dl:0.06s;--w:21vw"></i><i style="--y:77%;--d:1.88s;--dl:2.56s;--w:21vw"></i><i style="--y:54%;--d:1.47s;--dl:2.55s;--w:11vw"></i><i style="--y:52%;--d:1.42s;--dl:0.48s;--w:23vw"></i><i style="--y:20%;--d:2.72s;--dl:1.79s;--w:24vw"></i><i style="--y:38%;--d:2.31s;--dl:1.13s;--w:9vw"></i><i style="--y:12%;--d:1.6s;--dl:0s;--w:16vw"></i><i style="--y:23%;--d:2.3s;--dl:0.7s;--w:10vw"></i><i style="--y:37%;--d:1.3s;--dl:1.1s;--w:22vw"></i><i style="--y:48%;--d:2.8s;--dl:0.2s;--w:12vw"></i><i style="--y:61%;--d:1.8s;--dl:1.5s;--w:18vw"></i><i style="--y:72%;--d:2.1s;--dl:0.4s;--w:9vw"></i><i style="--y:84%;--d:1.5s;--dl:0.9s;--w:20vw"></i><i style="--y:93%;--d:2.6s;--dl:1.9s;--w:14vw"></i><i style="--y:30%;--d:3.1s;--dl:2.4s;--w:8vw"></i><i style="--y:66%;--d:2.4s;--dl:2.9s;--w:11vw"></i></div>
   <div class="flyby" aria-hidden="true"><div class="j w1"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j15"/></svg></div><div class="j"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div><div class="j w2"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j4"/></svg></div></div>
-  <div class="road" aria-hidden="true"><span class="lane"></span><span class="rider"><span class="beam"></span><img src="assets/bike-top-480.webp" alt="" width="480" height="324"></span></div>
   <div class="scan" aria-hidden="true"></div>
   <button type="button" class="motion" id="motion" aria-pressed="false">Pause motion</button>
   <div class="copy">
