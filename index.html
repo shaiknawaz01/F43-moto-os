@@ -288,18 +288,6 @@ a{color:inherit}
 .quiet p.big span{display:block;color:var(--text-dim)}
 .quiet p.small{margin:1.2em 0 0;color:var(--text-2);max-width:40em}
 
-/* ── end card ── */
-.end{text-align:center;display:grid;justify-items:center;padding-block:clamp(80px,14vh,160px)}
-.badge{position:relative;width:min(70vw,300px);aspect-ratio:1}
-.badge img{width:100%;height:100%}
-.badge::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%) no-repeat;background-size:250% 100%;background-position:120% 0;
-  -webkit-mask:url(assets/badge-640.webp) center/contain no-repeat;mask:url(assets/badge-640.webp) center/contain no-repeat;mix-blend-mode:screen}
-@media (prefers-reduced-motion:no-preference){.badge.lit::after{animation:glint 1.3s .2s var(--out) both}}
-@keyframes glint{to{background-position:-20% 0}}
-.end h2{margin:.5em 0 .25em;font:700 clamp(1.9rem,7vw,4.6rem)/1 var(--label);text-transform:uppercase;letter-spacing:.04em;text-wrap:balance}
-.end p{margin:0 0 2em;color:var(--text-2)}
-.end .ctas{justify-content:center}
 
 .hero .copy{position:relative;z-index:1}
 
@@ -334,21 +322,90 @@ a{color:inherit}
 .count b{font:600 1.5rem/1 var(--num);font-variant-numeric:tabular-nums;color:var(--ok);letter-spacing:0;margin-right:2px}
 .list.pro .count b{color:var(--caution)}
 
-/* end card: afterburner rings and a climb-out */
-.end{position:relative;overflow:hidden}
-.end>*:not(.climb){position:relative;z-index:1}
-.badge .rings{position:absolute;inset:0;pointer-events:none}
-.badge .rings i{position:absolute;inset:10%;border-radius:50%;border:2px solid var(--caution);opacity:0;box-shadow:0 0 18px rgba(245,183,49,.45),inset 0 0 18px rgba(245,183,49,.25)}
-.climb{position:absolute;left:78%;bottom:-140px;display:flex;flex-direction:column-reverse;align-items:center;opacity:0;z-index:0}
-.climb svg{width:58px;height:58px;fill:var(--text);filter:drop-shadow(0 0 10px rgba(53,224,240,.45))}
-.climb .flame{width:9px;height:30px;margin:-8px 0 0}
-.climb::after{content:"";order:-1;width:2px;height:46vh;background:linear-gradient(rgba(232,238,244,.5),transparent)}
+
+/* hero: three-ship formation */
+.flyby .j.w1{margin-top:-9vh;margin-left:-7vw}
+.flyby .j.w2{margin-top:7vh;margin-left:-9vw}
+.flyby .j.w1 svg,.flyby .j.w2 svg{width:clamp(48px,6vw,92px)}
 @media (prefers-reduced-motion:no-preference){
-  .badge.lit .rings i{animation:ring 1.6s var(--out) 3 both;animation-delay:calc(var(--r) * .5s)}
-  .climb.go{animation:climb 2.6s .5s cubic-bezier(.5,0,.75,.5) both}
+  .boot .flyby .j.w1{animation-delay:2.92s}
+  .boot .flyby .j.w2{animation-delay:3.04s}
 }
-@keyframes ring{0%{opacity:.9;scale:.75}100%{opacity:0;scale:1.75}}
-@keyframes climb{0%{opacity:1;translate:0 0}100%{opacity:1;translate:-14vw -160vh}}
+
+/* ── the end: runway 27, take-off, and the Play button ── */
+.tko{position:relative;height:auto}
+.stage{position:relative;height:100svh;min-height:560px;overflow:hidden;background:
+  radial-gradient(70% 50% at 50% 100%,rgba(53,224,240,.06),transparent 70%)}
+.rwy{--rw:clamp(150px,26vw,300px);position:absolute;left:50%;top:-40%;height:140%;width:var(--rw);translate:-50% 0;
+  transform-origin:50% 86%;
+  -webkit-mask:linear-gradient(transparent 44%,#000 72%);mask:linear-gradient(transparent 44%,#000 72%)}
+.rwy>*{position:absolute}
+.asphalt{inset:0;background:
+  repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 2px,transparent 2px 5px),#141A21;
+  box-shadow:inset 0 0 0 1px rgba(53,66,79,.6)}
+.edge{top:0;bottom:0;width:3px;background:rgba(232,238,244,.7)}
+.edge.l{left:7%}.edge.r{right:7%}
+.lt{top:-70px;bottom:0;width:10px;background:radial-gradient(circle at 5px 5px,#FFF1C9 0 2.4px,rgba(255,241,201,.35) 3.4px,transparent 5px) 0 0/10px 70px repeat-y;translate:0 var(--lt,0px)}
+.lt.l{left:1.5%}.lt.r{right:1.5%}
+.cl{left:50%;top:-110px;bottom:0;width:5px;margin-left:-2.5px;
+  background:repeating-linear-gradient(rgba(232,238,244,.85) 0 46px,transparent 46px 110px);translate:0 var(--cl,0px)}
+.marks{left:0;right:0;bottom:0;height:72%;translate:0 var(--mk,0px)}
+.marks .keys{left:10%;right:10%;bottom:1.5%;height:7%;
+  background:repeating-linear-gradient(90deg,rgba(232,238,244,.8) 0 7%,transparent 7% 12.5%)}
+.marks b{position:absolute;left:0;right:0;bottom:10%;text-align:center;font:700 calc(var(--rw) * .34)/1 var(--label);color:rgba(232,238,244,.75);letter-spacing:.06em}
+.marks .tdz{left:22%;right:22%;height:5%;background:linear-gradient(90deg,rgba(232,238,244,.7) 0 30%,transparent 30% 70%,rgba(232,238,244,.7) 70%)}
+.marks .t1{bottom:52%}.marks .t2{bottom:70%}.marks .t3{bottom:88%}
+.rush{inset:0;opacity:var(--rush,0);background:repeating-linear-gradient(90deg,transparent 0 9%,rgba(53,224,240,.08) 9% 9.6%)}
+
+.tjet{--jw:clamp(86px,13vw,150px);position:absolute;left:0;top:0;width:var(--jw);height:calc(var(--jw) * 1.38);
+  translate:calc(50vw - var(--jw) / 2) 62svh;z-index:2;will-change:translate,scale}
+.tjet svg{position:absolute;inset:0;width:100%;height:100%}
+.tjet .shadow{fill:#000;opacity:.55;filter:blur(3px);translate:var(--sx,6px) var(--sy,9px);scale:var(--ss,1)}
+.tjet .body{position:absolute;inset:0}
+.tjet .body svg{fill:#E8EEF4;filter:drop-shadow(0 0 8px rgba(53,224,240,.35))}
+.tjet .ab{position:absolute;top:93%;width:9%;height:calc(var(--thr,.25) * 55%);transform-origin:50% 0;
+  background:linear-gradient(#FFF6D8,#FF9A3C 35%,rgba(255,45,70,.55) 70%,transparent);border-radius:40% 40% 50% 50%/20% 20% 80% 80%;
+  filter:blur(1.2px) drop-shadow(0 0 6px rgba(255,122,47,.8))}
+.tjet .ab.l{left:40.5%}.tjet .ab.r{left:50.5%}
+.call{position:absolute;left:50%;bottom:6svh;translate:-50% 0;margin:0;z-index:3;
+  font:700 clamp(.9rem,1.6vw,1.15rem)/1 var(--label);letter-spacing:.32em;text-transform:uppercase;color:var(--accent);
+  padding:.7em 1.1em .65em;border:1px solid rgba(53,224,240,.45);background:rgba(14,20,26,.75);white-space:nowrap}
+.call.amber{color:var(--caution);border-color:rgba(245,183,49,.5)}
+.tko-head{position:absolute;inset:0 0 auto 0;z-index:4;text-align:center;display:grid;justify-items:center;padding:clamp(76px,12svh,120px) var(--gutter) 0}
+.tko-head h2{margin:.45em 0 .2em;font:700 clamp(1.9rem,6vw,4.4rem)/1 var(--label);text-transform:uppercase;letter-spacing:.04em;text-wrap:balance}
+.tko-head>p:not(.tag){margin:0 0 1.6em;color:var(--text-2)}
+.tko-head .ctas{justify-content:center}
+.pad{position:relative;display:inline-block}
+.pad .play{position:relative;z-index:1;transition:box-shadow .3s,background-color .2s,translate .2s var(--out)}
+.pad.lit .play{box-shadow:0 0 0 2px rgba(53,224,240,.5),0 0 34px 6px rgba(53,224,240,.55)}
+.burst{position:absolute;inset:0;pointer-events:none}
+.burst i{position:absolute;inset:-6px;border:2px solid var(--accent);opacity:0;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+
+@media (prefers-reduced-motion:no-preference){
+  .js .tko{height:420svh}
+  .js .stage{position:sticky;top:0}
+  .tjet .ab{animation:flicker .08s steps(2) infinite}
+  .pad.lit .burst i{animation:burst 1s var(--out) both}
+  .pad.lit .burst i:nth-child(2){animation-delay:.16s}.pad.lit .burst i:nth-child(3){animation-delay:.32s}
+}
+@media (prefers-reduced-motion:reduce){
+  .tjet{translate:calc(50vw - var(--jw) / 2) 58svh}
+}
+/* HUD tapes that run with the roll */
+.tape{position:absolute;top:34%;bottom:10%;width:46px;overflow:hidden;opacity:.85;
+  -webkit-mask:linear-gradient(transparent,#000 20%,#000 80%,transparent);mask:linear-gradient(transparent,#000 20%,#000 80%,transparent)}
+.tape.l{left:calc(50% - var(--rwh, 150px) - 150px)}.tape.r{right:calc(50% - var(--rwh, 150px) - 150px)}
+.tape::before{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--border)}
+.tape.l::before{right:0}.tape.r::before{left:0}
+.tape i{position:absolute;left:0;right:0;top:-120px;bottom:0;translate:0 var(--tp,0px);
+  background-image:repeating-linear-gradient(rgba(138,153,168,.9) 0 2px,transparent 2px 120px),repeating-linear-gradient(rgba(100,114,130,.8) 0 1px,transparent 1px 24px);
+  background-size:100% 100%,55% 100%;background-repeat:no-repeat;background-position:0 0,0 0}
+.tape.r i{background-position:0 0,100% 0}
+.sbrk{position:absolute;width:30px;height:30px;border:1.5px solid rgba(53,224,240,.45);z-index:3}
+.sbrk.a{left:var(--gutter);top:76px;border-right:0;border-bottom:0}.sbrk.b{right:var(--gutter);top:76px;border-left:0;border-bottom:0}
+.sbrk.c{left:var(--gutter);bottom:24px;border-right:0;border-top:0}.sbrk.d{right:var(--gutter);bottom:24px;border-left:0;border-top:0}
+@media (max-width:760px){.tape{display:none}}
+@keyframes burst{0%{opacity:.9;scale:1}100%{opacity:0;scale:1.35 1.9}}
 
 footer{border-top:1px solid var(--border);padding:36px var(--gutter) 48px;color:var(--text-dim);font-size:.85rem}
 footer nav{display:flex;flex-wrap:wrap;gap:10px 26px;margin-bottom:18px}
@@ -358,7 +415,7 @@ footer p{margin:.4em 0;max-width:60em}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="jet" viewBox="0 0 100 100"><path d="M50 2 55 20 56.5 38 94 62 94 70 57 62 56 80 70 91 70 97 50 92 30 97 30 91 44 80 43 62 6 70 6 62 43.5 38 45 20Z"/></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="jet" viewBox="1494.7 1315.0 258.9 353.8"><path fill-rule="evenodd" d="M 1624.1 1640.0 C 1624.1 1640.0 1626.7 1638.9 1626.7 1635.6 C 1626.7 1632.4 1627.2 1621.8 1627.2 1621.8 L 1629.0 1621.9 L 1635.9 1628.0 L 1643.4 1622.5 C 1643.4 1622.5 1643.4 1638.7 1645.2 1640.7 C 1647.0 1642.6 1673.5 1664.8 1677.1 1664.8 C 1680.7 1664.8 1705.2 1657.6 1705.2 1656.0 C 1705.2 1654.5 1705.7 1634.1 1705.7 1634.1 L 1676.0 1607.8 C 1676.0 1607.8 1729.9 1590.8 1733.8 1587.6 C 1737.8 1584.3 1749.6 1575.4 1749.6 1568.9 C 1749.6 1562.4 1749.6 1553.8 1749.6 1553.8 L 1663.4 1475.1 C 1663.4 1475.1 1662.1 1437.3 1660.4 1429.6 C 1658.7 1421.9 1640.2 1407.6 1640.2 1407.6 C 1640.2 1407.6 1638.3 1359.3 1634.2 1341.4 C 1630.1 1323.6 1624.1 1319.0 1624.1 1319.0 C 1624.1 1319.0 1618.2 1323.6 1614.1 1341.4 C 1610.0 1359.3 1608.1 1407.6 1608.1 1407.6 C 1608.1 1407.6 1589.6 1421.9 1587.9 1429.6 C 1586.1 1437.3 1584.9 1475.1 1584.9 1475.1 L 1498.7 1553.8 C 1498.7 1553.8 1498.7 1562.4 1498.7 1568.9 C 1498.7 1575.4 1510.5 1584.3 1514.4 1587.6 C 1518.4 1590.8 1572.3 1607.8 1572.3 1607.8 L 1542.6 1634.1 C 1542.6 1634.1 1543.1 1654.5 1543.1 1656.0 C 1543.1 1657.6 1567.6 1664.8 1571.2 1664.8 C 1574.8 1664.8 1601.3 1642.6 1603.1 1640.7 C 1604.9 1638.7 1604.9 1622.5 1604.9 1622.5 L 1612.4 1628.0 L 1619.3 1621.9 L 1621.1 1621.8 C 1621.1 1621.8 1621.6 1632.4 1621.6 1635.6 C 1621.6 1638.9 1624.1 1640.0 1624.1 1640.0 "/></symbol><symbol id="j15" viewBox="1495.5 1867.5 257.2 373.3"><path fill-rule="evenodd" d="M 1624.1 2195.8 L 1632.9 2195.8 L 1640.1 2183.4 C 1640.1 2183.4 1647.9 2236.8 1649.1 2235.7 C 1650.3 2234.7 1703.6 2223.0 1703.8 2220.6 C 1704 2218.2 1704 2189.4 1704 2189.4 C 1704 2189.4 1663.9 2161.6 1666.1 2160.3 C 1668.3 2158.9 1748.8 2137.4 1748.8 2137.4 L 1747.9 2101.9 C 1747.9 2101.9 1672.4 2057.2 1668.8 2042.9 C 1665.2 2028.7 1664.2 1992.3 1664.0 1983.9 C 1663.9 1975.5 1658.9 1968.8 1658.9 1968.8 C 1658.9 1968.8 1649.6 1979.5 1648.4 1977.4 C 1647.2 1975.4 1642.1 1957.2 1641.6 1944.1 C 1641.0 1931.1 1639.4 1905.7 1634.5 1891.1 C 1629.6 1876.6 1624.1 1871.5 1624.1 1871.5 C 1624.1 1871.5 1618.7 1876.6 1613.8 1891.1 C 1608.9 1905.7 1607.2 1931.1 1606.7 1944.1 C 1606.2 1957.2 1601.1 1975.4 1599.9 1977.4 C 1598.7 1979.5 1589.4 1968.8 1589.4 1968.8 C 1589.4 1968.8 1584.4 1975.5 1584.3 1983.9 C 1584.1 1992.3 1583.1 2028.7 1579.5 2042.9 C 1575.9 2057.2 1500.4 2101.9 1500.4 2101.9 L 1499.5 2137.4 C 1499.5 2137.4 1580.0 2158.9 1582.2 2160.3 C 1584.4 2161.6 1544.3 2189.4 1544.3 2189.4 C 1544.3 2189.4 1544.3 2218.2 1544.5 2220.6 C 1544.6 2223.0 1598.0 2234.7 1599.2 2235.7 C 1600.4 2236.8 1608.2 2183.4 1608.2 2183.4 L 1615.4 2195.8 L 1624.1 2195.8 "/></symbol><symbol id="j4" viewBox="170.7 761.1 222.3 339.1"><path fill-rule="evenodd" d="M 281.8 1068.6 C 281.8 1068.6 283.6 1069.3 283.8 1068.0 C 284.1 1066.8 284.0 1055.4 284.0 1055.4 L 286.0 1055.4 C 286.0 1055.4 285.8 1068.5 288.0 1068.8 C 290.1 1069.2 301.0 1068.8 301.0 1068.8 L 308.7 1087.6 C 308.7 1087.6 338.4 1096.2 342.3 1095.0 C 346.3 1093.8 352.5 1083.8 349.5 1078.7 C 346.6 1073.6 324.7 1047.3 324.7 1047.3 L 324.5 1052.8 L 313.7 1040.3 L 314.9 1020.6 C 314.9 1020.6 346.4 1020.4 352.6 1023.1 C 358.8 1025.9 370.1 1028.9 372.9 1027.6 C 375.6 1026.2 385.7 1005.6 385.7 1005.6 C 385.7 1005.6 389.0 1001.2 380.4 992.6 C 371.8 984.0 314.7 924.3 314.7 924.3 C 314.7 924.3 313.4 908.5 311.2 903.1 C 309.0 897.7 307.9 894.0 308.0 892.0 C 308.1 890.0 308.0 871.3 308.0 871.3 L 306.4 868.3 L 306.1 860.8 C 306.1 860.8 296.4 861.4 295.7 861.4 C 295.1 861.5 292.8 863.9 292.8 864.2 C 292.8 864.5 293.1 841 292.8 808.6 C 292.5 776.2 281.8 765.1 281.8 765.1 C 281.8 765.1 271.1 776.2 270.8 808.6 C 270.5 841 270.8 864.5 270.8 864.2 C 270.8 863.9 268.6 861.5 267.9 861.4 C 267.3 861.4 257.5 860.8 257.5 860.8 L 257.3 868.3 L 255.6 871.3 C 255.6 871.3 255.5 890.0 255.6 892.0 C 255.7 894.0 254.7 897.7 252.5 903.1 C 250.2 908.5 248.9 924.3 248.9 924.3 C 248.9 924.3 191.8 984.0 183.2 992.6 C 174.7 1001.2 177.9 1005.6 177.9 1005.6 C 177.9 1005.6 188.0 1026.2 190.8 1027.6 C 193.5 1028.9 204.9 1025.9 211.0 1023.1 C 217.2 1020.4 248.8 1020.6 248.8 1020.6 L 250.0 1040.3 L 239.2 1052.8 L 239.0 1047.3 C 239.0 1047.3 217.0 1073.6 214.1 1078.7 C 211.2 1083.8 217.4 1093.8 221.3 1095.0 C 225.3 1096.2 254.9 1087.6 254.9 1087.6 L 262.7 1068.8 C 262.7 1068.8 273.6 1069.2 275.7 1068.8 C 277.8 1068.5 277.7 1055.4 277.7 1055.4 L 279.6 1055.4 C 279.6 1055.4 279.6 1066.8 279.8 1068.0 C 280.1 1069.3 281.8 1068.6 281.8 1068.6 "/></symbol><symbol id="j9" viewBox="636.7 1345.2 185.1 291.7"><path fill-rule="evenodd" d="M 729.3 1632.9 C 729.3 1632.9 730.3 1631.8 730.5 1630.0 C 730.8 1628.3 731.6 1626.9 732.2 1626.7 C 732.9 1626.5 736.1 1627.6 736.4 1627.1 C 736.7 1626.5 738.9 1619.6 738.9 1619.6 C 738.9 1619.6 750.6 1622.8 752.9 1623.1 C 755.2 1623.4 777.5 1624.7 779.2 1622.3 C 780.9 1619.9 781.2 1604.5 781.2 1604.5 C 781.2 1604.5 749.3 1575.1 749.3 1574.0 C 749.3 1572.9 749.3 1556.1 749.3 1556.1 L 811.3 1556.1 C 811.3 1556.1 813.1 1557.1 813.3 1558.5 C 813.4 1559.9 814.1 1560.8 815.4 1561.1 C 816.8 1561.5 817.4 1561.1 817.4 1560.3 C 817.4 1559.5 817.8 1511.8 817.4 1511.8 C 817.1 1511.8 815.8 1507.8 814.8 1511.0 C 813.9 1514.1 814.0 1531.1 814.0 1531.1 C 814.0 1531.1 811.1 1530.5 810.1 1529.6 C 809.2 1528.7 755.6 1481.0 755.6 1481.0 C 755.6 1481.0 756.2 1469.1 751.9 1459.2 C 747.5 1449.2 745.9 1441.5 745.2 1438.1 C 744.5 1434.6 739.9 1384.2 736.5 1366.7 C 733.1 1349.2 729.3 1350.9 729.3 1350.9 C 729.3 1350.9 725.4 1349.2 722.0 1366.7 C 718.6 1384.2 714.0 1434.6 713.4 1438.1 C 712.7 1441.5 711.0 1449.2 706.7 1459.2 C 702.3 1469.1 703.0 1481.0 703.0 1481.0 C 703.0 1481.0 649.3 1528.7 648.4 1529.6 C 647.4 1530.5 644.5 1531.1 644.5 1531.1 C 644.5 1531.1 644.7 1514.1 643.7 1511.0 C 642.8 1507.8 641.5 1511.8 641.1 1511.8 C 640.7 1511.8 641.1 1559.5 641.1 1560.3 C 641.1 1561.1 641.8 1561.5 643.1 1561.1 C 644.4 1560.8 645.1 1559.9 645.3 1558.5 C 645.4 1557.1 647.2 1556.1 647.2 1556.1 L 709.2 1556.1 C 709.2 1556.1 709.2 1572.9 709.2 1574.0 C 709.2 1575.1 677.3 1604.5 677.3 1604.5 C 677.3 1604.5 677.6 1619.9 679.4 1622.3 C 681.1 1624.7 703.3 1623.4 705.6 1623.1 C 708.0 1622.8 719.7 1619.6 719.7 1619.6 C 719.7 1619.6 721.8 1626.5 722.1 1627.1 C 722.4 1627.6 725.7 1626.5 726.3 1626.7 C 727.0 1626.9 727.8 1628.3 728.0 1630.0 C 728.3 1631.8 729.3 1632.9 729.3 1632.9 "/></symbol><symbol id="j13" viewBox="604.2 1879.2 250.1 348.9"><path fill-rule="evenodd" d="M 729.3 2224.1 C 729.3 2224.1 730.8 2223.3 730.8 2222.1 C 730.8 2221.0 731.0 2205.7 731.0 2205.7 C 731.0 2205.7 733.4 2204.7 733.4 2203.8 C 733.5 2202.8 733.6 2198.4 733.8 2197.8 C 734.0 2197.2 735.7 2196.2 735.7 2196.2 C 735.7 2196.2 738.6 2199.0 740.1 2199.0 C 741.5 2199.0 752.9 2198.8 753.9 2198.5 C 754.9 2198.3 756.0 2188.1 756.0 2188.1 C 756.0 2188.1 760.2 2186.9 760.7 2185.7 C 761.1 2184.6 764.2 2169.9 764.2 2169.9 L 844.1 2164.6 C 844.1 2164.6 844.7 2169.8 845.6 2171.3 C 846.5 2172.8 850.3 2175.2 850.2 2174.2 C 850.2 2173.1 850.2 2113.3 850.2 2113.3 C 850.2 2113.3 849.6 2110.2 848.6 2111.9 C 847.6 2113.5 845.8 2115.4 845.8 2118.6 C 845.7 2121.9 845.4 2129.9 845.4 2129.9 C 845.4 2129.9 773.2 2058.0 771.1 2052.0 C 768.9 2046.0 767.6 2031.0 767.6 2031.0 C 767.6 2031.0 789.6 2040.6 789.3 2039.0 C 788.9 2037.5 790.7 2027.0 785.9 2022.6 C 781.1 2018.2 756.9 1996.0 756.9 1996.0 C 756.9 1996.0 755.0 1980.7 751.3 1970.1 C 747.5 1959.5 743.9 1946.4 743.6 1943.2 C 742.9 1933.8 735.0 1885.7 729.3 1883.2 C 723.6 1885.7 715.7 1933.8 714.9 1943.2 C 714.6 1946.4 711.0 1959.5 707.3 1970.1 C 703.5 1980.7 701.6 1996.0 701.6 1996.0 C 701.6 1996.0 677.4 2018.2 672.6 2022.6 C 667.8 2027.0 669.6 2037.5 669.3 2039.0 C 668.9 2040.6 691.0 2031.0 691.0 2031.0 C 691.0 2031.0 689.6 2046.0 687.5 2052.0 C 685.3 2058.0 613.1 2129.9 613.1 2129.9 C 613.1 2129.9 612.8 2121.9 612.8 2118.6 C 612.7 2115.4 611.0 2113.5 609.9 2111.9 C 608.9 2110.2 608.3 2113.3 608.3 2113.3 C 608.3 2113.3 608.4 2173.1 608.3 2174.2 C 608.2 2175.2 612.0 2172.8 612.9 2171.3 C 613.8 2169.8 614.4 2164.6 614.4 2164.6 L 694.4 2169.9 C 694.4 2169.9 697.4 2184.6 697.9 2185.7 C 698.3 2186.9 702.5 2188.1 702.5 2188.1 C 702.5 2188.1 703.6 2198.3 704.7 2198.5 C 705.7 2198.8 717.0 2199.0 718.5 2199.0 C 719.9 2199.0 722.8 2196.2 722.8 2196.2 C 722.8 2196.2 724.5 2197.2 724.7 2197.8 C 724.9 2198.4 725.1 2202.8 725.1 2203.8 C 725.2 2204.7 727.5 2205.7 727.5 2205.7 C 727.5 2205.7 727.7 2221.0 727.7 2222.1 C 727.7 2223.3 729.3 2224.1 729.3 2224.1 "/></symbol><symbol id="j12" viewBox="168.8 1887.5 226.1 333.1"><path fill-rule="evenodd" d="M 281.8 2196.8 C 281.8 2196.8 283.3 2198.4 283.6 2200.2 C 284.0 2202.1 285.3 2204.4 288.9 2204.8 C 292.5 2205.1 295.5 2205.0 295.8 2203.9 C 296.1 2202.9 299.5 2196.6 299.5 2196.6 L 334.1 2215.3 C 334.1 2215.3 336.7 2216.5 338.4 2215.0 C 340.1 2213.4 341.4 2212.4 341.6 2207.4 C 341.7 2202.5 342.5 2197.8 340.2 2194.2 C 337.9 2190.5 315.7 2164.4 315.7 2164.4 C 315.7 2164.4 317.1 2158.8 314.9 2150.9 C 312.7 2143.0 310.1 2133.6 310.1 2133.6 L 386.9 2132.5 C 386.9 2132.5 389.2 2134.5 390.0 2134.0 C 390.9 2133.6 390.7 2132.8 390.7 2132.8 L 390.7 2081.8 L 387.7 2081.8 L 387.7 2095.6 C 387.7 2095.6 387.4 2097.8 385.3 2096.9 C 383.1 2096.1 310.6 2059.7 310.6 2059.7 C 310.6 2059.7 308.4 2058.4 308.2 2055.7 C 308.1 2053.0 307.6 2040.8 305.0 2031.0 C 302.3 2021.2 300.5 2016.5 300.5 2013.5 C 300.5 2010.5 300.4 1976.5 297.7 1969.4 C 294.9 1962.3 292.2 1960.5 292.1 1957.4 C 292.0 1954.3 291.6 1922.5 288.7 1909.5 C 285.8 1896.4 281.8 1891.5 281.8 1891.5 C 281.8 1891.5 277.9 1896.4 275.0 1909.5 C 272.1 1922.5 271.6 1954.3 271.5 1957.4 C 271.4 1960.5 268.7 1962.3 266.0 1969.4 C 263.2 1976.5 263.1 2010.5 263.1 2013.5 C 263.1 2016.5 261.3 2021.2 258.7 2031.0 C 256.0 2040.8 255.6 2053.0 255.4 2055.7 C 255.2 2058.4 253.0 2059.7 253.0 2059.7 C 253.0 2059.7 180.5 2096.1 178.4 2096.9 C 176.2 2097.8 175.9 2095.6 175.9 2095.6 L 175.9 2081.8 L 172.9 2081.8 L 172.9 2132.8 C 172.9 2132.8 172.8 2133.6 173.6 2134.0 C 174.5 2134.5 176.7 2132.5 176.7 2132.5 L 253.6 2133.6 C 253.6 2133.6 251.0 2143.0 248.8 2150.9 C 246.5 2158.8 248.0 2164.4 248.0 2164.4 C 248.0 2164.4 225.8 2190.5 223.5 2194.2 C 221.1 2197.8 221.9 2202.5 222.1 2207.4 C 222.3 2212.4 223.6 2213.4 225.3 2215.0 C 227.0 2216.5 229.6 2215.3 229.6 2215.3 L 264.2 2196.6 C 264.2 2196.6 267.5 2202.9 267.8 2203.9 C 268.2 2205.0 271.1 2205.1 274.7 2204.8 C 278.3 2204.4 279.7 2202.1 280.0 2200.2 C 280.4 2198.4 281.8 2196.8 281.8 2196.8 "/></symbol></svg>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="bar">
@@ -372,7 +429,7 @@ footer p{margin:.4em 0;max-width:60em}
 <main id="main">
 <section class="hero" id="hero" aria-labelledby="h1">
   <div class="streaks" aria-hidden="true"><i style="--y:8%;--d:1.70s;--dl:2.29s;--w:22vw"></i><i style="--y:51%;--d:2.51s;--dl:2.38s;--w:22vw"></i><i style="--y:80%;--d:2.15s;--dl:0.06s;--w:21vw"></i><i style="--y:77%;--d:1.88s;--dl:2.56s;--w:21vw"></i><i style="--y:54%;--d:1.47s;--dl:2.55s;--w:11vw"></i><i style="--y:52%;--d:1.42s;--dl:0.48s;--w:23vw"></i><i style="--y:20%;--d:2.72s;--dl:1.79s;--w:24vw"></i><i style="--y:38%;--d:2.31s;--dl:1.13s;--w:9vw"></i><i style="--y:12%;--d:1.6s;--dl:0s;--w:16vw"></i><i style="--y:23%;--d:2.3s;--dl:0.7s;--w:10vw"></i><i style="--y:37%;--d:1.3s;--dl:1.1s;--w:22vw"></i><i style="--y:48%;--d:2.8s;--dl:0.2s;--w:12vw"></i><i style="--y:61%;--d:1.8s;--dl:1.5s;--w:18vw"></i><i style="--y:72%;--d:2.1s;--dl:0.4s;--w:9vw"></i><i style="--y:84%;--d:1.5s;--dl:0.9s;--w:20vw"></i><i style="--y:93%;--d:2.6s;--dl:1.9s;--w:14vw"></i><i style="--y:30%;--d:3.1s;--dl:2.4s;--w:8vw"></i><i style="--y:66%;--d:2.4s;--dl:2.9s;--w:11vw"></i></div>
-  <div class="flyby" aria-hidden="true"><div class="j"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div></div>
+  <div class="flyby" aria-hidden="true"><div class="j w1"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j15"/></svg></div><div class="j"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div><div class="j w2"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j4"/></svg></div></div>
   <div class="scan" aria-hidden="true"></div>
   <button type="button" class="motion" id="motion" aria-pressed="false">Pause motion</button>
   <div class="copy">
@@ -452,14 +509,14 @@ footer p{margin:.4em 0;max-width:60em}
           <figcaption class="cap"><b>Fault codes</b><span class="pill free">Free</span><p>Stored engine faults in plain language, with the checks to do next. Always free.</p></figcaption></figure>
       </div>
     </div></div>
-    <div class="ruler" aria-hidden="true"><i></i><svg class="j" viewBox="0 0 100 100"><use href="#jet"/></svg></div>
+    <div class="ruler" aria-hidden="true"><i></i><svg class="j" viewBox="0 0 100 100"><use href="#j12"/></svg></div>
     <div class="ruler-n" aria-hidden="true"><span>01</span><span>07</span></div>
     <div class="caps" aria-hidden="true"><div class="cap on"><b>Cockpit</b><span class="pill free">Free</span><p>Speed, estimated gear, the rev gauge and engine tiles on one screen. Health checks, coolant and fuel left sit beside the speed.</p></div><div class="cap"><b>RIDE · Horizon</b><span class="pill pro">Pro</span><p>Above walking pace the screen declutters into a flight display: speed tape, artificial horizon and revs. Warnings still reach you, like this coolant alert.</p></div><div class="cap"><b>RIDE · Dogfight</b><span class="pill pro">Pro</span><p>Twin needle dials, speed and revs, with the engine data between them.</p></div><div class="cap"><b>RIDE · Apex</b><span class="pill pro">Pro</span><p>A swept rev band across the top and ground speed in the middle, for the open road.</p></div><div class="cap"><b>Ten RIDE faces</b><span class="pill free">5 free</span><p>Pick the instruments you ride with. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free.</p></div><div class="cap"><b>Eleven rev gauges</b><span class="pill free">6 free</span><p>ARC, BAR, NEON, LED, NEEDLE and HYPER are free. HUD, TURBINE, VECTOR, NOZZLE and RADAR come with Pro.</p></div><div class="cap"><b>Fault codes</b><span class="pill free">Free</span><p>Stored engine faults in plain language, with the checks to do next. Always free.</p></div></div>
     <p class="swipe">Swipe for more screens.</p>
   </div>
 </section>
 
-<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#jet"/></svg></div>
+<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j9"/></svg></div>
 <section class="sec" aria-labelledby="how-h">
   <div class="head">
     <p class="tag"><span class="tk">//</span>Setup</p>
@@ -523,22 +580,40 @@ footer p{margin:.4em 0;max-width:60em}
   <p class="terms">Engine data, fault codes and the ECU Report need an OBD-II adapter. What Learn your bike can find depends on what your bike broadcasts. Navigation and weather need a data connection.</p>
 </section>
 
-<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#jet"/></svg></div>
+<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j13"/></svg></div>
 <section class="sec quiet" aria-label="Privacy">
   <p class="big">No account. No cloud. <span>No ads. No analytics.</span></p>
   <p class="small">Your rides, logs and bike data stay on your phone. Read the <a href="privacy/">privacy policy</a>.</p>
 </section>
 
-<section class="end" aria-labelledby="end-h">
-  <div class="climb" aria-hidden="true"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div>
-  <div class="badge" id="badge"><span class="rings" aria-hidden="true"><i style="--r:0"></i><i style="--r:1"></i><i style="--r:2"></i></span><img src="assets/badge-640.webp" alt="F-43 badge" width="640" height="640" loading="lazy"></div>
-  <h2 id="end-h">Cleared for take-off.</h2>
-  <p>F-43 Moto OS, on Google Play.</p>
-  <div class="ctas">
-    <a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
-    </a>
-    <a class="ghost" href="https://www.instagram.com/f43_moto_os/">Follow @f43_moto_os</a>
+<section class="tko" id="takeoff" aria-labelledby="end-h">
+  <div class="stage" id="stage">
+    <div class="rwy" id="rwy" aria-hidden="true">
+      <div class="asphalt"></div>
+      <div class="lt l"></div><div class="lt r"></div>
+      <div class="edge l"></div><div class="edge r"></div>
+      <div class="cl"></div>
+      <div class="marks"><span class="tdz t3"></span><span class="tdz t2"></span><span class="tdz t1"></span><b>27</b><span class="keys"></span></div>
+      <div class="rush"></div>
+    </div>
+    <div class="tape l" aria-hidden="true"><i></i></div><div class="tape r" aria-hidden="true"><i></i></div>
+    <span class="sbrk a" aria-hidden="true"></span><span class="sbrk b" aria-hidden="true"></span><span class="sbrk c" aria-hidden="true"></span><span class="sbrk d" aria-hidden="true"></span>
+    <div class="tjet" id="tjet" aria-hidden="true">
+      <svg class="shadow" viewBox="0 0 100 100"><use href="#jet"/></svg>
+      <div class="body"><span class="ab l"></span><span class="ab r"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div>
+    </div>
+    <p class="call" aria-hidden="true"><span id="call">Line up and wait</span></p>
+    <div class="tko-head">
+      <p class="tag"><span class="tk">//</span>Runway 27</p>
+      <h2 id="end-h">Cleared for take-off.</h2>
+      <p>F-43 Moto OS, on Google Play.</p>
+      <div class="ctas">
+        <span class="pad" id="pad"><a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
+        </a><span class="burst" aria-hidden="true"><i></i><i></i><i></i></span></span>
+        <a class="ghost" href="https://www.instagram.com/f43_moto_os/">Follow @f43_moto_os</a>
+      </div>
+    </div>
   </div>
 </section>
 </main>
@@ -627,7 +702,6 @@ footer p{margin:.4em 0;max-width:60em}
     if (!e.isIntersecting) return;
     const el = e.target;
     io.unobserve(el);
-    if (el.id === 'badge') { el.classList.add('lit'); document.querySelector('.climb').classList.add('go'); return; }
     if (el.classList.contains('jetline')) { el.classList.add('go'); return; }
     el.classList.add('done');
     const b = el.querySelector('[data-count]');
@@ -636,7 +710,7 @@ footer p{margin:.4em 0;max-width:60em}
       for (let k = 0; k <= total; k++) setTimeout(() => { b.textContent = k; }, 90 * k + 120);
     }
   }), { threshold: 0.35 });
-  document.querySelectorAll('[data-check], #badge, .jetline').forEach((el) => {
+  document.querySelectorAll('[data-check], .jetline').forEach((el) => {
     if (!reduce.matches && el.matches('[data-check]')) el.querySelector('[data-count]').textContent = '0';
     io.observe(el);
   });
@@ -664,6 +738,66 @@ footer p{margin:.4em 0;max-width:60em}
   addEventListener('resize', update);
   wide.addEventListener('change', update);
   update();
+
+  // Runway 27: scroll drives the take-off roll, rotation, climb and the run-in to the Play button.
+  const tko = document.getElementById('takeoff');
+  const stage = document.getElementById('stage');
+  const rwy = document.getElementById('rwy');
+  const tj = document.getElementById('tjet');
+  const pad = document.getElementById('pad');
+  const call = document.getElementById('call');
+  const CALLS = [[0, 'Line up and wait'], [.07, 'Take-off power'], [.36, 'V1'], [.47, 'Rotate'], [.58, 'Positive climb'], [.72, 'Gear up'], [.86, 'Get it on Google Play']];
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const smooth = (x) => { x = clamp(x); return x * x * (3 - 2 * x); };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  let tTick = false, lastCall = '';
+  const fly = () => {
+    tTick = false;
+    if (reduce.matches) { pad.classList.add('lit'); return; }
+    const r = tko.getBoundingClientRect();
+    const H = stage.clientHeight, W = stage.clientWidth;
+    const p = clamp(-r.top / Math.max(1, r.height - H));
+    const P0 = .07, PR = .55;
+    const Dmax = 4.2 * H, v = 2 * Dmax / (PR - P0);
+    const roll = clamp((p - P0) / (PR - P0));
+    const D = p < PR ? Dmax * roll * roll : Dmax + v * (p - PR);
+    const speed = p < P0 ? 0 : p < PR ? roll : 1;
+    rwy.style.setProperty('--cl', (D % 110).toFixed(1) + 'px');
+    rwy.style.setProperty('--lt', (D % 70).toFixed(1) + 'px');
+    rwy.style.setProperty('--mk', Math.min(D, 3 * H).toFixed(1) + 'px');
+    rwy.style.setProperty('--rush', (speed * .9).toFixed(2));
+    stage.style.setProperty('--tp', (D * .6 % 120).toFixed(1) + 'px');
+    stage.style.setProperty('--rwh', (rwy.offsetWidth / 2).toFixed(0) + 'px');
+    const alt = smooth((p - .5) / .32);
+    rwy.style.scale = (1 - .42 * alt).toFixed(3);
+    rwy.style.opacity = (1 - .7 * alt).toFixed(3);
+
+    // jet: rolls in place, lifts toward the camera, then runs in to the Play button
+    const jw = tj.offsetWidth, jh = tj.offsetHeight;
+    const pr = pad.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    const bx = pr.left - sr.left + pr.width / 2, by = pr.top - sr.top + pr.height / 2;
+    const run = smooth((p - .66) / .27);
+    const lift = smooth((p - .48) / .2);
+    const shake = speed > .15 && p < PR + .03 ? (Math.random() - .5) * 1.6 * speed : 0;
+    const cx = lerp(W / 2, bx, run) + shake, cy = lerp(.64 * H, by, run);
+    const sc = lerp(1, 1.6, lift) * lerp(1, .42, run);
+    tj.style.translate = `${(cx - jw / 2).toFixed(1)}px ${(cy - jh / 2).toFixed(1)}px`;
+    tj.style.scale = sc.toFixed(3);
+    tj.style.opacity = (1 - smooth((p - .9) / .06)).toFixed(3);
+    tj.style.setProperty('--thr', (p < P0 ? .25 : p < .12 ? lerp(.25, 1, (p - P0) / .05) : p < .8 ? 1 : .7).toFixed(2));
+    tj.style.setProperty('--sx', (6 + 70 * alt).toFixed(1) + 'px');
+    tj.style.setProperty('--sy', (9 + 120 * alt).toFixed(1) + 'px');
+    tj.style.setProperty('--ss', (1 - .35 * alt).toFixed(3));
+    tj.querySelector('.shadow').style.opacity = (.55 * (1 - alt)).toFixed(3);
+
+    let c = CALLS[0][1];
+    for (const [at, txt] of CALLS) if (p >= at) c = txt;
+    if (c !== lastCall) { call.textContent = c; call.parentElement.classList.toggle('amber', c === 'V1' || c === 'Rotate'); lastCall = c; }
+    pad.classList.toggle('lit', p > .93);
+  };
+  addEventListener('scroll', () => { if (!tTick) { tTick = true; requestAnimationFrame(fly); } }, { passive: true });
+  addEventListener('resize', fly);
+  fly();
 })();
 </script>
 </body>
