@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>F-43 Moto OS · The fighter-jet cockpit for your motorcycle</title>
-<meta name="description" content="F-43 Moto OS turns the Android phone on your handlebar into a fighter-jet cockpit. Speed, lean and heading from the phone; engine data and fault codes with an OBD-II adapter. On Google Play.">
-<meta name="theme-color" content="#0E141A">
+<meta name="description" content="F-43 Moto OS turns the Android phone on your handlebar into a fighter-jet cockpit. Speed, lean and heading from the phone; engine data and fault codes with an OBD-II adapter. 90 India-spec bike presets. Free on Google Play.">
+<meta name="theme-color" content="#070B0F">
 <link rel="canonical" href="https://f43moto.in/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://f43moto.in/">
@@ -19,857 +19,485 @@
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/Rajdhani-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Oxanium-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"MobileApplication","name":"F-43 Moto OS","operatingSystem":"Android","applicationCategory":"TravelApplication","author":{"@type":"Organization","name":"Hangar 43"},"url":"https://f43moto.in/","installUrl":"https://play.google.com/store/apps/details?id=in.nawaz.f43moto"}
+{"@context":"https://schema.org","@type":"MobileApplication","name":"F-43 Moto OS","operatingSystem":"Android","applicationCategory":"TravelApplication","author":{"@type":"Organization","name":"Hangar 43"},"url":"https://f43moto.in/","installUrl":"https://play.google.com/store/apps/details?id=in.nawaz.f43moto","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}
 </script>
-<style>
-@font-face{font-family:"Rajdhani";src:url(assets/fonts/Rajdhani-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"Rajdhani";src:url(assets/fonts/Rajdhani-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"Oxanium";src:url(assets/fonts/Oxanium-Variable.woff2) format("woff2");font-weight:200 800;font-display:swap}
-@font-face{font-family:"Inter";src:url(assets/fonts/Inter-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
-
-:root{
-  --bg:#0E141A; --surface:#171F27; --surface-alt:#222C36; --border:#35424F;
-  --text:#E8EEF4; --text-2:#8A99A8; --text-dim:#647282;
-  --accent:#35E0F0; --ok:#22D27A; --caution:#F5B731; --warn:#FF7A2F; --critical:#FF2D46; --info:#4FA8FF;
-  --label:"Rajdhani",system-ui,sans-serif; --num:"Oxanium","Rajdhani",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
-  --out:cubic-bezier(.16,1,.3,1);
-  --gutter:clamp(16px,5vw,64px);
-  color-scheme:dark;
-}
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.6 var(--body);
-  overflow-x:clip;text-rendering:geometricPrecision;
-  background-image:
-    linear-gradient(rgba(232,238,244,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(232,238,244,.04) 1px,transparent 1px);
-  background-size:24px 24px;
-}
-img{display:block;max-width:100%;height:auto}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:#04161A;padding:8px 14px;z-index:99}
-.skip:focus{left:8px}
-
-/* chamfer: the app's cut corners, top-left and bottom-right */
-.cham{clip-path:polygon(var(--c,14px) 0,100% 0,100% calc(100% - var(--c,14px)),calc(100% - var(--c,14px)) 100%,0 100%,0 var(--c,14px))}
-.tag{font:600 .78rem/1 var(--label);letter-spacing:.22em;text-transform:uppercase;color:var(--text-2)}
-.tag .tk{color:var(--accent);letter-spacing:.05em;margin-right:.5em;font-style:italic}
-
-/* buttons */
-.play{
-  --c:12px;display:inline-flex;align-items:center;gap:.7em;text-decoration:none;
-  background:var(--accent);color:#04161A;font:700 1.05rem/1 var(--label);letter-spacing:.14em;text-transform:uppercase;
-  padding:1.05em 1.6em 1em;transition:background-color .2s,translate .2s var(--out);
-}
-.play svg{width:1.05em;height:1.05em;flex:none}
-.play:hover{background:#7DEBF6;translate:0 -2px}
-.ghost{font:600 1rem/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:1.05em .2em;border-bottom:1px solid var(--border)}
-.ghost:hover{border-color:var(--accent)}
-
-/* top bar */
-.bar{
-  position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:10px var(--gutter);background:rgba(14,20,26,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(53,66,79,.6);
-}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 1.05rem/1 var(--label);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
-.brand img{width:36px;height:36px}
-.bar .play{font-size:.82rem;padding:.85em 1.1em .8em;--c:9px}
-@media (max-width:420px){.bar .play span.long{display:none}}
-
-/* ───────────────── hero ───────────────── */
-.hero{
-  position:relative;min-height:calc(90svh - 57px);display:grid;align-items:center;
-  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,5vw,72px);
-  padding:clamp(28px,6vh,72px) var(--gutter) clamp(40px,8vh,96px);overflow:hidden;
-  background:radial-gradient(60% 70% at 72% 45%,rgba(53,224,240,.07),transparent 70%);
-}
-.hero h1{
-  margin:.35em 0 .45em;font:700 clamp(2.6rem,6.4vw,5.6rem)/.92 var(--label);text-transform:uppercase;letter-spacing:.01em;
-  max-width:13ch;text-wrap:balance;
-}
-.nw{white-space:nowrap}
-.hero .lede{max-width:34em;color:var(--text-2);font-size:clamp(1rem,1.2vw,1.12rem);margin:0 0 2em}
-.hero .lede strong{color:var(--text);font-weight:500}
-.ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px}
-.fine{margin:1.6em 0 0;font-size:.85rem;color:var(--text-dim)}
-
-/* the instrument: twin VECTOR-style rev ladders around a jet turbine */
-.inst{position:relative;justify-self:center;width:min(100%,520px);display:grid;gap:22px;z-index:1}
-.inst button{all:unset;cursor:pointer;display:block;position:relative}
-.inst button:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
-.vec{width:100%;height:auto;overflow:visible}
-.vec .seg{fill:var(--surface-alt);stroke:rgba(53,66,79,.7);stroke-width:.8}
-.vec .seg.rl{fill:#3A1A20}
-.vec .seg.on{fill:var(--accent);filter:drop-shadow(0 0 3px rgba(53,224,240,.75))}
-.vec .seg.rl.on{fill:var(--critical);filter:drop-shadow(0 0 5px rgba(255,45,70,.85))}
-.vec .cowl{fill:url(#cowl);stroke:var(--border);stroke-width:1.5}
-.vec .lip{fill:none;stroke:#2A3540;stroke-width:6}
-.vec .halo{fill:none;stroke:var(--accent);stroke-width:1.5;opacity:.85;filter:drop-shadow(0 0 5px rgba(53,224,240,.6))}
-.vec .ab{fill:none;stroke:var(--warn);stroke-width:4;opacity:0;filter:drop-shadow(0 0 10px rgba(255,122,47,.95))}
-.vec .ab.on{opacity:1}
-.vec .blades path{fill:url(#blade);stroke:rgba(0,0,0,.35);stroke-width:.6}
-.vec .blur{fill:url(#blurdisc);opacity:0}
-.vec .cone{fill:url(#cone)}
-.vec .swirl{fill:none;stroke:rgba(232,238,244,.55);stroke-width:2.2;stroke-linecap:round}
-.vec .mark{fill:var(--text);filter:drop-shadow(0 0 6px rgba(53,224,240,.45))}
-.vec text{font-family:var(--label);font-weight:700;text-anchor:middle;letter-spacing:.24em;text-transform:uppercase}
-.vec .st{font-size:15px;fill:var(--text-2)}
-.vec .st.go{fill:var(--accent);font-size:19px}
-.vec .st.test{opacity:0}
-.vec.testing .st.test{opacity:1}.vec.testing .st.go,.vec.testing .halo{opacity:0}
-.vec .sub{font-size:10px;fill:var(--text-dim);letter-spacing:.3em}
-
-.lamps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:0;padding:0;list-style:none}
-.lamps li{display:grid;justify-items:center;gap:7px}
-.lamps i{
-  width:clamp(16px,3.4vw,22px);aspect-ratio:1;border-radius:50%;background:var(--surface-alt);
-  box-shadow:inset 0 2px 3px rgba(255,255,255,.06),inset 0 -2px 4px rgba(0,0,0,.5);
-}
-.lamps span{font:600 .62rem/1 var(--label);letter-spacing:.16em;color:var(--text-dim);text-transform:uppercase}
-.lamps [data-c=amber]{--lamp:var(--caution)} .lamps [data-c=red]{--lamp:var(--critical)} .lamps [data-c=blue]{--lamp:var(--info)}
-
-.brk{position:absolute;width:26px;height:26px;border:1.5px solid rgba(53,224,240,.55)}
-.brk.a{left:-6px;top:-6px;border-right:0;border-bottom:0}
-.brk.b{right:-6px;top:-6px;border-left:0;border-bottom:0}
-.brk.c{left:-6px;bottom:-6px;border-right:0;border-top:0}
-.brk.d{right:-6px;bottom:-6px;border-left:0;border-top:0}
-.scan{position:absolute;inset:0;pointer-events:none;opacity:0}
-.scan::after{content:"";position:absolute;left:0;right:0;top:0;height:40px;
-  background:linear-gradient(rgba(53,224,240,0),rgba(53,224,240,.08));border-bottom:1px solid rgba(53,224,240,.3)}
-
-/* speed streaks and the fly-by behind the hero */
-.streaks,.flyby{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.streaks{display:none}
-.streaks i{position:absolute;left:0;top:var(--y);height:1px;width:var(--w,18vw);
-  background:linear-gradient(90deg,transparent,rgba(53,224,240,.7));translate:-30vw 0}
-.flyby .j{position:absolute;left:0;top:0;display:flex;align-items:center;opacity:0;rotate:-14deg}
-.flyby .j::before{content:"";width:42vw;height:2px;background:linear-gradient(90deg,transparent,rgba(232,238,244,.55));margin-right:-4px}
-.flame{width:30px;height:9px;margin-right:-8px;border-radius:50%;
-  background:radial-gradient(closest-side,#FFF6D8,#FF7A2F 55%,transparent);filter:blur(1px)}
-.flyby svg{width:clamp(64px,8vw,120px);height:auto;rotate:90deg;fill:var(--text);filter:drop-shadow(0 0 10px rgba(53,224,240,.45))}
-
-@media (prefers-reduced-motion:no-preference){
-  .streaks{display:block}
-  .streaks i{animation:streak var(--d,1.4s) linear infinite;animation-delay:var(--dl,0s)}
-  .boot .lamps i{animation:lamp 2.15s both;animation-delay:calc(.62s + var(--n) * 66ms)}
-  .boot .scan{animation:scan 1.1s 2.95s var(--out) both}
-  .boot .flyby .j{animation:flyby 1.8s 2.8s cubic-bezier(.45,0,.75,.6) both}
-  .flame{animation:flicker .09s steps(2) infinite}
-  .boot .lede,.boot .ctas,.boot .fine{animation:rise .6s var(--out) both}
-  .boot .ctas{animation-delay:.08s}.boot .fine{animation-delay:.16s}
-}
-.still .streaks i,.still .flame,.still .rings i{animation-play-state:paused}
-@keyframes streak{to{translate:130vw 0}}
-@keyframes flyby{0%{opacity:0;translate:-90vw 86vh}4%{opacity:1}100%{opacity:1;translate:105vw 6vh}}
-@keyframes flicker{50%{scale:1.25 .8;opacity:.75}}
-@keyframes lamp{
-  0%{background:var(--surface-alt)}
-  3%,82%{background:var(--lamp);box-shadow:0 0 14px 1px color-mix(in srgb,var(--lamp) 70%,transparent),inset 0 2px 3px rgba(255,255,255,.35)}
-  86%,100%{background:var(--surface-alt)}
-}
-@keyframes scan{0%{opacity:1;translate:0 -40px}100%{opacity:0;translate:0 100%}}
-@keyframes rise{from{opacity:0;translate:0 18px}}
-
-.motion{position:absolute;right:var(--gutter);bottom:18px;z-index:2;display:none;align-items:center;gap:8px;
-  background:none;border:1px solid var(--border);color:var(--text-2);font:600 .72rem/1 var(--label);letter-spacing:.18em;text-transform:uppercase;padding:.7em .9em;cursor:pointer}
-.motion:hover{color:var(--text);border-color:var(--text-dim)}
-@media (prefers-reduced-motion:no-preference){.js .motion{display:inline-flex}}
-
-@media (max-width:899px){
-  .hero{grid-template-columns:1fr;min-height:0;padding-top:28px}
-  .inst{order:-1;width:min(74vw,300px)}
-  .lamps span{font-size:.5rem;letter-spacing:.1em}
-  .hero h1{max-width:13ch}
-}
-
-/* ───────────────── sections ───────────────── */
-.sec{padding:clamp(72px,12vh,140px) var(--gutter)}
-.head{max-width:44rem;margin:0 0 clamp(28px,5vh,48px)}
-.head h2{margin:.5em 0 .35em;font:700 clamp(2rem,4.4vw,3.4rem)/1 var(--label);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
-.head p{margin:0;color:var(--text-2);max-width:38em}
-
-/* ── the tray: real screens, panned by scroll on wide screens ── */
-.tray{--n:7;position:relative}
-.tray .sticky{padding:clamp(72px,12vh,120px) var(--gutter) 48px}
-.frame{
-  --c:18px;position:relative;width:min(100%,1180px);margin:0 auto;background:var(--border);padding:1.5px;
-}
-.frame-in{--c:17px;background:#070A0D;overflow:hidden}
-.track{display:flex}
-.slide{flex:0 0 100%;margin:0}
-.slide img{width:100%;aspect-ratio:1920/860;object-fit:cover;background:#070A0D}
-.caps{position:relative;width:min(100%,1180px);margin:18px auto 0;min-height:5.2em}
-.cap{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:baseline}
-.cap b{font:700 1.25rem/1.1 var(--label);letter-spacing:.12em;text-transform:uppercase}
-.cap .pill{justify-self:start;text-transform:uppercase;font:700 .7rem/1 var(--label);letter-spacing:.2em;padding:.45em .7em .4em;border:1px solid var(--border);color:var(--text-2)}
-.cap .pill.pro{border-color:rgba(245,183,49,.55);color:var(--caution)}
-.cap .pill.free{border-color:rgba(34,210,122,.5);color:var(--ok)}
-.cap p{grid-column:1/-1;margin:0;color:var(--text-2);max-width:46em}
-.ruler{position:relative;width:min(100%,1180px);margin:22px auto 0;height:14px;
-  background:repeating-linear-gradient(90deg,var(--text-dim) 0 1px,transparent 1px calc(100% / 42));opacity:.9}
-.ruler::before{content:"";position:absolute;inset:auto 0 0 0;height:1px;background:var(--border)}
-.ruler i{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform-origin:left;scale:var(--p,0) 1;box-shadow:0 0 6px rgba(53,224,240,.6)}
-.ruler-n{width:min(100%,1180px);margin:8px auto 0;display:flex;justify-content:space-between;font:500 .8rem/1 var(--num);color:var(--text-dim);font-variant-numeric:tabular-nums}
-
-/* small screens and reduced motion: a swipeable strip, each screen with its caption */
-.tray .track{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:0}
-.tray .track::-webkit-scrollbar{display:none}
-.slide{scroll-snap-align:center}
-.slide figcaption{padding:16px 2px 0}
-.caps,.ruler,.ruler-n{display:none}
-.swipe{width:min(100%,1180px);margin:14px auto 0;color:var(--text-dim);font-size:.85rem}
-
-@media (min-width:900px) and (prefers-reduced-motion:no-preference){
-  .tray{height:calc(var(--n) * 62vh + 100vh)}
-  .tray .sticky{position:sticky;top:0;height:100vh;padding-top:84px;padding-bottom:24px;display:flex;flex-direction:column;justify-content:center}
-  .tray .head{margin-bottom:22px}
-  .tray .frame,.caps,.ruler,.ruler-n{width:min(100%,calc((100vh - 480px) * 2.233),1180px)}
-  .tray .head h2{font-size:clamp(2rem,3.4vw,2.8rem)}
-  .tray .track{overflow:visible;scroll-snap-type:none;width:calc(var(--n) * 100%);translate:calc(var(--p,0) * -100% * (var(--n) - 1) / var(--n)) 0}
-  .slide{flex-basis:calc(100% / var(--n))}
-  .slide figcaption{display:none}
-  .caps,.ruler,.ruler-n{display:block}.ruler-n{display:flex}
-  .swipe{display:none}
-  .cap{position:absolute;inset:0 0 auto 0;opacity:0;transition:opacity .25s,translate .35s var(--out);translate:0 6px}
-  .cap.on{opacity:1;translate:0 0}
-}
-@supports ((animation-timeline:view()) and (animation-range:0% 100%)){
-  @media (min-width:900px) and (prefers-reduced-motion:no-preference){
-    .tray{view-timeline:--tray block}
-    .tray .track{animation:pan linear both;animation-timeline:--tray;animation-range:contain 0% contain 100%}
-    .ruler i{animation:fill linear both;animation-timeline:--tray;animation-range:contain 0% contain 100%}
-  }
-}
-@keyframes pan{from{translate:0 0}to{translate:calc(-100% * (var(--n) - 1) / var(--n)) 0}}
-@keyframes fill{from{scale:0 1}to{scale:1 1}}
-
-/* ── steps ── */
-.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px);margin:0;padding:0;list-style:none;counter-reset:s}
-.steps li{position:relative;padding-top:22px;border-top:1px solid var(--border)}
-.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);position:absolute;top:-1px;left:0;
-  font:600 .9rem/1 var(--num);color:var(--accent);background:var(--bg);padding:0 10px 0 0;translate:0 -50%}
-.steps h3{margin:.2em 0 .45em;font:700 1.55rem/1.05 var(--label);text-transform:uppercase;letter-spacing:.04em}
-.steps p{margin:0;color:var(--text-2)}
-.steps .note{margin-top:.9em;color:var(--text);font-size:.92rem}
-@media (max-width:760px){.steps{grid-template-columns:1fr}}
-
-/* ── preflight checklist ── */
-.check{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,36px)}
-.list{--c:16px;background:var(--surface);padding:clamp(20px,3vw,34px)}
-.list.pro{background:linear-gradient(180deg,rgba(245,183,49,.06),transparent 40%),var(--surface)}
-.list h3{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 6px;font:700 1.6rem/1 var(--label);text-transform:uppercase;letter-spacing:.06em}
-.list h3 small{font:600 .78rem/1 var(--label);letter-spacing:.2em;color:var(--text-2)}
-.list .sum{margin:0 0 14px;color:var(--text-2);font-size:.95rem}
-.list ul{list-style:none;margin:0;padding:0}
-.list li{display:grid;grid-template-columns:22px 1fr;gap:4px 14px;padding:13px 0;border-top:1px dashed rgba(53,66,79,.8)}
-.list li b{font:700 1.02rem/1.25 var(--label);letter-spacing:.08em;text-transform:uppercase}
-.list li span{grid-column:2;color:var(--text-2);font-size:.92rem;line-height:1.5}
-.box{grid-row:1/span 2;width:18px;height:18px;margin-top:1px;border:1.5px solid var(--border);display:grid;place-items:center}
-.box svg{width:12px;height:12px;stroke:var(--ok);stroke-width:2.6;fill:none;stroke-dasharray:20;stroke-dashoffset:0}
-.list.pro .box svg{stroke:var(--caution)}
-@media (prefers-reduced-motion:no-preference){
-  .js .list .box svg{stroke-dashoffset:20;transition:stroke-dashoffset .28s var(--out);transition-delay:calc(var(--k) * 90ms)}
-  .js .list .box{transition:border-color .2s;transition-delay:calc(var(--k) * 90ms)}
-  .js .list.done .box svg{stroke-dashoffset:0}
-}
-.list.done .box{border-color:rgba(34,210,122,.55)}
-.list.pro.done .box{border-color:rgba(245,183,49,.55)}
-.terms{margin:22px 0 0;color:var(--text-2);font-size:.92rem;max-width:52em}
-@media (max-width:860px){.check{grid-template-columns:1fr}}
-
-/* ── privacy band ── */
-.quiet{border-block:1px solid var(--border);background:var(--surface);text-align:left}
-.quiet p.big{margin:0;font:700 clamp(1.9rem,5vw,4rem)/1 var(--label);text-transform:uppercase;letter-spacing:.02em;max-width:18ch}
-.quiet p.big span{display:block;color:var(--text-dim)}
-.quiet p.small{margin:1.2em 0 0;color:var(--text-2);max-width:40em}
-
-
-.hero .copy{position:relative;z-index:1}
-
-/* jet crossings between sections */
-.jetline{position:relative;height:64px;margin:0 var(--gutter);overflow:hidden;container-type:inline-size}
-.jetline::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--border)}
-.jetline .trail{position:absolute;left:0;top:calc(50% - 1px);height:2px;width:100%;background:linear-gradient(90deg,transparent,rgba(53,224,240,.8));transform-origin:left;scale:1 1;opacity:.35}
-.jetline .j{position:absolute;top:50%;left:0;width:40px;height:40px;margin-top:-20px;rotate:90deg;fill:var(--text);translate:calc(100cqw - 40px) 0;filter:drop-shadow(0 0 8px rgba(53,224,240,.5))}
-@media (prefers-reduced-motion:no-preference){
-  .js .jetline .j{translate:-60px 0}
-  .js .jetline .trail{scale:0 1;opacity:.9}
-  .jetline.go .j{animation:cross 1.5s cubic-bezier(.5,0,.5,1) both}
-  .jetline.go .trail{animation:trail 1.5s cubic-bezier(.5,0,.5,1) both,trailfade 1s 1.5s both}
-}
-@keyframes cross{to{translate:calc(100cqw + 60px) 0}}
-@keyframes trail{to{scale:1 1}}
-@keyframes trailfade{to{opacity:.35}}
-
-/* the jet that rides the screen ruler */
-.ruler{container-type:inline-size;margin-top:40px}
-.ruler .j{position:absolute;left:0;bottom:7px;width:26px;height:26px;rotate:90deg;fill:var(--accent);
-  translate:calc(var(--p,0) * (100cqw - 26px)) 0;filter:drop-shadow(0 0 6px rgba(53,224,240,.7))}
-@supports ((animation-timeline:view()) and (animation-range:0% 100%)){
-  @media (min-width:900px) and (prefers-reduced-motion:no-preference){
-    .ruler .j{animation:jetrun linear both;animation-timeline:--tray;animation-range:contain 0% contain 100%}
-  }
-}
-@keyframes jetrun{from{translate:0 0}to{translate:calc(100cqw - 26px) 0}}
-
-/* checklist counters */
-.count{margin:0 0 10px;font:600 .9rem/1 var(--label);letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
-.count b{font:600 1.5rem/1 var(--num);font-variant-numeric:tabular-nums;color:var(--ok);letter-spacing:0;margin-right:2px}
-.list.pro .count b{color:var(--caution)}
-
-
-/* hero: three-ship formation */
-.flyby .j.w1{margin-top:-9vh;margin-left:-7vw}
-.flyby .j.w2{margin-top:7vh;margin-left:-9vw}
-.flyby .j.w1 svg,.flyby .j.w2 svg{width:clamp(48px,6vw,92px)}
-@media (prefers-reduced-motion:no-preference){
-  .boot .flyby .j.w1{animation-delay:2.92s}
-  .boot .flyby .j.w2{animation-delay:3.04s}
-}
-
-/* ── the end: runway 27, take-off, and the Play button ── */
-.tko{position:relative;height:auto}
-.stage{position:relative;height:100svh;min-height:560px;overflow:hidden;background:
-  radial-gradient(70% 50% at 50% 100%,rgba(53,224,240,.06),transparent 70%)}
-.rwy{--rw:clamp(150px,26vw,300px);position:absolute;left:50%;top:-40%;height:140%;width:var(--rw);translate:-50% 0;
-  transform-origin:50% 86%;
-  -webkit-mask:linear-gradient(transparent 44%,#000 72%);mask:linear-gradient(transparent 44%,#000 72%)}
-.rwy>*{position:absolute}
-.asphalt{inset:0;background:
-  repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 2px,transparent 2px 5px),#141A21;
-  box-shadow:inset 0 0 0 1px rgba(53,66,79,.6)}
-.edge{top:0;bottom:0;width:3px;background:rgba(232,238,244,.7)}
-.edge.l{left:7%}.edge.r{right:7%}
-.lt{top:-70px;bottom:0;width:10px;background:radial-gradient(circle at 5px 5px,#FFF1C9 0 2.4px,rgba(255,241,201,.35) 3.4px,transparent 5px) 0 0/10px 70px repeat-y;translate:0 var(--lt,0px)}
-.lt.l{left:1.5%}.lt.r{right:1.5%}
-.cl{left:50%;top:-110px;bottom:0;width:5px;margin-left:-2.5px;
-  background:repeating-linear-gradient(rgba(232,238,244,.85) 0 46px,transparent 46px 110px);translate:0 var(--cl,0px)}
-.marks{left:0;right:0;bottom:0;height:72%;translate:0 var(--mk,0px)}
-.marks .keys{left:10%;right:10%;bottom:1.5%;height:7%;
-  background:repeating-linear-gradient(90deg,rgba(232,238,244,.8) 0 7%,transparent 7% 12.5%)}
-.marks b{position:absolute;left:0;right:0;bottom:10%;text-align:center;font:700 calc(var(--rw) * .34)/1 var(--label);color:rgba(232,238,244,.75);letter-spacing:.06em}
-.marks .tdz{left:22%;right:22%;height:5%;background:linear-gradient(90deg,rgba(232,238,244,.7) 0 30%,transparent 30% 70%,rgba(232,238,244,.7) 70%)}
-.marks .t1{bottom:52%}.marks .t2{bottom:70%}.marks .t3{bottom:88%}
-.rush{inset:0;opacity:var(--rush,0);background:repeating-linear-gradient(90deg,transparent 0 9%,rgba(53,224,240,.08) 9% 9.6%)}
-
-.tjet{--jw:clamp(86px,13vw,150px);position:absolute;left:0;top:0;width:var(--jw);height:calc(var(--jw) * 1.38);
-  translate:calc(50vw - var(--jw) / 2) 62svh;z-index:2;will-change:translate,scale}
-.tjet svg{position:absolute;inset:0;width:100%;height:100%}
-.tjet .shadow{fill:#000;opacity:.55;filter:blur(3px);translate:var(--sx,6px) var(--sy,9px);scale:var(--ss,1)}
-.tjet .body{position:absolute;inset:0}
-.tjet .body svg{fill:#E8EEF4;filter:drop-shadow(0 0 8px rgba(53,224,240,.35))}
-.tjet .ab{position:absolute;top:93%;width:9%;height:calc(var(--thr,.25) * 55%);transform-origin:50% 0;
-  background:linear-gradient(#FFF6D8,#FF9A3C 35%,rgba(255,45,70,.55) 70%,transparent);border-radius:40% 40% 50% 50%/20% 20% 80% 80%;
-  filter:blur(1.2px) drop-shadow(0 0 6px rgba(255,122,47,.8))}
-.tjet .ab.l{left:40.5%}.tjet .ab.r{left:50.5%}
-.call{position:absolute;left:50%;bottom:6svh;translate:-50% 0;margin:0;z-index:3;
-  font:700 clamp(.9rem,1.6vw,1.15rem)/1 var(--label);letter-spacing:.32em;text-transform:uppercase;color:var(--accent);
-  padding:.7em 1.1em .65em;border:1px solid rgba(53,224,240,.45);background:rgba(14,20,26,.75);white-space:nowrap}
-.call.amber{color:var(--caution);border-color:rgba(245,183,49,.5)}
-.tko-head{position:absolute;inset:0 0 auto 0;z-index:4;text-align:center;display:grid;justify-items:center;padding:clamp(76px,12svh,120px) var(--gutter) 0}
-.tko-head h2{margin:.45em 0 .2em;font:700 clamp(1.9rem,6vw,4.4rem)/1 var(--label);text-transform:uppercase;letter-spacing:.04em;text-wrap:balance}
-.tko-head>p:not(.tag){margin:0 0 1.6em;color:var(--text-2)}
-.tko-head .ctas{justify-content:center}
-.pad{position:relative;display:inline-block}
-.pad .play{position:relative;z-index:1;transition:box-shadow .3s,background-color .2s,translate .2s var(--out)}
-.pad.lit .play{box-shadow:0 0 0 2px rgba(53,224,240,.5),0 0 34px 6px rgba(53,224,240,.55)}
-.burst{position:absolute;inset:0;pointer-events:none}
-.burst i{position:absolute;inset:-6px;border:2px solid var(--accent);opacity:0;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
-
-@media (prefers-reduced-motion:no-preference){
-  .js .tko{height:420svh}
-  .js .stage{position:sticky;top:0}
-  .tjet .ab{animation:flicker .08s steps(2) infinite}
-  .pad.lit .burst i{animation:burst 1s var(--out) both}
-  .pad.lit .burst i:nth-child(2){animation-delay:.16s}.pad.lit .burst i:nth-child(3){animation-delay:.32s}
-}
-@media (prefers-reduced-motion:reduce){
-  .tjet{translate:calc(50vw - var(--jw) / 2) 58svh}
-}
-/* HUD tapes that run with the roll */
-.tape{position:absolute;top:34%;bottom:10%;width:46px;overflow:hidden;opacity:.85;
-  -webkit-mask:linear-gradient(transparent,#000 20%,#000 80%,transparent);mask:linear-gradient(transparent,#000 20%,#000 80%,transparent)}
-.tape.l{left:calc(50% - var(--rwh, 150px) - 150px)}.tape.r{right:calc(50% - var(--rwh, 150px) - 150px)}
-.tape::before{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--border)}
-.tape.l::before{right:0}.tape.r::before{left:0}
-.tape i{position:absolute;left:0;right:0;top:-120px;bottom:0;translate:0 var(--tp,0px);
-  background-image:repeating-linear-gradient(rgba(138,153,168,.9) 0 2px,transparent 2px 120px),repeating-linear-gradient(rgba(100,114,130,.8) 0 1px,transparent 1px 24px);
-  background-size:100% 100%,55% 100%;background-repeat:no-repeat;background-position:0 0,0 0}
-.tape.r i{background-position:0 0,100% 0}
-.sbrk{position:absolute;width:30px;height:30px;border:1.5px solid rgba(53,224,240,.45);z-index:3}
-.sbrk.a{left:var(--gutter);top:76px;border-right:0;border-bottom:0}.sbrk.b{right:var(--gutter);top:76px;border-left:0;border-bottom:0}
-.sbrk.c{left:var(--gutter);bottom:24px;border-right:0;border-top:0}.sbrk.d{right:var(--gutter);bottom:24px;border-left:0;border-top:0}
-@media (max-width:760px){.tape{display:none}}
-/* on your bike: the annotated motorcycle */
-.bikefig{position:relative;margin:0 auto clamp(40px,6vh,64px);max-width:980px}
-.bikefig img{width:100%;filter:drop-shadow(0 18px 24px rgba(0,0,0,.55))}
-.bikefig .lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.bikefig .lines path{fill:none;vector-effect:non-scaling-stroke}
-.bikefig .bt{stroke:var(--info);stroke-width:2;stroke-dasharray:6 7;filter:drop-shadow(0 0 4px rgba(79,168,255,.8))}
-.bikefig .ld{stroke:rgba(232,238,244,.6);stroke-width:1}
-.dev{position:absolute;translate:-50% -50%;border-radius:3px}
-.dev.phone{left:73.5%;top:50%;width:4.2%;height:15%;background:#0A0F14;border:2px solid var(--accent);
-  box-shadow:0 0 14px 2px rgba(53,224,240,.55),inset 0 0 8px rgba(53,224,240,.45)}
-.dev.obd{left:38%;top:50%;width:3.6%;height:5.5%;background:#13324D;border:2px solid var(--info);box-shadow:0 0 12px rgba(79,168,255,.7)}
-.chip{position:absolute;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
-  font:600 clamp(.66rem,1.3vw,.9rem)/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--text);
-  background:rgba(14,20,26,.88);border:1px solid var(--border);padding:.55em .8em .5em}
-.chip b{font:600 1em/1 var(--num);color:#04161A;background:var(--accent);padding:.2em .45em}
-.chip.c2 b{background:var(--info)}
-.chip.c1{left:80%;top:80%;translate:-30% 0}
-.chip.c2{left:26%;top:17%;translate:-50% -100%}
-@media (max-width:640px){.chip.c1{left:auto;right:0;translate:0 0;top:86%}.chip.c2{left:0;translate:0 -100%;top:12%}}
-@media (prefers-reduced-motion:no-preference){
-  .js .bikefig .bt{stroke-dashoffset:0;animation:bt 1s linear infinite}
-  .js .bikefig .ld,.js .bikefig .chip{opacity:0;transition:opacity .5s var(--out)}
-  .js .bikefig.done .ld,.js .bikefig.done .chip{opacity:1}
-  .js .bikefig.done .chip.c2{transition-delay:.25s}
-  .dev{animation:devpulse 2.2s ease-in-out infinite}
-  .dev.obd{animation-delay:.4s}
-}
-.still .bikefig .bt,.still .dev{animation-play-state:paused}
-@keyframes bt{to{stroke-dashoffset:-26}}
-@keyframes devpulse{50%{box-shadow:0 0 22px 6px rgba(53,224,240,.75),inset 0 0 8px rgba(53,224,240,.45)}}
-
-/* bikes on the section lines */
-.jetline{height:86px}
-.jetline .j{top:36%}
-.jetline .bk{position:absolute;left:0;top:70%;width:70px;height:auto;margin-top:-24px;translate:calc(100cqw - 150px) 0;filter:drop-shadow(0 3px 3px rgba(0,0,0,.6)) drop-shadow(0 0 8px rgba(53,224,240,.35))}
-@media (prefers-reduced-motion:no-preference){
-  .js .jetline .bk{translate:-80px 0}
-  .jetline.go .bk{animation:crossb 1.9s .15s cubic-bezier(.45,0,.4,1) both}
-}
-@keyframes crossb{from{translate:-80px 0}to{translate:calc(100cqw + 80px) 0}}
-
-/* the bike on the runway */
-.tbike{--bl:calc(var(--jw,120px) * .78);position:absolute;left:0;top:0;width:var(--bl);height:calc(var(--bl) * .675);z-index:1;rotate:-90deg;
-  translate:calc(50vw - var(--bl) * 1.3) 66svh;--jw:clamp(86px,13vw,150px)}
-.tbike img{width:100%;height:100%;filter:drop-shadow(-6px 4px 4px rgba(0,0,0,.6))}
-@keyframes burst{0%{opacity:.9;scale:1}100%{opacity:0;scale:1.35 1.9}}
-
-footer{border-top:1px solid var(--border);padding:36px var(--gutter) 48px;color:var(--text-dim);font-size:.85rem}
-footer nav{display:flex;flex-wrap:wrap;gap:10px 26px;margin-bottom:18px}
-footer nav a{color:var(--text-2);text-decoration:none;font:600 .95rem/1 var(--label);letter-spacing:.14em;text-transform:uppercase}
-footer nav a:hover{color:var(--accent)}
-footer p{margin:.4em 0;max-width:60em}
-</style>
+<script>
+(function(d){d.classList.add('js');try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!sessionStorage.getItem('f43-boot'))d.classList.add('booting')}catch(e){}
+setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classList.add('ready','fb')}},4000)})(document.documentElement);
+</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="jet" viewBox="1494.7 1315.0 258.9 353.8"><path fill-rule="evenodd" d="M 1624.1 1640.0 C 1624.1 1640.0 1626.7 1638.9 1626.7 1635.6 C 1626.7 1632.4 1627.2 1621.8 1627.2 1621.8 L 1629.0 1621.9 L 1635.9 1628.0 L 1643.4 1622.5 C 1643.4 1622.5 1643.4 1638.7 1645.2 1640.7 C 1647.0 1642.6 1673.5 1664.8 1677.1 1664.8 C 1680.7 1664.8 1705.2 1657.6 1705.2 1656.0 C 1705.2 1654.5 1705.7 1634.1 1705.7 1634.1 L 1676.0 1607.8 C 1676.0 1607.8 1729.9 1590.8 1733.8 1587.6 C 1737.8 1584.3 1749.6 1575.4 1749.6 1568.9 C 1749.6 1562.4 1749.6 1553.8 1749.6 1553.8 L 1663.4 1475.1 C 1663.4 1475.1 1662.1 1437.3 1660.4 1429.6 C 1658.7 1421.9 1640.2 1407.6 1640.2 1407.6 C 1640.2 1407.6 1638.3 1359.3 1634.2 1341.4 C 1630.1 1323.6 1624.1 1319.0 1624.1 1319.0 C 1624.1 1319.0 1618.2 1323.6 1614.1 1341.4 C 1610.0 1359.3 1608.1 1407.6 1608.1 1407.6 C 1608.1 1407.6 1589.6 1421.9 1587.9 1429.6 C 1586.1 1437.3 1584.9 1475.1 1584.9 1475.1 L 1498.7 1553.8 C 1498.7 1553.8 1498.7 1562.4 1498.7 1568.9 C 1498.7 1575.4 1510.5 1584.3 1514.4 1587.6 C 1518.4 1590.8 1572.3 1607.8 1572.3 1607.8 L 1542.6 1634.1 C 1542.6 1634.1 1543.1 1654.5 1543.1 1656.0 C 1543.1 1657.6 1567.6 1664.8 1571.2 1664.8 C 1574.8 1664.8 1601.3 1642.6 1603.1 1640.7 C 1604.9 1638.7 1604.9 1622.5 1604.9 1622.5 L 1612.4 1628.0 L 1619.3 1621.9 L 1621.1 1621.8 C 1621.1 1621.8 1621.6 1632.4 1621.6 1635.6 C 1621.6 1638.9 1624.1 1640.0 1624.1 1640.0 "/></symbol><symbol id="j15" viewBox="1495.5 1867.5 257.2 373.3"><path fill-rule="evenodd" d="M 1624.1 2195.8 L 1632.9 2195.8 L 1640.1 2183.4 C 1640.1 2183.4 1647.9 2236.8 1649.1 2235.7 C 1650.3 2234.7 1703.6 2223.0 1703.8 2220.6 C 1704 2218.2 1704 2189.4 1704 2189.4 C 1704 2189.4 1663.9 2161.6 1666.1 2160.3 C 1668.3 2158.9 1748.8 2137.4 1748.8 2137.4 L 1747.9 2101.9 C 1747.9 2101.9 1672.4 2057.2 1668.8 2042.9 C 1665.2 2028.7 1664.2 1992.3 1664.0 1983.9 C 1663.9 1975.5 1658.9 1968.8 1658.9 1968.8 C 1658.9 1968.8 1649.6 1979.5 1648.4 1977.4 C 1647.2 1975.4 1642.1 1957.2 1641.6 1944.1 C 1641.0 1931.1 1639.4 1905.7 1634.5 1891.1 C 1629.6 1876.6 1624.1 1871.5 1624.1 1871.5 C 1624.1 1871.5 1618.7 1876.6 1613.8 1891.1 C 1608.9 1905.7 1607.2 1931.1 1606.7 1944.1 C 1606.2 1957.2 1601.1 1975.4 1599.9 1977.4 C 1598.7 1979.5 1589.4 1968.8 1589.4 1968.8 C 1589.4 1968.8 1584.4 1975.5 1584.3 1983.9 C 1584.1 1992.3 1583.1 2028.7 1579.5 2042.9 C 1575.9 2057.2 1500.4 2101.9 1500.4 2101.9 L 1499.5 2137.4 C 1499.5 2137.4 1580.0 2158.9 1582.2 2160.3 C 1584.4 2161.6 1544.3 2189.4 1544.3 2189.4 C 1544.3 2189.4 1544.3 2218.2 1544.5 2220.6 C 1544.6 2223.0 1598.0 2234.7 1599.2 2235.7 C 1600.4 2236.8 1608.2 2183.4 1608.2 2183.4 L 1615.4 2195.8 L 1624.1 2195.8 "/></symbol><symbol id="j4" viewBox="170.7 761.1 222.3 339.1"><path fill-rule="evenodd" d="M 281.8 1068.6 C 281.8 1068.6 283.6 1069.3 283.8 1068.0 C 284.1 1066.8 284.0 1055.4 284.0 1055.4 L 286.0 1055.4 C 286.0 1055.4 285.8 1068.5 288.0 1068.8 C 290.1 1069.2 301.0 1068.8 301.0 1068.8 L 308.7 1087.6 C 308.7 1087.6 338.4 1096.2 342.3 1095.0 C 346.3 1093.8 352.5 1083.8 349.5 1078.7 C 346.6 1073.6 324.7 1047.3 324.7 1047.3 L 324.5 1052.8 L 313.7 1040.3 L 314.9 1020.6 C 314.9 1020.6 346.4 1020.4 352.6 1023.1 C 358.8 1025.9 370.1 1028.9 372.9 1027.6 C 375.6 1026.2 385.7 1005.6 385.7 1005.6 C 385.7 1005.6 389.0 1001.2 380.4 992.6 C 371.8 984.0 314.7 924.3 314.7 924.3 C 314.7 924.3 313.4 908.5 311.2 903.1 C 309.0 897.7 307.9 894.0 308.0 892.0 C 308.1 890.0 308.0 871.3 308.0 871.3 L 306.4 868.3 L 306.1 860.8 C 306.1 860.8 296.4 861.4 295.7 861.4 C 295.1 861.5 292.8 863.9 292.8 864.2 C 292.8 864.5 293.1 841 292.8 808.6 C 292.5 776.2 281.8 765.1 281.8 765.1 C 281.8 765.1 271.1 776.2 270.8 808.6 C 270.5 841 270.8 864.5 270.8 864.2 C 270.8 863.9 268.6 861.5 267.9 861.4 C 267.3 861.4 257.5 860.8 257.5 860.8 L 257.3 868.3 L 255.6 871.3 C 255.6 871.3 255.5 890.0 255.6 892.0 C 255.7 894.0 254.7 897.7 252.5 903.1 C 250.2 908.5 248.9 924.3 248.9 924.3 C 248.9 924.3 191.8 984.0 183.2 992.6 C 174.7 1001.2 177.9 1005.6 177.9 1005.6 C 177.9 1005.6 188.0 1026.2 190.8 1027.6 C 193.5 1028.9 204.9 1025.9 211.0 1023.1 C 217.2 1020.4 248.8 1020.6 248.8 1020.6 L 250.0 1040.3 L 239.2 1052.8 L 239.0 1047.3 C 239.0 1047.3 217.0 1073.6 214.1 1078.7 C 211.2 1083.8 217.4 1093.8 221.3 1095.0 C 225.3 1096.2 254.9 1087.6 254.9 1087.6 L 262.7 1068.8 C 262.7 1068.8 273.6 1069.2 275.7 1068.8 C 277.8 1068.5 277.7 1055.4 277.7 1055.4 L 279.6 1055.4 C 279.6 1055.4 279.6 1066.8 279.8 1068.0 C 280.1 1069.3 281.8 1068.6 281.8 1068.6 "/></symbol><symbol id="j9" viewBox="636.7 1345.2 185.1 291.7"><path fill-rule="evenodd" d="M 729.3 1632.9 C 729.3 1632.9 730.3 1631.8 730.5 1630.0 C 730.8 1628.3 731.6 1626.9 732.2 1626.7 C 732.9 1626.5 736.1 1627.6 736.4 1627.1 C 736.7 1626.5 738.9 1619.6 738.9 1619.6 C 738.9 1619.6 750.6 1622.8 752.9 1623.1 C 755.2 1623.4 777.5 1624.7 779.2 1622.3 C 780.9 1619.9 781.2 1604.5 781.2 1604.5 C 781.2 1604.5 749.3 1575.1 749.3 1574.0 C 749.3 1572.9 749.3 1556.1 749.3 1556.1 L 811.3 1556.1 C 811.3 1556.1 813.1 1557.1 813.3 1558.5 C 813.4 1559.9 814.1 1560.8 815.4 1561.1 C 816.8 1561.5 817.4 1561.1 817.4 1560.3 C 817.4 1559.5 817.8 1511.8 817.4 1511.8 C 817.1 1511.8 815.8 1507.8 814.8 1511.0 C 813.9 1514.1 814.0 1531.1 814.0 1531.1 C 814.0 1531.1 811.1 1530.5 810.1 1529.6 C 809.2 1528.7 755.6 1481.0 755.6 1481.0 C 755.6 1481.0 756.2 1469.1 751.9 1459.2 C 747.5 1449.2 745.9 1441.5 745.2 1438.1 C 744.5 1434.6 739.9 1384.2 736.5 1366.7 C 733.1 1349.2 729.3 1350.9 729.3 1350.9 C 729.3 1350.9 725.4 1349.2 722.0 1366.7 C 718.6 1384.2 714.0 1434.6 713.4 1438.1 C 712.7 1441.5 711.0 1449.2 706.7 1459.2 C 702.3 1469.1 703.0 1481.0 703.0 1481.0 C 703.0 1481.0 649.3 1528.7 648.4 1529.6 C 647.4 1530.5 644.5 1531.1 644.5 1531.1 C 644.5 1531.1 644.7 1514.1 643.7 1511.0 C 642.8 1507.8 641.5 1511.8 641.1 1511.8 C 640.7 1511.8 641.1 1559.5 641.1 1560.3 C 641.1 1561.1 641.8 1561.5 643.1 1561.1 C 644.4 1560.8 645.1 1559.9 645.3 1558.5 C 645.4 1557.1 647.2 1556.1 647.2 1556.1 L 709.2 1556.1 C 709.2 1556.1 709.2 1572.9 709.2 1574.0 C 709.2 1575.1 677.3 1604.5 677.3 1604.5 C 677.3 1604.5 677.6 1619.9 679.4 1622.3 C 681.1 1624.7 703.3 1623.4 705.6 1623.1 C 708.0 1622.8 719.7 1619.6 719.7 1619.6 C 719.7 1619.6 721.8 1626.5 722.1 1627.1 C 722.4 1627.6 725.7 1626.5 726.3 1626.7 C 727.0 1626.9 727.8 1628.3 728.0 1630.0 C 728.3 1631.8 729.3 1632.9 729.3 1632.9 "/></symbol><symbol id="j13" viewBox="604.2 1879.2 250.1 348.9"><path fill-rule="evenodd" d="M 729.3 2224.1 C 729.3 2224.1 730.8 2223.3 730.8 2222.1 C 730.8 2221.0 731.0 2205.7 731.0 2205.7 C 731.0 2205.7 733.4 2204.7 733.4 2203.8 C 733.5 2202.8 733.6 2198.4 733.8 2197.8 C 734.0 2197.2 735.7 2196.2 735.7 2196.2 C 735.7 2196.2 738.6 2199.0 740.1 2199.0 C 741.5 2199.0 752.9 2198.8 753.9 2198.5 C 754.9 2198.3 756.0 2188.1 756.0 2188.1 C 756.0 2188.1 760.2 2186.9 760.7 2185.7 C 761.1 2184.6 764.2 2169.9 764.2 2169.9 L 844.1 2164.6 C 844.1 2164.6 844.7 2169.8 845.6 2171.3 C 846.5 2172.8 850.3 2175.2 850.2 2174.2 C 850.2 2173.1 850.2 2113.3 850.2 2113.3 C 850.2 2113.3 849.6 2110.2 848.6 2111.9 C 847.6 2113.5 845.8 2115.4 845.8 2118.6 C 845.7 2121.9 845.4 2129.9 845.4 2129.9 C 845.4 2129.9 773.2 2058.0 771.1 2052.0 C 768.9 2046.0 767.6 2031.0 767.6 2031.0 C 767.6 2031.0 789.6 2040.6 789.3 2039.0 C 788.9 2037.5 790.7 2027.0 785.9 2022.6 C 781.1 2018.2 756.9 1996.0 756.9 1996.0 C 756.9 1996.0 755.0 1980.7 751.3 1970.1 C 747.5 1959.5 743.9 1946.4 743.6 1943.2 C 742.9 1933.8 735.0 1885.7 729.3 1883.2 C 723.6 1885.7 715.7 1933.8 714.9 1943.2 C 714.6 1946.4 711.0 1959.5 707.3 1970.1 C 703.5 1980.7 701.6 1996.0 701.6 1996.0 C 701.6 1996.0 677.4 2018.2 672.6 2022.6 C 667.8 2027.0 669.6 2037.5 669.3 2039.0 C 668.9 2040.6 691.0 2031.0 691.0 2031.0 C 691.0 2031.0 689.6 2046.0 687.5 2052.0 C 685.3 2058.0 613.1 2129.9 613.1 2129.9 C 613.1 2129.9 612.8 2121.9 612.8 2118.6 C 612.7 2115.4 611.0 2113.5 609.9 2111.9 C 608.9 2110.2 608.3 2113.3 608.3 2113.3 C 608.3 2113.3 608.4 2173.1 608.3 2174.2 C 608.2 2175.2 612.0 2172.8 612.9 2171.3 C 613.8 2169.8 614.4 2164.6 614.4 2164.6 L 694.4 2169.9 C 694.4 2169.9 697.4 2184.6 697.9 2185.7 C 698.3 2186.9 702.5 2188.1 702.5 2188.1 C 702.5 2188.1 703.6 2198.3 704.7 2198.5 C 705.7 2198.8 717.0 2199.0 718.5 2199.0 C 719.9 2199.0 722.8 2196.2 722.8 2196.2 C 722.8 2196.2 724.5 2197.2 724.7 2197.8 C 724.9 2198.4 725.1 2202.8 725.1 2203.8 C 725.2 2204.7 727.5 2205.7 727.5 2205.7 C 727.5 2205.7 727.7 2221.0 727.7 2222.1 C 727.7 2223.3 729.3 2224.1 729.3 2224.1 "/></symbol><symbol id="j12" viewBox="168.8 1887.5 226.1 333.1"><path fill-rule="evenodd" d="M 281.8 2196.8 C 281.8 2196.8 283.3 2198.4 283.6 2200.2 C 284.0 2202.1 285.3 2204.4 288.9 2204.8 C 292.5 2205.1 295.5 2205.0 295.8 2203.9 C 296.1 2202.9 299.5 2196.6 299.5 2196.6 L 334.1 2215.3 C 334.1 2215.3 336.7 2216.5 338.4 2215.0 C 340.1 2213.4 341.4 2212.4 341.6 2207.4 C 341.7 2202.5 342.5 2197.8 340.2 2194.2 C 337.9 2190.5 315.7 2164.4 315.7 2164.4 C 315.7 2164.4 317.1 2158.8 314.9 2150.9 C 312.7 2143.0 310.1 2133.6 310.1 2133.6 L 386.9 2132.5 C 386.9 2132.5 389.2 2134.5 390.0 2134.0 C 390.9 2133.6 390.7 2132.8 390.7 2132.8 L 390.7 2081.8 L 387.7 2081.8 L 387.7 2095.6 C 387.7 2095.6 387.4 2097.8 385.3 2096.9 C 383.1 2096.1 310.6 2059.7 310.6 2059.7 C 310.6 2059.7 308.4 2058.4 308.2 2055.7 C 308.1 2053.0 307.6 2040.8 305.0 2031.0 C 302.3 2021.2 300.5 2016.5 300.5 2013.5 C 300.5 2010.5 300.4 1976.5 297.7 1969.4 C 294.9 1962.3 292.2 1960.5 292.1 1957.4 C 292.0 1954.3 291.6 1922.5 288.7 1909.5 C 285.8 1896.4 281.8 1891.5 281.8 1891.5 C 281.8 1891.5 277.9 1896.4 275.0 1909.5 C 272.1 1922.5 271.6 1954.3 271.5 1957.4 C 271.4 1960.5 268.7 1962.3 266.0 1969.4 C 263.2 1976.5 263.1 2010.5 263.1 2013.5 C 263.1 2016.5 261.3 2021.2 258.7 2031.0 C 256.0 2040.8 255.6 2053.0 255.4 2055.7 C 255.2 2058.4 253.0 2059.7 253.0 2059.7 C 253.0 2059.7 180.5 2096.1 178.4 2096.9 C 176.2 2097.8 175.9 2095.6 175.9 2095.6 L 175.9 2081.8 L 172.9 2081.8 L 172.9 2132.8 C 172.9 2132.8 172.8 2133.6 173.6 2134.0 C 174.5 2134.5 176.7 2132.5 176.7 2132.5 L 253.6 2133.6 C 253.6 2133.6 251.0 2143.0 248.8 2150.9 C 246.5 2158.8 248.0 2164.4 248.0 2164.4 C 248.0 2164.4 225.8 2190.5 223.5 2194.2 C 221.1 2197.8 221.9 2202.5 222.1 2207.4 C 222.3 2212.4 223.6 2213.4 225.3 2215.0 C 227.0 2216.5 229.6 2215.3 229.6 2215.3 L 264.2 2196.6 C 264.2 2196.6 267.5 2202.9 267.8 2203.9 C 268.2 2205.0 271.1 2205.1 274.7 2204.8 C 278.3 2204.4 279.7 2202.1 280.0 2200.2 C 280.4 2198.4 281.8 2196.8 281.8 2196.8 "/></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="jet" viewBox="1494.7 1315.0 258.9 353.8"><path fill-rule="evenodd" pathLength="1" d="M 1624.1 1640.0 C 1624.1 1640.0 1626.7 1638.9 1626.7 1635.6 C 1626.7 1632.4 1627.2 1621.8 1627.2 1621.8 L 1629.0 1621.9 L 1635.9 1628.0 L 1643.4 1622.5 C 1643.4 1622.5 1643.4 1638.7 1645.2 1640.7 C 1647.0 1642.6 1673.5 1664.8 1677.1 1664.8 C 1680.7 1664.8 1705.2 1657.6 1705.2 1656.0 C 1705.2 1654.5 1705.7 1634.1 1705.7 1634.1 L 1676.0 1607.8 C 1676.0 1607.8 1729.9 1590.8 1733.8 1587.6 C 1737.8 1584.3 1749.6 1575.4 1749.6 1568.9 C 1749.6 1562.4 1749.6 1553.8 1749.6 1553.8 L 1663.4 1475.1 C 1663.4 1475.1 1662.1 1437.3 1660.4 1429.6 C 1658.7 1421.9 1640.2 1407.6 1640.2 1407.6 C 1640.2 1407.6 1638.3 1359.3 1634.2 1341.4 C 1630.1 1323.6 1624.1 1319.0 1624.1 1319.0 C 1624.1 1319.0 1618.2 1323.6 1614.1 1341.4 C 1610.0 1359.3 1608.1 1407.6 1608.1 1407.6 C 1608.1 1407.6 1589.6 1421.9 1587.9 1429.6 C 1586.1 1437.3 1584.9 1475.1 1584.9 1475.1 L 1498.7 1553.8 C 1498.7 1553.8 1498.7 1562.4 1498.7 1568.9 C 1498.7 1575.4 1510.5 1584.3 1514.4 1587.6 C 1518.4 1590.8 1572.3 1607.8 1572.3 1607.8 L 1542.6 1634.1 C 1542.6 1634.1 1543.1 1654.5 1543.1 1656.0 C 1543.1 1657.6 1567.6 1664.8 1571.2 1664.8 C 1574.8 1664.8 1601.3 1642.6 1603.1 1640.7 C 1604.9 1638.7 1604.9 1622.5 1604.9 1622.5 L 1612.4 1628.0 L 1619.3 1621.9 L 1621.1 1621.8 C 1621.1 1621.8 1621.6 1632.4 1621.6 1635.6 C 1621.6 1638.9 1624.1 1640.0 1624.1 1640.0"/></symbol><symbol id="j15" viewBox="1495.5 1867.5 257.2 373.3"><path fill-rule="evenodd" d="M 1624.1 2195.8 L 1632.9 2195.8 L 1640.1 2183.4 C 1640.1 2183.4 1647.9 2236.8 1649.1 2235.7 C 1650.3 2234.7 1703.6 2223.0 1703.8 2220.6 C 1704 2218.2 1704 2189.4 1704 2189.4 C 1704 2189.4 1663.9 2161.6 1666.1 2160.3 C 1668.3 2158.9 1748.8 2137.4 1748.8 2137.4 L 1747.9 2101.9 C 1747.9 2101.9 1672.4 2057.2 1668.8 2042.9 C 1665.2 2028.7 1664.2 1992.3 1664.0 1983.9 C 1663.9 1975.5 1658.9 1968.8 1658.9 1968.8 C 1658.9 1968.8 1649.6 1979.5 1648.4 1977.4 C 1647.2 1975.4 1642.1 1957.2 1641.6 1944.1 C 1641.0 1931.1 1639.4 1905.7 1634.5 1891.1 C 1629.6 1876.6 1624.1 1871.5 1624.1 1871.5 C 1624.1 1871.5 1618.7 1876.6 1613.8 1891.1 C 1608.9 1905.7 1607.2 1931.1 1606.7 1944.1 C 1606.2 1957.2 1601.1 1975.4 1599.9 1977.4 C 1598.7 1979.5 1589.4 1968.8 1589.4 1968.8 C 1589.4 1968.8 1584.4 1975.5 1584.3 1983.9 C 1584.1 1992.3 1583.1 2028.7 1579.5 2042.9 C 1575.9 2057.2 1500.4 2101.9 1500.4 2101.9 L 1499.5 2137.4 C 1499.5 2137.4 1580.0 2158.9 1582.2 2160.3 C 1584.4 2161.6 1544.3 2189.4 1544.3 2189.4 C 1544.3 2189.4 1544.3 2218.2 1544.5 2220.6 C 1544.6 2223.0 1598.0 2234.7 1599.2 2235.7 C 1600.4 2236.8 1608.2 2183.4 1608.2 2183.4 L 1615.4 2195.8 L 1624.1 2195.8"/></symbol><symbol id="j4" viewBox="170.7 761.1 222.3 339.1"><path fill-rule="evenodd" d="M 281.8 1068.6 C 281.8 1068.6 283.6 1069.3 283.8 1068.0 C 284.1 1066.8 284.0 1055.4 284.0 1055.4 L 286.0 1055.4 C 286.0 1055.4 285.8 1068.5 288.0 1068.8 C 290.1 1069.2 301.0 1068.8 301.0 1068.8 L 308.7 1087.6 C 308.7 1087.6 338.4 1096.2 342.3 1095.0 C 346.3 1093.8 352.5 1083.8 349.5 1078.7 C 346.6 1073.6 324.7 1047.3 324.7 1047.3 L 324.5 1052.8 L 313.7 1040.3 L 314.9 1020.6 C 314.9 1020.6 346.4 1020.4 352.6 1023.1 C 358.8 1025.9 370.1 1028.9 372.9 1027.6 C 375.6 1026.2 385.7 1005.6 385.7 1005.6 C 385.7 1005.6 389.0 1001.2 380.4 992.6 C 371.8 984.0 314.7 924.3 314.7 924.3 C 314.7 924.3 313.4 908.5 311.2 903.1 C 309.0 897.7 307.9 894.0 308.0 892.0 C 308.1 890.0 308.0 871.3 308.0 871.3 L 306.4 868.3 L 306.1 860.8 C 306.1 860.8 296.4 861.4 295.7 861.4 C 295.1 861.5 292.8 863.9 292.8 864.2 C 292.8 864.5 293.1 841 292.8 808.6 C 292.5 776.2 281.8 765.1 281.8 765.1 C 281.8 765.1 271.1 776.2 270.8 808.6 C 270.5 841 270.8 864.5 270.8 864.2 C 270.8 863.9 268.6 861.5 267.9 861.4 C 267.3 861.4 257.5 860.8 257.5 860.8 L 257.3 868.3 L 255.6 871.3 C 255.6 871.3 255.5 890.0 255.6 892.0 C 255.7 894.0 254.7 897.7 252.5 903.1 C 250.2 908.5 248.9 924.3 248.9 924.3 C 248.9 924.3 191.8 984.0 183.2 992.6 C 174.7 1001.2 177.9 1005.6 177.9 1005.6 C 177.9 1005.6 188.0 1026.2 190.8 1027.6 C 193.5 1028.9 204.9 1025.9 211.0 1023.1 C 217.2 1020.4 248.8 1020.6 248.8 1020.6 L 250.0 1040.3 L 239.2 1052.8 L 239.0 1047.3 C 239.0 1047.3 217.0 1073.6 214.1 1078.7 C 211.2 1083.8 217.4 1093.8 221.3 1095.0 C 225.3 1096.2 254.9 1087.6 254.9 1087.6 L 262.7 1068.8 C 262.7 1068.8 273.6 1069.2 275.7 1068.8 C 277.8 1068.5 277.7 1055.4 277.7 1055.4 L 279.6 1055.4 C 279.6 1055.4 279.6 1066.8 279.8 1068.0 C 280.1 1069.3 281.8 1068.6 281.8 1068.6"/></symbol><symbol id="j9" viewBox="636.7 1345.2 185.1 291.7"><path fill-rule="evenodd" d="M 729.3 1632.9 C 729.3 1632.9 730.3 1631.8 730.5 1630.0 C 730.8 1628.3 731.6 1626.9 732.2 1626.7 C 732.9 1626.5 736.1 1627.6 736.4 1627.1 C 736.7 1626.5 738.9 1619.6 738.9 1619.6 C 738.9 1619.6 750.6 1622.8 752.9 1623.1 C 755.2 1623.4 777.5 1624.7 779.2 1622.3 C 780.9 1619.9 781.2 1604.5 781.2 1604.5 C 781.2 1604.5 749.3 1575.1 749.3 1574.0 C 749.3 1572.9 749.3 1556.1 749.3 1556.1 L 811.3 1556.1 C 811.3 1556.1 813.1 1557.1 813.3 1558.5 C 813.4 1559.9 814.1 1560.8 815.4 1561.1 C 816.8 1561.5 817.4 1561.1 817.4 1560.3 C 817.4 1559.5 817.8 1511.8 817.4 1511.8 C 817.1 1511.8 815.8 1507.8 814.8 1511.0 C 813.9 1514.1 814.0 1531.1 814.0 1531.1 C 814.0 1531.1 811.1 1530.5 810.1 1529.6 C 809.2 1528.7 755.6 1481.0 755.6 1481.0 C 755.6 1481.0 756.2 1469.1 751.9 1459.2 C 747.5 1449.2 745.9 1441.5 745.2 1438.1 C 744.5 1434.6 739.9 1384.2 736.5 1366.7 C 733.1 1349.2 729.3 1350.9 729.3 1350.9 C 729.3 1350.9 725.4 1349.2 722.0 1366.7 C 718.6 1384.2 714.0 1434.6 713.4 1438.1 C 712.7 1441.5 711.0 1449.2 706.7 1459.2 C 702.3 1469.1 703.0 1481.0 703.0 1481.0 C 703.0 1481.0 649.3 1528.7 648.4 1529.6 C 647.4 1530.5 644.5 1531.1 644.5 1531.1 C 644.5 1531.1 644.7 1514.1 643.7 1511.0 C 642.8 1507.8 641.5 1511.8 641.1 1511.8 C 640.7 1511.8 641.1 1559.5 641.1 1560.3 C 641.1 1561.1 641.8 1561.5 643.1 1561.1 C 644.4 1560.8 645.1 1559.9 645.3 1558.5 C 645.4 1557.1 647.2 1556.1 647.2 1556.1 L 709.2 1556.1 C 709.2 1556.1 709.2 1572.9 709.2 1574.0 C 709.2 1575.1 677.3 1604.5 677.3 1604.5 C 677.3 1604.5 677.6 1619.9 679.4 1622.3 C 681.1 1624.7 703.3 1623.4 705.6 1623.1 C 708.0 1622.8 719.7 1619.6 719.7 1619.6 C 719.7 1619.6 721.8 1626.5 722.1 1627.1 C 722.4 1627.6 725.7 1626.5 726.3 1626.7 C 727.0 1626.9 727.8 1628.3 728.0 1630.0 C 728.3 1631.8 729.3 1632.9 729.3 1632.9"/></symbol></svg>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="bar">
-  <a class="brand" href="./" aria-label="F-43 Moto OS home"><img src="assets/badge-320.webp" alt="" width="36" height="36">F-43 Moto OS</a>
-  <a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>
-    <span><span class="long">Get it on </span>Google Play</span>
-  </a>
+<!-- power-on self-test, once per visit -->
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot-half t"></div><div class="boot-half b"></div>
+  <div class="boot-core">
+    <svg class="boot-mark" viewBox="0 0 100 100"><use href="#jet"/></svg>
+    <p class="boot-title">F-43 Moto OS</p>
+    <ol class="boot-log">
+      <li style="--i:0">Built-in test<b>Run</b></li>
+      <li style="--i:1">IMU · GPS<b>OK</b></li>
+      <li style="--i:2">ECU link<b>OK</b></li>
+      <li style="--i:3">Warning lamps<b>OK</b></li>
+    </ol>
+    <p class="boot-go">Cleared</p>
+  </div>
+  <p class="boot-skip">Tap to skip</p>
+</div>
+
+<header class="bar" id="bar">
+  <a class="brand" href="#top" aria-label="F-43 Moto OS, back to top"><img src="assets/badge-320.webp" alt="" width="34" height="34"><span>F-43 <em>Moto OS</em></span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#ride">Test ride</a><a href="#screens">Screens</a><a href="#systems">Systems</a><a href="#pro">Pro</a><a href="#ranks">Ranks</a><a href="#faq">FAQ</a>
+  </nav>
+  <div class="bar-r">
+    <button type="button" class="icon-btn" id="motion" aria-pressed="false" title="Pause motion">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M7 4.5v15L19.5 12z"/></svg>
+      <span class="sr" id="motionLbl">Pause motion</span>
+    </button>
+    <a class="play cham sm" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto" data-magnet>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg><span><span class="long">Get it on </span>Google Play</span>
+    </a>
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h12"/></svg><span class="sr">Menu</span>
+    </button>
+  </div>
+  <i class="bar-prog" id="prog" aria-hidden="true"></i>
 </header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="#ride" style="--i:0"><small>01</small>Test ride</a>
+    <a href="#screens" style="--i:1"><small>02</small>Screens</a>
+    <a href="#systems" style="--i:2"><small>03</small>Systems</a>
+    <a href="#pro" style="--i:3"><small>04</small>F-43 Pro</a>
+    <a href="#ranks" style="--i:4"><small>05</small>Pilot ranks</a>
+    <a href="#faq" style="--i:5"><small>06</small>FAQ</a>
+  </nav>
+</div>
+
+<!-- flight instruments that ride along the page edges on wide screens -->
+<div class="rail l" id="railL" aria-hidden="true">
+  <span class="rail-lbl">SPD</span><div class="rail-tape" id="spdTape"></div><span class="rail-val" id="spdVal">000</span>
+</div>
+<div class="rail r" id="railR" aria-hidden="true">
+  <span class="rail-lbl">ALT</span>
+  <div class="rail-tape marks" id="railMarks"><i class="rail-cur" id="railCur"></i></div>
+  <span class="rail-val" id="altVal">00000</span>
+</div>
+<div class="reticle" id="reticle" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
 
 <main id="main">
-<section class="hero" id="hero" aria-labelledby="h1">
-  <div class="streaks" aria-hidden="true"><i style="--y:8%;--d:1.70s;--dl:2.29s;--w:22vw"></i><i style="--y:51%;--d:2.51s;--dl:2.38s;--w:22vw"></i><i style="--y:80%;--d:2.15s;--dl:0.06s;--w:21vw"></i><i style="--y:77%;--d:1.88s;--dl:2.56s;--w:21vw"></i><i style="--y:54%;--d:1.47s;--dl:2.55s;--w:11vw"></i><i style="--y:52%;--d:1.42s;--dl:0.48s;--w:23vw"></i><i style="--y:20%;--d:2.72s;--dl:1.79s;--w:24vw"></i><i style="--y:38%;--d:2.31s;--dl:1.13s;--w:9vw"></i><i style="--y:12%;--d:1.6s;--dl:0s;--w:16vw"></i><i style="--y:23%;--d:2.3s;--dl:0.7s;--w:10vw"></i><i style="--y:37%;--d:1.3s;--dl:1.1s;--w:22vw"></i><i style="--y:48%;--d:2.8s;--dl:0.2s;--w:12vw"></i><i style="--y:61%;--d:1.8s;--dl:1.5s;--w:18vw"></i><i style="--y:72%;--d:2.1s;--dl:0.4s;--w:9vw"></i><i style="--y:84%;--d:1.5s;--dl:0.9s;--w:20vw"></i><i style="--y:93%;--d:2.6s;--dl:1.9s;--w:14vw"></i><i style="--y:30%;--d:3.1s;--dl:2.4s;--w:8vw"></i><i style="--y:66%;--d:2.4s;--dl:2.9s;--w:11vw"></i></div>
-  <div class="flyby" aria-hidden="true"><div class="j w1"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j15"/></svg></div><div class="j"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div><div class="j w2"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j4"/></svg></div></div>
-  <div class="scan" aria-hidden="true"></div>
-  <button type="button" class="motion" id="motion" aria-pressed="false">Pause motion</button>
-  <div class="copy">
-    <p class="tag"><span class="tk">//</span>Motorcycle dashboard app · Android</p>
-    <h1 id="h1">The <span class="nw">fighter-jet</span> cockpit for your motorcycle.</h1>
-    <p class="lede">F-43 Moto OS turns the Android phone on your handlebar into an instrument panel. <strong>Speed, lean and heading</strong> come from the phone itself. Plug an <strong>OBD-II adapter</strong> into your bike's diagnostic port and the cockpit reads the engine's own computer: revs, coolant, voltage, fuel trims and fault codes.</p>
-    <div class="ctas">
-      <a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
+<span id="top"></span>
+
+<!-- ═════════ 01 · hero: a cockpit you can ride ═════════ -->
+<section class="hero" id="ride" aria-labelledby="h1">
+  <div class="flyby" aria-hidden="true">
+    <div class="fj w1"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j15"/></svg></div>
+    <div class="fj"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div>
+    <div class="fj w2"><span class="flame"></span><svg viewBox="0 0 100 100"><use href="#j4"/></svg></div>
+  </div>
+  <div class="hud-wrap" id="hudWrap">
+    <canvas class="hud" id="hud" aria-hidden="true"></canvas>
+    <div class="ctl" role="group" aria-label="Test ride controls">
+      <p class="ctl-tag"><i class="dot"></i>Test ride · <span id="hudMode">Autopilot</span></p>
+      <button type="button" class="throttle" id="throttle" aria-describedby="ctlHint" data-lock>
+        <span class="thr-in"><span class="thr-fill" id="thrFill"></span><span class="thr-lbl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10M6 9l6-6 6 6M5 21h14"/></svg>Hold throttle</span></span>
+      </button>
+      <div class="ctl-row">
+        <button type="button" class="chip-btn" id="tilt" hidden>Tilt phone to lean</button>
+        <button type="button" class="chip-btn" id="sound" aria-pressed="false"><span>Engine sound</span> <b>Off</b></button>
+      </div>
+      <p class="ctl-hint" id="ctlHint"><span class="k-mouse">Hold it, or <kbd>W</kbd>. Lean with the mouse or <kbd>A</kbd>/<kbd>D</kbd>.</span><span class="k-touch">Hold the button to ride. Drag across the cockpit to lean.</span></p>
+    </div>
+  </div>
+  <div class="hero-copy">
+    <p class="tag" data-scramble><span class="tk">//</span>Motorcycle dashboard app · Android</p>
+    <h1 id="h1" class="split">The <span class="nw">fighter-jet</span> cockpit for your motorcycle.</h1>
+    <p class="lede rise" style="--d:.25s">F-43 Moto OS turns the Android phone on your handlebar into an instrument panel. <strong>Speed, lean and heading</strong> come from the phone itself. Plug in an <strong>OBD-II adapter</strong> and it reads your engine's own computer: revs, coolant, voltage, fuel trims and fault codes.</p>
+    <div class="ctas rise" style="--d:.35s">
+      <a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto" data-magnet>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
       </a>
-      <a class="ghost" href="#screens">See the screens</a>
+      <a class="ghost" href="#screens">See it in motion<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </div>
-    <p class="fine">Free to download. 54 India-spec bike presets, or add your own. No account, no cloud, no ads.</p>
+    <p class="fine rise" style="--d:.45s">Free to download · 90 India-spec bike presets · No account, no cloud, no ads.</p>
+  </div>
+  <a class="scroll-cue" href="#setup" aria-label="Scroll to how it works"><i></i></a>
+</section>
+
+<!-- ═════════ bike presets ticker ═════════ -->
+<section class="ticker" aria-labelledby="tk-h">
+  <div class="tk-head">
+    <b class="tk-num" data-count="90">90</b>
+    <p id="tk-h">India-spec bike presets.<br><span>Or build your own.</span></p>
+  </div>
+  <div class="tk-rows" aria-hidden="true">
+    <div class="tk-row" data-dir="-1"><div class="tk-track"><span>Yezdi Roadster</span><span>Jawa 42</span><span>RE Classic 350</span><span>RE Hunter 350</span><span>Bajaj Pulsar NS200</span><span>TVS Apache RTR 160 4V</span><span>TVS Apache RR 310</span><span>Hero Xpulse 200</span><span>KTM 200 Duke</span><span>KTM 390 Duke</span><span>Yamaha R15 V4</span><span>Yamaha MT-15</span><span>Suzuki Gixxer 250</span><span>Harley-Davidson X440</span><span>Triumph Speed 400</span><span>Triumph Scrambler 400 X</span><span>Kawasaki Ninja 400</span><span>Kawasaki Z500</span><span>RE Meteor 350</span><span>RE Bullet 350</span><span>RE Himalayan 450</span><span>RE Scram 411</span><span>RE Interceptor 650</span><span>RE Continental GT 650</span><span>RE Super Meteor 650</span><span>Honda Hornet 2.0</span><span>Honda CB300R</span><span>Honda CB350RS</span><span>Hero Xtreme 160R</span><span>Hero Karizma XMR</span><span>Hero Mavrick 440</span><span>TVS Apache RTR 200 4V</span><span>TVS Ronin 225</span><span>TVS Raider 125</span><span>Bajaj Pulsar N160</span><span>Bajaj Pulsar N250</span><span>Bajaj Pulsar NS160</span><span>Bajaj Dominar 400</span><span>Yamaha FZ-S FI</span><span>Yamaha FZ25</span><span>Yamaha MT-03</span><span>Yamaha R3</span><span>Suzuki Gixxer 155</span><span>Suzuki V-Strom SX 250</span><span>KTM 250 Duke</span></div></div>
+    <div class="tk-row o" data-dir="1"><div class="tk-track"><span>KTM RC 390</span><span>KTM 390 Adventure</span><span>Yezdi Scrambler</span><span>Yezdi Adventure</span><span>Jawa Perak</span><span>Kawasaki W175</span><span>BMW G 310 R</span><span>BMW G 310 GS</span><span>Hero Xpulse 200 4V</span><span>Hero Xpulse 210</span><span>RE Himalayan 411</span><span>RE Scram 440</span><span>RE Bear 650</span><span>KTM 250 Adventure</span><span>Honda CB200X</span><span>Honda NX500</span><span>Bajaj Dominar 250</span><span>Kawasaki Versys 650</span><span>Suzuki V-Strom 800DE</span><span>Hero Splendor Plus</span><span>Hero Xtreme 125R</span><span>Hero Xtreme 250R</span><span>Honda Shine 125</span><span>Honda SP 125</span><span>Honda Unicorn</span><span>Honda SP160</span><span>Honda CB300F</span><span>Bajaj Pulsar 125</span><span>Bajaj Pulsar 150</span><span>Bajaj Pulsar 220F</span><span>Bajaj Pulsar RS200</span><span>Bajaj Pulsar NS400Z</span><span>Bajaj Avenger Cruise 220</span><span>TVS Apache RTR 310</span><span>Yamaha FZ-X</span><span>Suzuki Gixxer SF 250</span><span>RE Guerrilla 450</span><span>RE Shotgun 650</span><span>RE Classic 650</span><span>Jawa 350</span><span>Triumph Speed T4</span><span>Kawasaki Ninja 300</span><span>Kawasaki Z650</span><span>Your own bike</span></div></div>
+  </div>
+</section>
+
+<!-- ═════════ how it works, pinned on wide screens ═════════ -->
+<section class="setup" id="setup" aria-labelledby="setup-h">
+  <div class="setup-pin">
+    <div class="sec-head" data-reveal>
+      <p class="tag" data-scramble><span class="tk">//</span>01 · On your bike</p>
+      <h2 id="setup-h" class="split">Your phone becomes the dashboard.</h2>
+    </div>
+    <div class="setup-grid">
+      <ol class="steps" id="steps">
+        <li data-n="1"><span class="st-n">01</span><div><h3>Mount the phone</h3><p>Put your Android phone on the handlebar, in landscape. Speed, lean angle and heading work straight away, from the phone's own sensors.</p></div></li>
+        <li data-n="2"><span class="st-n">02</span><div><h3>Plug in an adapter</h3><p>An OBD-II Bluetooth adapter goes in your bike's diagnostic port, often under the seat or a side panel. Pair it once, and the cockpit reads the engine.</p></div></li>
+        <li data-n="3"><span class="st-n">03</span><div><h3>Pick your bike, ride</h3><p>Choose from 90 India-spec presets or add your own. Switch on, the self-test runs, the lamps light and go out, and you're cleared to ride.</p><p class="note">Set it up before you ride. Hands on the bars, eyes on the road.</p></div></li>
+      </ol>
+      <figure class="bikefig" id="bikefig" data-step="0">
+        <img src="assets/bike-top-1200.webp" srcset="assets/bike-top-480.webp 480w, assets/bike-top-1200.webp 1200w" sizes="(min-width:960px) 60vw, 92vw" width="1200" height="810" alt="A motorcycle seen from above, with a phone on the handlebar and an OBD-II adapter in the diagnostic port under the seat." loading="lazy" decoding="async">
+        <svg class="bf-over" viewBox="0 0 1200 810" aria-hidden="true">
+          <defs><radialGradient id="bfglow"><stop offset="0" stop-color="#35E0F0" stop-opacity=".55"/><stop offset="1" stop-color="#35E0F0" stop-opacity="0"/></radialGradient>
+            <radialGradient id="bfglow2"><stop offset="0" stop-color="#4FA8FF" stop-opacity=".6"/><stop offset="1" stop-color="#4FA8FF" stop-opacity="0"/></radialGradient></defs>
+          <g class="bf-phone"><circle cx="882" cy="405" r="120" fill="url(#bfglow)" class="halo"/><circle cx="882" cy="405" r="70" class="ring"/><rect x="857" y="345" width="50" height="120" rx="7" class="dev"/><rect x="863" y="353" width="38" height="104" rx="3" class="scr"/></g>
+          <g class="bf-obd"><circle cx="456" cy="405" r="100" fill="url(#bfglow2)" class="halo"/><circle cx="456" cy="405" r="56" class="ring"/><rect x="434" y="383" width="44" height="44" rx="5" class="dev"/><circle cx="456" cy="405" r="6" class="led"/></g>
+          <path id="bfarc" class="bf-arc" pathLength="1" d="M456 380 Q669 40 882 340"/>
+          <g class="bf-pk"><circle r="7"><animateMotion dur="1.4s" repeatCount="indefinite" path="M456 380 Q669 40 882 340"/></circle><circle r="7"><animateMotion dur="1.4s" begin=".47s" repeatCount="indefinite" path="M456 380 Q669 40 882 340"/></circle><circle r="7"><animateMotion dur="1.4s" begin=".94s" repeatCount="indefinite" path="M456 380 Q669 40 882 340"/></circle></g>
+        </svg>
+        <figcaption>
+          <span class="chip c1"><b>1</b>Phone on the handlebar</span>
+          <span class="chip c2"><b>2</b>OBD-II adapter, in the diagnostic port</span>
+          <span class="chip c3"><b>3</b>Bluetooth link · ECU data</span>
+        </figcaption>
+        <ul class="lamps" aria-hidden="true">
+          <li data-c="amber" style="--n:0"><i></i><span>Engine</span></li>
+          <li data-c="amber" style="--n:1"><i></i><span>ABS</span></li>
+          <li data-c="red" style="--n:2"><i></i><span>Battery</span></li>
+          <li data-c="red" style="--n:3"><i></i><span>Coolant</span></li>
+          <li data-c="amber" style="--n:4"><i></i><span>Fuel</span></li>
+          <li data-c="blue" style="--n:5"><i></i><span>OBD</span></li>
+        </ul>
+        <p class="cleared" aria-hidden="true">Cleared to ride</p>
+      </figure>
+    </div>
+    <div class="setup-prog" aria-hidden="true"><i id="setupFill"></i></div>
+  </div>
+</section>
+
+<!-- ═════════ 02 · real screens, in motion ═════════ -->
+<section class="sec screens" id="screens" aria-labelledby="screens-h">
+  <div class="sec-head center" data-reveal>
+    <p class="tag" data-scramble><span class="tk">//</span>02 · Real screens</p>
+    <h2 id="screens-h" class="split">The real app. In motion.</h2>
+    <p>Captured from a phone running F-43 Moto OS in demo mode. The bike is simulated; every pixel of the cockpit is the app.</p>
+  </div>
+  <div class="device-stage" id="deviceStage">
+    <div class="device" id="device">
+      <div class="device-screen" id="screen">
+        <video id="faceVid" muted playsinline loop preload="none" poster="assets/video/cluster.webp" aria-label="Screen recording of the selected RIDE face"></video>
+        <span class="scan" aria-hidden="true"></span><span class="glare" aria-hidden="true"></span>
+      </div>
+      <span class="cam" aria-hidden="true"></span><span class="hw a" aria-hidden="true"></span><span class="hw b" aria-hidden="true"></span>
+    </div>
+    <div class="device-shadow" aria-hidden="true"></div>
+  </div>
+  <div class="face-ui">
+    <div class="faces" role="tablist" aria-label="RIDE faces" id="faces">
+      <button type="button" role="tab" aria-selected="true" data-v="cluster" data-t="free" data-d="Compressor RPM and a split flight display. Above walking pace, the cockpit declutters to this.">Cluster<em>Free</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="monolith" data-t="free" data-d="An angular rev shield around the revs, for maximum clarity at a glance.">Monolith<em>Free</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="strip" data-t="free" data-d="A wide rev ribbon across the top with twin digital readouts.">Strip<em>Free</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="classic" data-t="free" data-d="An open-ring HUD with precise rev tracking.">Classic<em>Free</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="horizon" data-t="pro" data-d="A fighter HUD: rolling horizon, speed tape and rev tape. Warnings still reach you.">Horizon<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="aerogt" data-t="pro" data-d="A turbine iris around the revs, with a split power instrument.">Aero GT<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="apex" data-t="pro" data-d="A swept-wing rev band across the top and ground speed in the middle, for the open road.">Apex<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="twinspool" data-t="pro" data-d="A jet rev ring with the full flight data stack beside it.">Twin Spool<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="dogfight" data-t="pro" data-d="Twin needle dials, speed and revs, with the engine data between them.">Dogfight<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="collection" data-t="all" data-d="Ten RIDE faces in all. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free; the other five come with Pro.">All ten<em>10</em><i></i></button>
+    </div>
+    <div class="face-cap" aria-live="polite"><b id="faceName">Cluster</b><span class="pill free" id="facePill">Free</span><p id="faceDesc">Compressor RPM and a split flight display. Above walking pace, the cockpit declutters to this.</p></div>
+  </div>
+  <ul class="stats" data-reveal>
+    <li><b data-count="10">10</b><span>RIDE faces · 5 free</span></li>
+    <li><b data-count="11">11</b><span>Rev gauges · 6 free</span></li>
+    <li><b data-count="90">90</b><span>Bike presets</span></li>
+    <li><b>0</b><span>Accounts, clouds or ads</span></li>
+  </ul>
+</section>
+
+<!-- ═════════ 03 · systems, all free ═════════ -->
+<section class="sec systems" id="systems" aria-labelledby="sys-h">
+  <div class="sec-head" data-reveal>
+    <p class="tag" data-scramble><span class="tk">//</span>03 · Systems</p>
+    <h2 id="sys-h" class="split">Everything a rider needs. Free.</h2>
+    <p>Safety features, fault codes and the full live dashboard are free for every rider. Nothing here needs an account.</p>
+  </div>
+  <div class="bento">
+    <article class="card span2 row2" data-reveal data-glow>
+      <div class="ci">
+        <div class="media vid" style="--op:100%"><video muted playsinline loop preload="none" poster="assets/video/crash.webp" data-src="assets/video/crash.mp4" aria-hidden="true"></video><span class="rec">Demo</span></div>
+        <div class="txt"><p class="kicker red">Safety</p><h3>Crash detection</h3><p>Senses a hard impact and counts down. If you don't tap I'M OK, it opens a ready-to-send SOS text with your location for your emergency contacts.</p><p class="small">Best-effort: it depends on sensors, signal and your settings. Never rely on it as your only safety net.</p></div>
+      </div>
+    </article>
+    <article class="card span2" data-reveal data-glow>
+      <div class="ci">
+        <div class="media term" id="term" aria-hidden="true">
+          <p class="t-head"><span>ECU · Fault scan</span><span class="t-led"></span></p>
+          <p class="t-code" id="tCode">P0562</p>
+          <p class="t-txt" id="tTxt">System voltage low</p>
+          <p class="t-fix" id="tFix">Check the charging system: battery, regulator, connections.</p>
+        </div>
+        <div class="txt"><p class="kicker">Diagnostics</p><h3>Fault codes, in plain language</h3><p>Read and clear stored faults, with freeze frame, readiness monitors and Bus Scan. Clearing refuses to run while the bike is moving.</p></div>
+      </div>
+    </article>
+    <article class="card" data-reveal data-glow>
+      <div class="ci">
+        <div class="media att" aria-hidden="true">
+          <div class="att-ball"><div class="att-disc"></div><span class="att-w"></span></div>
+          <p class="att-read"><span class="att-n"></span>°</p>
+          <p class="att-lvl">Levelled</p>
+        </div>
+        <div class="txt"><p class="kicker">Sensors <span class="new">Next update</span></p><h3>Lean, levelled</h3><p>Bank, pitch and heading from the phone. Phone mounted crooked? Level it once and lean reads true.</p></div>
+      </div>
+    </article>
+    <article class="card" data-reveal data-glow>
+      <div class="ci">
+        <div class="media heat" aria-hidden="true">
+          <div class="therm"><i></i></div>
+          <p class="heat-read"><span class="heat-n"></span>°C</p>
+          <p class="toast"><b>Phone hot</b>Shade it from the sun</p>
+        </div>
+        <div class="txt"><p class="kicker amber">Phone <span class="new">Next update</span></p><h3>Heat warnings</h3><p>Sun, screen, charging and GPS add up. F-43 tells you when the phone on your mount runs warm, so you can shade it before Android steps in.</p></div>
+      </div>
+    </article>
+    <article class="card span2" data-reveal data-glow>
+      <div class="ci">
+        <div class="media vid"><video muted playsinline loop preload="none" poster="assets/video/caution.webp" data-src="assets/video/caution.mp4" aria-hidden="true"></video></div>
+        <div class="txt"><p class="kicker amber">Warnings</p><h3>Master caution, with a diagnosis</h3><p>Priority warnings tell you the probable cause, what to check, and whether it's safe to ride on. Guided multimeter tests show where the probes go.</p></div>
+      </div>
+    </article>
+    <article class="card span2" data-reveal data-glow>
+      <div class="ci">
+        <div class="media vid"><video muted playsinline loop preload="none" poster="assets/video/mission.webp" data-src="assets/video/mission.mp4" aria-hidden="true"></video></div>
+        <div class="txt"><p class="kicker">After the ride</p><h3>Mission Complete</h3><p>Park up and your route draws itself while the stats count up: distance, ride time, top speed, max lean.</p></div>
+      </div>
+    </article>
+    <article class="card" data-reveal data-glow>
+      <div class="ci">
+        <div class="media nav" aria-hidden="true">
+          <div class="nav-card"><svg viewBox="0 0 48 48"><path d="M14 40V22a6 6 0 0 1 6-6h14M28 9l7 7-7 7"/></svg><p><b class="nav-n"></b> m<span>Turn right · NH 44</span></p></div>
+          <div class="nav-road"><i></i></div>
+        </div>
+        <div class="txt"><p class="kicker">Navigation</p><h3>Turn by turn</h3><p>On OpenStreetMap, with the turn banner across the top. Maps and routing need a data connection.</p></div>
+      </div>
+    </article>
+    <article class="card" data-reveal data-glow>
+      <div class="ci">
+        <div class="media odo" aria-hidden="true">
+          <p class="odo-lbl">Odometer</p>
+          <p class="odo-d" id="odo"></p>
+          <ul class="odo-chips"><li>Fuel</li><li>Service</li><li>Chain</li></ul>
+        </div>
+        <div class="txt"><p class="kicker">Logs</p><h3>Your bike's logbook</h3><p>Fuel, service and chain reminders tied to your odometer, a trip computer and personal bests.</p></div>
+      </div>
+    </article>
+    <article class="card" data-reveal data-glow>
+      <div class="ci">
+        <div class="media fit" aria-hidden="true">
+          <div class="fit-phone"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i></div>
+        </div>
+        <div class="txt"><p class="kicker">Display <span class="new">Next update</span></p><h3>Fits your phone</h3><p>The cockpit lays itself out for your screen, big or small. Want it a step larger? One setting.</p></div>
+      </div>
+    </article>
+    <article class="card" data-reveal data-glow>
+      <div class="ci">
+        <div class="media mayday" aria-hidden="true"><span class="md-btn">Mayday</span><i></i><i></i><i></i></div>
+        <div class="txt"><p class="kicker red">SOS</p><h3>One-tap Mayday</h3><p>Text your people your live location, or call them, from one button.</p></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ═════════ 04 · F-43 Pro ═════════ -->
+<section class="sec pro" id="pro" aria-labelledby="pro-h">
+  <div class="sec-head" data-reveal>
+    <p class="tag gold" data-scramble><span class="tk">//</span>04 · F-43 Pro</p>
+    <h2 id="pro-h" class="split">Open the engine up.</h2>
+    <p>One-time unlock, no subscription. A 7-day trial of everything starts the first time your bike connects, so it never runs out while your adapter is in the post.</p>
+  </div>
+  <div class="lab" id="lab">
+    <div class="lab-frame">
+      <video muted playsinline loop preload="none" poster="assets/video/mechlab.webp" data-src="assets/video/mechlab.mp4" aria-label="Mechanical Lab: a 3D engine turning over, then shown in an exploded view."></video>
+      <span class="lb a" aria-hidden="true"></span><span class="lb b" aria-hidden="true"></span><span class="lb c" aria-hidden="true"></span><span class="lb d" aria-hidden="true"></span>
+      <p class="lab-cap"><b>Mechanical Lab</b><span>Your engine in 3D: piston, valves and heat move with the data. Sample data shown.</span></p>
+    </div>
+  </div>
+  <div class="pro-row">
+    <article class="pcard" data-reveal data-glow>
+      <div class="ci">
+        <div class="media vid"><video muted playsinline loop preload="none" poster="assets/video/faultmap.webp" data-src="assets/video/faultmap.mp4" aria-hidden="true"></video></div>
+        <div class="txt"><h3>ECU Report and fault map</h3><p>The engine computer's own self-tests: misfire counters, O2 sensor response, fuelling and charging. Faults pinned where they live on the engine.</p></div>
+      </div>
+    </article>
+    <article class="pcard" data-reveal data-glow>
+      <div class="ci">
+        <div class="media vid"><video muted playsinline loop preload="none" poster="assets/video/sniffer.webp" data-src="assets/video/sniffer.mp4" aria-hidden="true"></video></div>
+        <div class="txt"><h3>Learn your bike</h3><p>Finds what your bike broadcasts on its CAN bus, one signal at a time, and shows you before it saves. The CAN sniffer shows every ID and byte.</p></div>
+      </div>
+    </article>
   </div>
 
-  <div class="inst">
-    <span class="brk a" aria-hidden="true"></span><span class="brk b" aria-hidden="true"></span><span class="brk c" aria-hidden="true"></span><span class="brk d" aria-hidden="true"></span>
-    <button type="button" id="replay" aria-label="Run the start-up test again">
-      <svg class="vec" id="vec" viewBox="0 0 400 400" role="img" aria-labelledby="vect">
-        <title id="vect">Start-up test: the turbine spools up, both rev ladders fill to the redline, six warning lamps light and go out, then the cockpit reads cleared.</title>
-        <defs>
-          <radialGradient id="cowl" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#26313C"/><stop offset=".6" stop-color="#121920"/><stop offset="1" stop-color="#090D11"/></radialGradient>
-          <linearGradient id="blade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C9D3DC"/><stop offset=".5" stop-color="#6E7C89"/><stop offset="1" stop-color="#2E3A45"/></linearGradient>
-          <radialGradient id="blurdisc"><stop offset=".2" stop-color="#6E7C89" stop-opacity=".2"/><stop offset=".75" stop-color="#9AA8B5" stop-opacity=".55"/><stop offset="1" stop-color="#35E0F0" stop-opacity=".15"/></radialGradient>
-          <radialGradient id="cone" cx="40%" cy="35%"><stop offset="0" stop-color="#E8EEF4"/><stop offset=".6" stop-color="#5A6875"/><stop offset="1" stop-color="#1A222A"/></radialGradient>
-        </defs>
-        <g class="ladders"><polygon class="seg on" data-i="0" points="65.0,352.0 105.0,352.0 96.0,362.5 56.0,362.5"/><polygon class="seg on" data-i="1" points="59.2,335.5 99.2,335.5 90.2,346.0 50.2,346.0"/><polygon class="seg on" data-i="2" points="54.2,319.0 94.2,319.0 85.2,329.5 45.2,329.5"/><polygon class="seg on" data-i="3" points="49.9,302.5 89.9,302.5 80.9,313.0 40.9,313.0"/><polygon class="seg on" data-i="4" points="46.3,286.0 86.3,286.0 77.3,296.5 37.3,296.5"/><polygon class="seg" data-i="5" points="43.4,269.5 83.4,269.5 74.4,280.0 34.4,280.0"/><polygon class="seg" data-i="6" points="41.2,253.0 81.2,253.0 72.2,263.5 32.2,263.5"/><polygon class="seg" data-i="7" points="39.8,236.5 79.8,236.5 70.8,247.0 30.8,247.0"/><polygon class="seg" data-i="8" points="39.1,220.0 79.1,220.0 70.1,230.5 30.1,230.5"/><polygon class="seg" data-i="9" points="39.1,203.5 79.1,203.5 70.1,214.0 30.1,214.0"/><polygon class="seg" data-i="10" points="39.8,187.0 79.8,187.0 70.8,197.5 30.8,197.5"/><polygon class="seg" data-i="11" points="41.2,170.5 81.2,170.5 72.2,181.0 32.2,181.0"/><polygon class="seg" data-i="12" points="43.4,154.0 83.4,154.0 74.4,164.5 34.4,164.5"/><polygon class="seg" data-i="13" points="46.3,137.5 86.3,137.5 77.3,148.0 37.3,148.0"/><polygon class="seg" data-i="14" points="49.9,121.0 89.9,121.0 80.9,131.5 40.9,131.5"/><polygon class="seg rl" data-i="15" points="54.2,104.5 94.2,104.5 85.2,115.0 45.2,115.0"/><polygon class="seg rl" data-i="16" points="59.2,88.0 99.2,88.0 90.2,98.5 50.2,98.5"/><polygon class="seg rl" data-i="17" points="65.0,71.5 105.0,71.5 96.0,82.0 56.0,82.0"/><polygon class="seg on" data-i="0" points="335.0,352.0 295.0,352.0 304.0,362.5 344.0,362.5"/><polygon class="seg on" data-i="1" points="340.8,335.5 300.8,335.5 309.8,346.0 349.8,346.0"/><polygon class="seg on" data-i="2" points="345.8,319.0 305.8,319.0 314.8,329.5 354.8,329.5"/><polygon class="seg on" data-i="3" points="350.1,302.5 310.1,302.5 319.1,313.0 359.1,313.0"/><polygon class="seg on" data-i="4" points="353.7,286.0 313.7,286.0 322.7,296.5 362.7,296.5"/><polygon class="seg" data-i="5" points="356.6,269.5 316.6,269.5 325.6,280.0 365.6,280.0"/><polygon class="seg" data-i="6" points="358.8,253.0 318.8,253.0 327.8,263.5 367.8,263.5"/><polygon class="seg" data-i="7" points="360.2,236.5 320.2,236.5 329.2,247.0 369.2,247.0"/><polygon class="seg" data-i="8" points="360.9,220.0 320.9,220.0 329.9,230.5 369.9,230.5"/><polygon class="seg" data-i="9" points="360.9,203.5 320.9,203.5 329.9,214.0 369.9,214.0"/><polygon class="seg" data-i="10" points="360.2,187.0 320.2,187.0 329.2,197.5 369.2,197.5"/><polygon class="seg" data-i="11" points="358.8,170.5 318.8,170.5 327.8,181.0 367.8,181.0"/><polygon class="seg" data-i="12" points="356.6,154.0 316.6,154.0 325.6,164.5 365.6,164.5"/><polygon class="seg" data-i="13" points="353.7,137.5 313.7,137.5 322.7,148.0 362.7,148.0"/><polygon class="seg" data-i="14" points="350.1,121.0 310.1,121.0 319.1,131.5 359.1,131.5"/><polygon class="seg rl" data-i="15" points="345.8,104.5 305.8,104.5 314.8,115.0 354.8,115.0"/><polygon class="seg rl" data-i="16" points="340.8,88.0 300.8,88.0 309.8,98.5 349.8,98.5"/><polygon class="seg rl" data-i="17" points="335.0,71.5 295.0,71.5 304.0,82.0 344.0,82.0"/></g>
-        <circle class="halo" cx="200" cy="206" r="98"/>
-        <circle class="ab" id="ab" cx="200" cy="206" r="98"/>
-        <circle class="cowl" cx="200" cy="206" r="92"/>
-        <circle class="lip" cx="200" cy="206" r="80"/>
-        <g transform="translate(200 206)">
-          <g class="blades" id="blades"><path transform="rotate(0.00)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(25.71)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(51.43)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(77.14)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(102.86)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(128.57)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(154.29)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(180.00)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(205.71)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(231.43)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(257.14)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(282.86)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(308.57)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/><path transform="rotate(334.29)" d="M0,-17 C11,-36 20,-56 15,-71 L4,-73 C7,-56 1,-36 -6,-17Z"/></g>
-          <circle class="blur" id="blur" r="76"/>
-          <circle class="cone" r="17"/>
-          <path class="swirl" id="swirl" d="M0,-3 C6,-3 7,4 2,6 C-4,8 -9,2 -6,-5"/>
-        </g>
-        <svg x="181" y="56" width="38" height="38" viewBox="0 0 100 100"><use class="mark" href="#jet"/></svg>
-        <text class="st test" x="200" y="342">Spool-up</text>
-        <text class="st go" x="200" y="344">Cleared</text>
-        <text class="sub" x="200" y="366">F-43 Moto OS</text>
-      </svg>
-    </button>
-    <ul class="lamps" aria-hidden="true">
-      <li data-c="amber" style="--n:0"><i></i><span>Engine</span></li>
-      <li data-c="amber" style="--n:1"><i></i><span>ABS</span></li>
-      <li data-c="red" style="--n:2"><i></i><span>Battery</span></li>
-      <li data-c="red" style="--n:3"><i></i><span>Coolant</span></li>
-      <li data-c="amber" style="--n:4"><i></i><span>Fuel</span></li>
-      <li data-c="blue" style="--n:5"><i></i><span>OBD</span></li>
+  <div class="compare" id="compare" data-mode="free" data-reveal>
+    <div class="cmp-top">
+      <h3 class="cmp-h">Pre-flight checklist</h3>
+      <div class="seg" role="radiogroup" aria-label="Show what's included">
+        <button type="button" role="radio" aria-checked="true" data-mode="free">Free</button>
+        <button type="button" role="radio" aria-checked="false" data-mode="pro">With Pro</button>
+        <i class="seg-thumb" aria-hidden="true"></i>
+      </div>
+      <p class="cmp-count" aria-live="polite"><b id="cmpN">10</b> / 19 systems armed</p>
+    </div>
+    <ul class="cmp-list">
+      <li data-t="free"><i class="ic"></i><b>Cockpit</b><span>Speed, gear, engine tiles, six rev gauge styles</span></li>
+      <li data-t="free"><i class="ic"></i><b>Horizon and compass</b><span>Bank, pitch and heading, no adapter needed</span></li>
+      <li data-t="free"><i class="ic"></i><b>RIDE mode</b><span>Declutters above walking pace. Five faces</span></li>
+      <li data-t="free"><i class="ic"></i><b>Fault codes</b><span>Read and clear, freeze frame, readiness, Bus Scan</span></li>
+      <li data-t="free"><i class="ic"></i><b>Crash detection</b><span>Countdown, then a ready-to-send SOS text</span></li>
+      <li data-t="free"><i class="ic"></i><b>Mayday and warnings</b><span>Priority warnings and guided multimeter tests</span></li>
+      <li data-t="free"><i class="ic"></i><b>Logs and navigation</b><span>Fuel, service, chain, trip computer, OpenStreetMap</span></li>
+      <li data-t="free"><i class="ic"></i><b>Mission Complete</b><span>Your route draws itself after every ride</span></li>
+      <li data-t="free"><i class="ic"></i><b>Pilot ranks</b><span>Cadet to Air Marshal, for everyone · next update</span></li>
+      <li data-t="free"><i class="ic"></i><b>Phone heat warnings</b><span>Warm and hot alerts on the mount · next update</span></li>
+      <li data-t="pro"><i class="ic"></i><b>ECU Report</b><span>Misfires, O2 response, fuelling and charging</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Live Analysis</b><span>Long-window wear checks and a guided idle test</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Mechanical Lab</b><span>The 3D engine, with a fault map</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Learn your bike</b><span>Finds your bike's own CAN signals</span></li>
+      <li data-t="pro"><i class="ic"></i><b>CAN sniffer</b><span>Every ID and byte, with mark, filter and save</span></li>
+      <li data-t="pro"><i class="ic"></i><b>More instruments</b><span>Five RIDE faces, five rev gauges, six HYPER colourways</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Flight Debrief</b><span>A share card for every ride, Dyno and Flight Recorder</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Voice guidance</b><span>Spoken navigation and the nav radar scope</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Garage</b><span>More than one bike, each with its own logs</span></li>
     </ul>
+    <p class="terms">Engine data, fault codes and the ECU Report need an OBD-II adapter. What Learn your bike can find depends on what your bike broadcasts. Navigation and weather need a data connection.</p>
   </div>
 </section>
 
-<section class="sec onbike" aria-labelledby="how-h">
-  <div class="head">
-    <p class="tag"><span class="tk">//</span>On your bike</p>
-    <h2 id="how-h">Your phone becomes the dashboard</h2>
-    <p>F-43 Moto OS is a motorcycle app. It runs on the Android phone mounted on your handlebar, and reads your bike's engine through a small OBD-II Bluetooth adapter.</p>
+<!-- ═════════ 05 · pilot ranks ═════════ -->
+<section class="sec ranks" id="ranks" aria-labelledby="ranks-h">
+  <div class="sec-head center" data-reveal>
+    <p class="tag gold" data-scramble><span class="tk">//</span>05 · Pilot ranks <span class="new">Next update</span></p>
+    <h2 id="ranks-h" class="split">Earn your wings.</h2>
+    <p>Every ride with F-43 counts toward your rank, Cadet to Air Marshal. Distance and rides both count. Speed and lean never do: a rank that rewarded them would be a reason to ride harder.</p>
   </div>
-  <figure class="bikefig" id="bikefig">
-    <img src="assets/bike-top-1200.webp" srcset="assets/bike-top-480.webp 480w, assets/bike-top-1200.webp 1200w" sizes="(min-width:1100px) 980px, 92vw" width="1200" height="810" alt="A motorcycle seen from above, with the phone on the handlebar and the OBD-II adapter under the seat." loading="lazy" decoding="async">
-    <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-      <path class="bt" d="M38 50 Q55 14 73.5 50"/>
-      <path class="ld" d="M73.5 56 L80 80"/>
-      <path class="ld" d="M38 45 L26 17"/>
-    </svg>
-    <span class="dev phone" aria-hidden="true"></span>
-    <span class="dev obd" aria-hidden="true"></span>
-    <figcaption>
-      <span class="chip c1"><b>1</b>Phone on the handlebar</span>
-      <span class="chip c2"><b>2</b>OBD-II adapter, in the diagnostic port</span>
-    </figcaption>
-  </figure>
-  <ol class="steps">
-    <li>
-      <h3>Mount the phone</h3>
-      <p>Put your Android phone on the handlebar, in landscape. Speed, lean angle and heading work straight away, from the phone's own sensors.</p>
-    </li>
-    <li>
-      <h3>Plug in an adapter</h3>
-      <p>Plug an OBD-II Bluetooth adapter into your bike's diagnostic port (often under the seat or a side panel) and pair it once. The cockpit now reads the engine: revs, coolant, voltage, fuel trims and fault codes.</p>
-    </li>
-    <li>
-      <h3>Pick your bike</h3>
-      <p>Choose from 54 India-spec presets or add your own. Switch on, the self-test runs, six lamps light and go out, and you're cleared to ride.</p>
-      <p class="note">Set it up before you ride. Hands on the bars, eyes on the road.</p>
-    </li>
-  </ol>
-</section>
-<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j9"/></svg><img class="bk" src="assets/bike-top-480.webp" alt="" width="480" height="324" loading="lazy"></div>
-<section class="tray" id="screens" aria-labelledby="screens-h">
-  <div class="sticky">
-    <div class="head">
-      <p class="tag"><span class="tk">//</span>Real screens</p>
-      <h2 id="screens-h">This is the app, not a mock-up.</h2>
-      <p>Every screen here is a capture from a phone running F-43 Moto OS, with the app's demo data standing in for a bike.</p>
+  <div class="rank-stage" id="rankStage">
+    <div class="rank-read">
+      <p class="rank-promo" id="rankPromo" aria-hidden="true">Promoted</p>
+      <p class="rank-now" id="rankNow" aria-live="polite">Cadet</p>
+      <p class="rank-stats"><span><b id="rkKm">0</b> km</span><span><b id="rkRides">0</b> rides</span></p>
+      <p class="rank-next" id="rankNext">Next: Pilot Officer at 50 km and 3 rides</p>
     </div>
-    <div class="frame cham"><div class="frame-in cham">
-      <div class="track" id="track" tabindex="0" aria-label="App screens. Swipe or scroll to see more.">
-        <figure class="slide"><img src="assets/shots/01-cockpit-1600.webp" srcset="assets/shots/01-cockpit-880.webp 880w, assets/shots/01-cockpit-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="The F-43 cockpit: speed 65 km/h in gear 6, rev gauge, health checks 100 of 100, coolant 87 °C and fuel left." loading="lazy" decoding="async">
-          <figcaption class="cap"><b>Cockpit</b><span class="pill free">Free</span><p>Speed, estimated gear, the rev gauge and engine tiles on one screen. Health checks, coolant and fuel left sit beside the speed.</p></figcaption></figure>
-        <figure class="slide"><img src="assets/shots/02-ride-horizon-1600.webp" srcset="assets/shots/02-ride-horizon-880.webp 880w, assets/shots/02-ride-horizon-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="HORIZON RIDE face: 84 km/h, 4200 rpm, gear 6, artificial horizon, with an amber coolant warning strip." fetchpriority="low" decoding="async">
-          <figcaption class="cap"><b>RIDE · Horizon</b><span class="pill pro">Pro</span><p>Above walking pace the screen declutters into a flight display: speed tape, artificial horizon and revs. Warnings still reach you, like this coolant alert.</p></figcaption></figure>
-        <figure class="slide"><img src="assets/shots/03-ride-dogfight-1600.webp" srcset="assets/shots/03-ride-dogfight-880.webp 880w, assets/shots/03-ride-dogfight-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="DOGFIGHT RIDE face: speed dial at 61 km/h and rev dial at 7872 rpm with fuel, coolant and battery between them." fetchpriority="low" decoding="async">
-          <figcaption class="cap"><b>RIDE · Dogfight</b><span class="pill pro">Pro</span><p>Twin needle dials, speed and revs, with the engine data between them.</p></figcaption></figure>
-        <figure class="slide"><img src="assets/shots/04-ride-apex-1600.webp" srcset="assets/shots/04-ride-apex-880.webp 880w, assets/shots/04-ride-apex-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="APEX RIDE face: rev band to 10,000 rpm, 104 km/h ground speed, gear 4." fetchpriority="low" decoding="async">
-          <figcaption class="cap"><b>RIDE · Apex</b><span class="pill pro">Pro</span><p>A swept rev band across the top and ground speed in the middle, for the open road.</p></figcaption></figure>
-        <figure class="slide"><img src="assets/shots/05-ride-collection-1600.webp" srcset="assets/shots/05-ride-collection-880.webp 880w, assets/shots/05-ride-collection-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="The RIDE collection: BLADES, CLUSTER, MONOLITH, STRIP, CLASSIC, TWIN SPOOL, DOGFIGHT and APEX faces." fetchpriority="low" decoding="async">
-          <figcaption class="cap"><b>Ten RIDE faces</b><span class="pill free">5 free</span><p>Pick the instruments you ride with. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free.</p></figcaption></figure>
-        <figure class="slide"><img src="assets/shots/06-rpm-gauges-1600.webp" srcset="assets/shots/06-rpm-gauges-880.webp 880w, assets/shots/06-rpm-gauges-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="The rev gauge picker with eleven styles, five marked Pro." fetchpriority="low" decoding="async">
-          <figcaption class="cap"><b>Eleven rev gauges</b><span class="pill free">6 free</span><p>ARC, BAR, NEON, LED, NEEDLE and HYPER are free. HUD, TURBINE, VECTOR, NOZZLE and RADAR come with Pro.</p></figcaption></figure>
-        <figure class="slide"><img src="assets/shots/07-ecu-faults-1600.webp" srcset="assets/shots/07-ecu-faults-880.webp 880w, assets/shots/07-ecu-faults-1600.webp 1600w" sizes="(min-width:1200px) 1180px, 92vw" width="1600" height="717" alt="ECU fault list showing two codes in plain language: O2 sensor slow response, and system voltage low." fetchpriority="low" decoding="async">
-          <figcaption class="cap"><b>Fault codes</b><span class="pill free">Free</span><p>Stored engine faults in plain language, with the checks to do next. Always free.</p></figcaption></figure>
-      </div>
-    </div></div>
-    <div class="ruler" aria-hidden="true"><i></i><svg class="j" viewBox="0 0 100 100"><use href="#j12"/></svg></div>
-    <div class="ruler-n" aria-hidden="true"><span>01</span><span>07</span></div>
-    <div class="caps" aria-hidden="true"><div class="cap on"><b>Cockpit</b><span class="pill free">Free</span><p>Speed, estimated gear, the rev gauge and engine tiles on one screen. Health checks, coolant and fuel left sit beside the speed.</p></div><div class="cap"><b>RIDE · Horizon</b><span class="pill pro">Pro</span><p>Above walking pace the screen declutters into a flight display: speed tape, artificial horizon and revs. Warnings still reach you, like this coolant alert.</p></div><div class="cap"><b>RIDE · Dogfight</b><span class="pill pro">Pro</span><p>Twin needle dials, speed and revs, with the engine data between them.</p></div><div class="cap"><b>RIDE · Apex</b><span class="pill pro">Pro</span><p>A swept rev band across the top and ground speed in the middle, for the open road.</p></div><div class="cap"><b>Ten RIDE faces</b><span class="pill free">5 free</span><p>Pick the instruments you ride with. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free.</p></div><div class="cap"><b>Eleven rev gauges</b><span class="pill free">6 free</span><p>ARC, BAR, NEON, LED, NEEDLE and HYPER are free. HUD, TURBINE, VECTOR, NOZZLE and RADAR come with Pro.</p></div><div class="cap"><b>Fault codes</b><span class="pill free">Free</span><p>Stored engine faults in plain language, with the checks to do next. Always free.</p></div></div>
-    <p class="swipe">Swipe for more screens.</p>
+    <ol class="boards" id="boards">
+      <li data-km="0" data-r="0" data-ins="0,0,0" data-short="CDT">Cadet<small>Your first ride</small></li>
+      <li data-km="50" data-r="3" data-ins="0,1,0" data-short="PLT OFF">Pilot Officer<small>50 km · 3 rides</small></li>
+      <li data-km="300" data-r="15" data-ins="1,0,0" data-short="FG OFF">Flying Officer<small>300 km · 15 rides</small></li>
+      <li data-km="1000" data-r="40" data-ins="2,0,0" data-short="FLT LT">Flight Lieutenant<small>1,000 km · 40 rides</small></li>
+      <li data-km="2500" data-r="90" data-ins="2,1,0" data-short="SQN LDR">Squadron Leader<small>2,500 km · 90 rides</small></li>
+      <li data-km="5000" data-r="160" data-ins="3,0,0" data-short="WG CDR">Wing Commander<small>5,000 km · 160 rides</small></li>
+      <li data-km="10000" data-r="300" data-ins="4,0,0" data-short="GP CAPT">Group Captain<small>10,000 km · 300 rides</small></li>
+      <li data-km="20000" data-r="500" data-ins="0,0,1" data-short="AIR CDRE">Air Commodore<small>20,000 km · 500 rides</small></li>
+      <li data-km="35000" data-r="800" data-ins="2,0,1" data-short="AIR MSHL">Air Marshal<small>35,000 km · 800 rides</small></li>
+    </ol>
+    <div class="rank-ctl">
+      <button type="button" class="chip-btn" id="rkPlay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15L19.5 12z"/></svg>Fly a career</button>
+      <label class="rk-slide"><span class="sr">Distance ridden</span><input type="range" id="rkSlider" min="0" max="800" value="0" step="1"></label>
+    </div>
+    <p class="rank-foot">Free for every rider. Demo-mode rides never count.</p>
   </div>
 </section>
 
-
-
-<section class="sec" aria-labelledby="free-h" style="padding-top:0">
-  <div class="head">
-    <p class="tag"><span class="tk">//</span>Pre-flight checklist</p>
-    <h2 id="free-h">What's free, and what's Pro</h2>
-    <p>Safety features and fault codes are free for every rider. F-43 Pro adds deeper analysis and more instruments.</p>
+<!-- ═════════ privacy ═════════ -->
+<section class="privacy" aria-labelledby="pv-h">
+  <h2 id="pv-h" class="sr">Privacy: no account, no cloud, no ads, no analytics.</h2>
+  <div class="pv-lines" aria-hidden="true">
+    <p class="pv-line" data-px="-1"><span>No account</span><span class="o">No cloud</span><span>No ads</span><span class="o">No analytics</span><span>No account</span><span class="o">No cloud</span><span>No ads</span><span class="o">No analytics</span></p>
+    <p class="pv-line" data-px="1"><span class="o">Your rides</span><span>Your phone</span><span class="o">Your data</span><span>Your phone</span><span class="o">Your rides</span><span>Your phone</span><span class="o">Your data</span><span>Your phone</span></p>
   </div>
-  <div class="check">
-    <div class="list cham" data-check>
-      <h3>Free <small>Always</small></h3>
-      <p class="count" aria-hidden="true"><b data-count>8</b>/8 checks</p>
-      <p class="sum">Everything you need to ride with your bike's data in view.</p>
-      <ul>
-        <li style="--k:0"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Cockpit</b><span>Speed, estimated gear and engine tiles, with six rev gauge styles.</span></li>
-        <li style="--k:1"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Horizon and compass</b><span>Bank, pitch and heading from the phone's sensors. No adapter needed.</span></li>
-        <li style="--k:2"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>RIDE mode</b><span>The screen declutters above walking pace. Five RIDE faces.</span></li>
-        <li style="--k:3"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Fault codes</b><span>Read and clear, in plain language, with freeze frame, readiness monitors and Bus Scan.</span></li>
-        <li style="--k:4"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Crash detection</b><span>Counts down, then opens a ready-to-send SOS text with your location for your emergency contacts.</span></li>
-        <li style="--k:5"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Mayday and warnings</b><span>A one-tap MAYDAY button, priority warnings and guided multimeter tests.</span></li>
-        <li style="--k:6"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Logs and navigation</b><span>Fuel, service and chain logs, a trip computer, and turn-by-turn navigation on OpenStreetMap.</span></li>
-        <li style="--k:7"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Mission Complete</b><span>After a ride, your route draws itself and the stats count up.</span></li>
-      </ul>
-    </div>
-    <div class="list pro cham" data-check>
-      <h3>F-43 Pro <small>One-time unlock</small></h3>
-      <p class="count" aria-hidden="true"><b data-count>8</b>/8 checks</p>
-      <p class="sum">No subscription. A 7-day trial of everything starts the first time your bike connects.</p>
-      <ul>
-        <li style="--k:0"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>ECU Report</b><span>The engine computer's own self-tests: misfire counters, O2 sensor response, fuelling and charging.</span></li>
-        <li style="--k:1"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Live Analysis</b><span>Long-window wear checks and a guided idle test.</span></li>
-        <li style="--k:2"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Learn your bike</b><span>Finds what your bike broadcasts on its CAN bus, one signal at a time, and shows you before it saves.</span></li>
-        <li style="--k:3"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>CAN sniffer</b><span>Every ID and byte, with mark, filter and save.</span></li>
-        <li style="--k:4"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>More instruments</b><span>Five more RIDE faces, five more rev gauges and six more HYPER colourways.</span></li>
-        <li style="--k:5"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Flight Debrief</b><span>A share card for every ride, plus Dyno and Flight Recorder.</span></li>
-        <li style="--k:6"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Voice guidance</b><span>Spoken navigation and the nav radar scope.</span></li>
-        <li style="--k:7"><i class="box"><svg viewBox="0 0 12 12"><path d="M1.5 6.5l3 3 6-7"/></svg></i><b>Garage</b><span>More than one bike, each with its own logs.</span></li>
-      </ul>
-    </div>
-  </div>
-  <p class="terms">Engine data, fault codes and the ECU Report need an OBD-II adapter. What Learn your bike can find depends on what your bike broadcasts. Navigation and weather need a data connection.</p>
+  <p class="pv-small" data-reveal>Your rides, logs and bike data stay on your phone. Searching for a place, planning a route or checking the weather asks OpenStreetMap or Open-Meteo, and carries only the place you asked about. Read the <a href="privacy/">privacy policy</a>.</p>
 </section>
 
-<div class="jetline" aria-hidden="true"><span class="trail"></span><svg class="j" viewBox="0 0 100 100"><use href="#j13"/></svg><img class="bk" src="assets/bike-top-480.webp" alt="" width="480" height="324" loading="lazy"></div>
-<section class="sec quiet" aria-label="Privacy">
-  <p class="big">No account. No cloud. <span>No ads. No analytics.</span></p>
-  <p class="small">Your rides, logs and bike data stay on your phone. Read the <a href="privacy/">privacy policy</a>.</p>
+<!-- ═════════ 06 · FAQ ═════════ -->
+<section class="sec faq" id="faq" aria-labelledby="faq-h">
+  <div class="faq-side" data-reveal>
+    <p class="tag" data-scramble><span class="tk">//</span>06 · Questions</p>
+    <h2 id="faq-h" class="split">Is it safe for my bike?</h2>
+    <p>The worries riders raise before they plug an adapter into their bike, answered against what the app does today.</p>
+    <label class="faq-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span class="sr">Search the questions</span><input type="search" id="faqQ" placeholder="Search: battery, warranty, rain…" autocomplete="off"></label>
+    <div class="faq-cats" id="faqCats" role="group" aria-label="Filter by topic">
+      <button type="button" aria-pressed="true" data-c="all">All</button>
+      <button type="button" aria-pressed="false" data-c="start">Getting started</button>
+      <button type="button" aria-pressed="false" data-c="ecu">ECU</button>
+      <button type="button" aria-pressed="false" data-c="wire">Battery and wiring</button>
+      <button type="button" aria-pressed="false" data-c="phone">Phone</button>
+      <button type="button" aria-pressed="false" data-c="safe">Safety and privacy</button>
+    </div>
+    <p class="faq-none" id="faqNone" hidden>No question matches that. Ask us at <a href="mailto:f43moto@gmail.com">f43moto@gmail.com</a>.</p>
+  </div>
+  <div class="faq-list" id="faqList">
+    <details data-c="start"><summary><span>Is F-43 Moto OS free?</span></summary><div class="a"><p>Yes. The download is free, and the safety features, fault codes and the full live dashboard stay free. F-43 Pro is a one-time unlock with no subscription, and a 7-day trial of everything starts the first time your bike connects.</p></div></details>
+    <details data-c="start"><summary><span>Does it work without an OBD-II adapter?</span></summary><div class="a"><p>Partly. Speed, lean, heading, crash detection, navigation and the logs work from the phone alone. Engine data, fault codes and the ECU Report need an OBD-II Bluetooth adapter in your bike's diagnostic port.</p></div></details>
+    <details data-c="start"><summary><span>Can I try it before I buy an adapter?</span></summary><div class="a"><p>Yes. Demo mode runs a simulated bike, so you can try every screen first. Demo rides never count toward your rank or your logs.</p></div></details>
+    <details data-c="ecu"><summary><span>Will using F-43 for hours on a long ride harm my ECU?</span></summary><div class="a"><p>No. F-43 only reads. It asks the ECU for one reading at a time (revs, speed, coolant temperature), waits for the answer, then asks for the next, about ten times a second. That's the same diagnostic link a service-centre scan tool uses, and BS6 bikes are required to support it. If your ECU doesn't report a reading, F-43 stops asking for it.</p><p>Reading doesn't write anything to the ECU's memory, so a ten-hour ride wears it no more than a ten-minute one.</p></div></details>
+    <details data-c="ecu"><summary><span>Does F-43 change anything on my ECU?</span></summary><div class="a"><p>Only one thing, and only when you ask: clearing stored fault codes. You have to scan first, F-43 asks you to confirm, and it refuses while the bike is moving. Everything else only reads or listens: live data, fault scans, ECU details, the module scan, the CAN monitor and Learn your bike.</p></div></details>
+    <details data-c="ecu"><summary><span>Can F-43 tune or remap my bike, or add power?</span></summary><div class="a"><p>No. F-43 can't flash, remap, code or adjust the ECU, and it can't operate any part of the bike. It shows what your bike is doing; it doesn't change how it runs. Power and torque figures in the app are estimates worked out from your riding data.</p></div></details>
+    <details data-c="ecu"><summary><span>Can it turn on the check-engine light or create a fault code?</span></summary><div class="a"><p>Reading data doesn't set fault codes. If a warning light comes on only while the adapter is plugged in, suspect the hardware: a loose plug, a cable wired for a different bike, or a faulty adapter. Unplug it and stop using that cable or adapter until it's checked.</p></div></details>
+    <details data-c="ecu"><summary><span>What happens if the Bluetooth link drops mid-ride?</span></summary><div class="a"><p>Nothing happens to the bike. The adapter plays no part in how the engine runs. F-43 calls out "Link lost", tries to reconnect, and marks the readings that have stopped updating.</p></div></details>
+    <details data-c="ecu"><summary><span>Is it safe to clear fault codes?</span></summary><div class="a"><p>Only after the fault is fixed. Clearing erases the stored codes, turns off the check-engine light and resets the emission readiness monitors. It doesn't repair anything, and the light comes back if the fault is still there. Never clear codes just before a service visit: the code is what your mechanic needs.</p></div></details>
+    <details data-c="wire"><summary><span>Will the adapter drain my bike's battery?</span></summary><div class="a"><p>Not while you ride. Parked is different: on some bikes the diagnostic port stays powered with the key off, and a dongle left in it keeps drawing current. Over days that can flatten a small motorcycle battery. Unplug the adapter if the bike will sit for more than a couple of days.</p></div></details>
+    <details data-c="wire"><summary><span>Can I leave the adapter plugged in for daily riding?</span></summary><div class="a"><p>Yes. Check once whether your port is live with the key off: if the adapter's light stays on with the key out, it's drawing from the battery. Push it fully home and secure it so it can't wobble; a loose plug is the usual cause of dropouts.</p></div></details>
+    <details data-c="wire"><summary><span>Can the wrong cable damage my bike?</span></summary><div class="a"><p>It can. Motorcycle diagnostic ports aren't standard, so the adapter cable has to match your make, model and year. A cable meant for another bike can put power on the wrong pin. Buy the cable and adapter together from one seller, quoting your exact model and year, and never force a plug that doesn't fit.</p></div></details>
+    <details data-c="wire"><summary><span>Can I ride in the rain with the adapter plugged in?</span></summary><div class="a"><p>Most adapters aren't waterproof, and while one is plugged in the port's rubber cap is off. Keep the adapter tucked under the seat, out of spray. Before a wash, or if the bike will stand in the rain, unplug it and refit the cap.</p></div></details>
+    <details data-c="wire"><summary><span>Will using F-43 void my warranty?</span></summary><div class="a"><p>F-43 plugs into the bike's own diagnostic socket, the one the service centre uses, with no cutting, splicing or extra wiring. Apart from clearing codes when you ask, it changes nothing on the ECU. We can't speak for every maker's warranty terms, so check your booklet if you're unsure, and unplug the adapter before a service visit.</p></div></details>
+    <details data-c="phone"><summary><span>Will F-43 drain my phone's battery?</span></summary><div class="a"><p>F-43 keeps the screen on while it's open, because it's a mounted dashboard. Plan for it the way you would for navigation with the screen on, and on long rides power the phone from a USB charger on the bike. RIDE mode shows the phone's battery level.</p></div></details>
+    <details data-c="phone"><summary><span>My phone gets hot on the mount. Is that a problem?</span></summary><div class="a"><p>Direct sun, a bright screen, charging and GPS together make any phone hot, and Android protects itself by dimming, slowing charging or closing apps. Mount the phone where air reaches the back, use a sun visor, and let it cool if Android warns about temperature. The next update adds F-43's own phone heat warnings.</p></div></details>
+    <details data-c="phone"><summary><span>Does it keep working if I switch apps or the screen turns off?</span></summary><div class="a"><p>Yes, while it's connected to a real adapter. A "bike link" notification keeps readings, the trip computer and ride recording running in the background. Exempt F-43 from Android battery optimisation, or some phones stop it anyway.</p></div></details>
+    <details data-c="phone"><summary><span>Does it need internet or use my mobile data?</span></summary><div class="a"><p>The dashboard, warnings, fault scans and ride log work with no internet. Crash SOS opens a text message, so it needs mobile signal, not data. Searching for a place, planning a route, weather, and map areas you haven't viewed before use mobile data.</p></div></details>
+    <details data-c="safe"><summary><span>Is it safe to use while riding?</span></summary><div class="a"><p>F-43 is built to be read at a glance, never operated on the move. Pair the adapter, pick your bike and set up routes while parked. With RIDE auto-engage on, the screen clears down to speed, lean, vitals and the ride clock above 8 km/h. Fault scans and clearing refuse to run while the bike is moving.</p></div></details>
+    <details data-c="safe"><summary><span>Does F-43 send my bike's data anywhere?</span></summary><div class="a"><p>No. There's no account, no cloud and no analytics. Readings, fault codes, ride logs and your bike's VIN stay on your phone unless you choose to share them. Place search, routing and weather ask OpenStreetMap or Open-Meteo, and that request carries only the place or approximate location you asked about.</p></div></details>
+  </div>
 </section>
 
-<section class="tko" id="takeoff" aria-labelledby="end-h">
-  <div class="stage" id="stage">
-    <div class="rwy" id="rwy" aria-hidden="true">
-      <div class="asphalt"></div>
-      <div class="lt l"></div><div class="lt r"></div>
-      <div class="edge l"></div><div class="edge r"></div>
-      <div class="cl"></div>
-      <div class="marks"><span class="tdz t3"></span><span class="tdz t2"></span><span class="tdz t1"></span><b>27</b><span class="keys"></span></div>
-      <div class="rush"></div>
+<!-- ═════════ finale ═════════ -->
+<section class="finale" id="takeoff" aria-labelledby="end-h">
+  <canvas class="warp" id="warp" aria-hidden="true"></canvas>
+  <div class="fin-copy">
+    <p class="tag" data-scramble><span class="tk">//</span>Runway 27 · Tower</p>
+    <h2 id="end-h" class="split">Cleared for take-off.</h2>
+    <p>Your bike's cockpit, free on Google Play.</p>
+    <div class="ctas">
+      <span class="pad" id="pad"><a class="play cham xl" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto" data-magnet>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
+      </a><span class="burst" aria-hidden="true"><i></i><i></i><i></i></span></span>
+      <a class="ghost" href="https://www.instagram.com/f43_moto_os/">Follow @f43_moto_os</a>
     </div>
-    <div class="tape l" aria-hidden="true"><i></i></div><div class="tape r" aria-hidden="true"><i></i></div>
-    <span class="sbrk a" aria-hidden="true"></span><span class="sbrk b" aria-hidden="true"></span><span class="sbrk c" aria-hidden="true"></span><span class="sbrk d" aria-hidden="true"></span>
-    <div class="tbike" id="tbike" aria-hidden="true"><img src="assets/bike-top-480.webp" alt="" width="480" height="324" loading="lazy"></div>
-    <div class="tjet" id="tjet" aria-hidden="true">
-      <svg class="shadow" viewBox="0 0 100 100"><use href="#jet"/></svg>
-      <div class="body"><span class="ab l"></span><span class="ab r"></span><svg viewBox="0 0 100 100"><use href="#jet"/></svg></div>
-    </div>
-    <p class="call" aria-hidden="true"><span id="call">Line up and wait</span></p>
-    <div class="tko-head">
-      <p class="tag"><span class="tk">//</span>Runway 27</p>
-      <h2 id="end-h">Cleared for take-off.</h2>
-      <p>Your bike&#39;s cockpit, on Google Play.</p>
-      <div class="ctas">
-        <span class="pad" id="pad"><a class="play cham" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5v17L20 12z"/></svg>Get it on Google Play
-        </a><span class="burst" aria-hidden="true"><i></i><i></i><i></i></span></span>
-        <a class="ghost" href="https://www.instagram.com/f43_moto_os/">Follow @f43_moto_os</a>
-      </div>
-    </div>
+    <p class="fin-call" aria-hidden="true"><span id="call">Hover the button for afterburner</span></p>
   </div>
 </section>
 </main>
 
-<footer>
-  <nav aria-label="Footer">
-    <a href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Google Play</a>
-    <a href="https://www.instagram.com/f43_moto_os/">Instagram</a>
-    <a href="privacy/">Privacy policy</a>
-    <a href="mailto:f43moto@gmail.com">Contact</a>
-  </nav>
+<footer class="foot">
+  <div class="foot-top">
+    <a class="brand" href="#top"><img src="assets/badge-320.webp" alt="" width="34" height="34" loading="lazy"><span>F-43 <em>Moto OS</em></span></a>
+    <nav aria-label="Footer">
+      <a href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Google Play</a>
+      <a href="https://www.instagram.com/f43_moto_os/">Instagram</a>
+      <a href="privacy/">Privacy policy</a>
+      <a href="mailto:f43moto@gmail.com">Contact</a>
+    </nav>
+  </div>
   <p>F-43 Moto OS by Hangar 43. © 2026 Hangar 43.</p>
-  <p>Bike presets are for riders of those models. F-43 Moto OS is not affiliated with or endorsed by any motorcycle maker. Map data © OpenStreetMap contributors.</p>
+  <p>F-43 Moto OS is a rider aid, not a substitute for safe riding or your bike's own instruments. Bike presets are for riders of those models; F-43 Moto OS is not affiliated with or endorsed by any motorcycle maker. Screen recordings use the app's demo mode. Map data © OpenStreetMap contributors.</p>
 </footer>
-
-<script>
-(() => {
-  const root = document.documentElement;
-  root.classList.add('js');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  const hero = document.getElementById('hero');
-  const vec = document.getElementById('vec');
-  const blades = document.getElementById('blades');
-  const blur = document.getElementById('blur');
-  const swirl = document.getElementById('swirl');
-  const ab = document.getElementById('ab');
-  const N = 18, IDLE = 5, PEAK = 1900, IDLE_SPIN = 140;
-
-  // Rev ladders: segments grouped by height, left and right together.
-  const rows = Array.from({ length: N }, () => []);
-  vec.querySelectorAll('.seg').forEach((el) => rows[+el.dataset.i].push(el));
-  let lit = IDLE;
-  const setLevel = (n) => {
-    if (n === lit) return;
-    rows.forEach((r, i) => r.forEach((el) => el.classList.toggle('on', i < n)));
-    lit = n;
-  };
-
-  const ease = (x) => x * x * (3 - 2 * x);
-  const levelAt = (t) =>
-    t < .5 ? 0 : t < 1.6 ? N * ease((t - .5) / 1.1) : t < 2.2 ? N : t < 3 ? N - (N - IDLE) * ease((t - 2.2) / .8) : IDLE;
-  const spinAt = (t) =>
-    t < .35 ? 0 : t < 1.7 ? PEAK * ((t - .35) / 1.35) ** 2 : t < 2.2 ? PEAK : t < 3.3 ? PEAK - (PEAK - IDLE_SPIN) * (1 - (1 - (t - 2.2) / 1.1) ** 3) : IDLE_SPIN;
-
-  // Start-up test, then the turbine idles. Tap the instrument to run it again.
-  let t0 = 0, prev = 0, angle = 0, raf = 0, still = false, visible = true;
-  const frame = (now) => {
-    raf = 0;
-    const t = (now - t0) / 1000, dt = Math.min(.05, (now - prev) / 1000);
-    prev = now;
-    const w = spinAt(t);
-    angle = (angle + w * dt) % 360;
-    blades.setAttribute('transform', `rotate(${angle.toFixed(2)})`);
-    swirl.setAttribute('transform', `rotate(${(angle * .5).toFixed(2)})`);
-    blur.style.opacity = Math.min(.95, w / PEAK * 1.6).toFixed(3);
-    blades.style.opacity = (1 - .55 * Math.min(1, w / PEAK)).toFixed(3);
-    setLevel(Math.round(levelAt(t)));
-    ab.classList.toggle('on', t > 1.45 && t < 2.45);
-    vec.classList.toggle('testing', t < 2.95);
-    if (!still && visible) raf = requestAnimationFrame(frame);
-  };
-  const run = () => { if (!raf && !still && visible) { prev = performance.now(); raf = requestAnimationFrame(frame); } };
-  const boot = () => {
-    if (reduce.matches) return;
-    hero.classList.remove('boot'); void hero.offsetWidth; hero.classList.add('boot');
-    t0 = performance.now(); setLevel(0); vec.classList.add('testing');
-    if (still) toggleStill(false);
-    run();
-  };
-  document.getElementById('replay').addEventListener('click', boot);
-
-  // Pause and play for everything that keeps moving.
-  const motionBtn = document.getElementById('motion');
-  const toggleStill = (v) => {
-    still = v; root.classList.toggle('still', v);
-    motionBtn.setAttribute('aria-pressed', String(v));
-    motionBtn.textContent = v ? 'Play motion' : 'Pause motion';
-    if (v && raf) { cancelAnimationFrame(raf); raf = 0; } else run();
-  };
-  motionBtn.addEventListener('click', () => toggleStill(!still));
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) run(); }).observe(hero);
-  boot();
-
-  // One-shot moments as things scroll into view.
-  const io = new IntersectionObserver((es) => es.forEach((e) => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-    io.unobserve(el);
-    if (el.classList.contains('jetline')) { el.classList.add('go'); return; }
-    el.classList.add('done');
-    const b = el.querySelector('[data-count]');
-    if (b && !reduce.matches) {
-      const total = el.querySelectorAll('li').length;
-      for (let k = 0; k <= total; k++) setTimeout(() => { b.textContent = k; }, 90 * k + 120);
-    }
-  }), { threshold: 0.35 });
-  document.querySelectorAll('[data-check], .jetline, #bikefig').forEach((el) => {
-    if (!reduce.matches && el.matches('[data-check]')) el.querySelector('[data-count]').textContent = '0';
-    io.observe(el);
-  });
-
-  // The screen tray: scroll pans the screens on wide screens.
-  const tray = document.getElementById('screens');
-  const track = document.getElementById('track');
-  const caps = [...document.querySelectorAll('.caps .cap')];
-  const fill = document.querySelector('.ruler i');
-  const rjet = document.querySelector('.ruler .j');
-  const wide = matchMedia('(min-width: 900px) and (prefers-reduced-motion: no-preference)');
-  const native = CSS.supports('(animation-timeline: view()) and (animation-range: 0% 100%)');
-  const n = caps.length;
-  let ticking = false, last = -1;
-  const update = () => {
-    ticking = false;
-    if (!wide.matches) return;
-    const r = tray.getBoundingClientRect();
-    const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
-    if (!native) [track, fill, rjet].forEach((el) => el.style.setProperty('--p', p));
-    const k = Math.min(n - 1, Math.round(p * (n - 1)));
-    if (k !== last) { caps.forEach((c, j) => c.classList.toggle('on', j === k)); last = k; }
-  };
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  addEventListener('resize', update);
-  wide.addEventListener('change', update);
-  update();
-
-  // Runway 27: scroll drives the take-off roll, rotation, climb and the run-in to the Play button.
-  const tko = document.getElementById('takeoff');
-  const stage = document.getElementById('stage');
-  const rwy = document.getElementById('rwy');
-  const tj = document.getElementById('tjet');
-  const tb = document.getElementById('tbike');
-  const pad = document.getElementById('pad');
-  const call = document.getElementById('call');
-  const CALLS = [[0, 'Line up and wait'], [.07, 'Take-off power'], [.36, 'V1'], [.47, 'Rotate'], [.58, 'Positive climb'], [.72, 'Gear up'], [.86, 'Get it on Google Play']];
-  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
-  const smooth = (x) => { x = clamp(x); return x * x * (3 - 2 * x); };
-  const lerp = (a, b, t) => a + (b - a) * t;
-  let tTick = false, lastCall = '';
-  const fly = () => {
-    tTick = false;
-    if (reduce.matches) { pad.classList.add('lit'); return; }
-    const r = tko.getBoundingClientRect();
-    const H = stage.clientHeight, W = stage.clientWidth;
-    const p = clamp(-r.top / Math.max(1, r.height - H));
-    const P0 = .07, PR = .55;
-    const Dmax = 4.2 * H, v = 2 * Dmax / (PR - P0);
-    const roll = clamp((p - P0) / (PR - P0));
-    const D = p < PR ? Dmax * roll * roll : Dmax + v * (p - PR);
-    const speed = p < P0 ? 0 : p < PR ? roll : 1;
-    rwy.style.setProperty('--cl', (D % 110).toFixed(1) + 'px');
-    rwy.style.setProperty('--lt', (D % 70).toFixed(1) + 'px');
-    rwy.style.setProperty('--mk', Math.min(D, 3 * H).toFixed(1) + 'px');
-    rwy.style.setProperty('--rush', (speed * .9).toFixed(2));
-    stage.style.setProperty('--tp', (D * .6 % 120).toFixed(1) + 'px');
-    stage.style.setProperty('--rwh', (rwy.offsetWidth / 2).toFixed(0) + 'px');
-    const alt = smooth((p - .5) / .32);
-    rwy.style.scale = (1 - .42 * alt).toFixed(3);
-    rwy.style.opacity = (1 - .7 * alt).toFixed(3);
-
-    // jet: rolls in place, lifts toward the camera, then runs in to the Play button
-    const jw = tj.offsetWidth, jh = tj.offsetHeight;
-    const pr = pad.getBoundingClientRect(), sr = stage.getBoundingClientRect();
-    const bx = pr.left - sr.left + pr.width / 2, by = pr.top - sr.top + pr.height / 2;
-    const run = smooth((p - .66) / .27);
-    const lift = smooth((p - .48) / .2);
-    const shake = speed > .15 && p < PR + .03 ? (Math.random() - .5) * 1.6 * speed : 0;
-    const cx = lerp(W / 2, bx, run) + shake, cy = lerp(.64 * H, by, run);
-    const sc = lerp(1, 1.6, lift) * lerp(1, .42, run);
-    tj.style.translate = `${(cx - jw / 2).toFixed(1)}px ${(cy - jh / 2).toFixed(1)}px`;
-    tj.style.scale = sc.toFixed(3);
-    tj.style.opacity = (1 - smooth((p - .9) / .06)).toFixed(3);
-    tj.style.setProperty('--thr', (p < P0 ? .25 : p < .12 ? lerp(.25, 1, (p - P0) / .05) : p < .8 ? 1 : .7).toFixed(2));
-    tj.style.setProperty('--sx', (6 + 70 * alt).toFixed(1) + 'px');
-    tj.style.setProperty('--sy', (9 + 120 * alt).toFixed(1) + 'px');
-    tj.style.setProperty('--ss', (1 - .35 * alt).toFixed(3));
-    tj.querySelector('.shadow').style.opacity = (.55 * (1 - alt)).toFixed(3);
-
-    // the bike rolls beside the jet, drops back, and stays on the ground as the runway falls away
-    const bw = tb.offsetWidth, bh = tb.offsetHeight, rwW = rwy.offsetWidth;
-    const gs = 1 - .42 * alt, ox = W / 2, oy = .804 * H;
-    const bx0 = W / 2 - rwW * .26 + shake * .6, by0 = .66 * H + 40 * roll + 90 * smooth((p - .5) / .3);
-    tb.style.translate = `${(ox + gs * (bx0 - ox) - bw / 2).toFixed(1)}px ${(oy + gs * (by0 - oy) - bh / 2).toFixed(1)}px`;
-    tb.style.scale = gs.toFixed(3);
-    tb.style.opacity = (1 - .45 * alt).toFixed(3);
-
-    let c = CALLS[0][1];
-    for (const [at, txt] of CALLS) if (p >= at) c = txt;
-    if (c !== lastCall) { call.textContent = c; call.parentElement.classList.toggle('amber', c === 'V1' || c === 'Rotate'); lastCall = c; }
-    pad.classList.toggle('lit', p > .93);
-  };
-  addEventListener('scroll', () => { if (!tTick) { tTick = true; requestAnimationFrame(fly); } }, { passive: true });
-  addEventListener('resize', fly);
-  fly();
-})();
-</script>
 </body>
 </html>
