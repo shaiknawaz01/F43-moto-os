@@ -45,6 +45,120 @@
   };
   motionBtn.addEventListener('click', () => setStill(!still));
 
+  // ── sound: synthesized in the page, nothing to download, off until asked for ──
+  const sfx = (() => {
+    let ac = null, out = null, noiseBuf = null, on = false, gestured = false;
+    const subs = [];
+    try { on = localStorage.getItem('f43-sound') === '1'; } catch (e) { /* storage blocked */ }
+    ['pointerdown', 'keydown'].forEach((ev) => addEventListener(ev, () => { gestured = true; }, { once: true, capture: true }));
+    // browsers only start audio after a click or key press on the page
+    const allowed = () => (navigator.userActivation ? navigator.userActivation.hasBeenActive : gestured);
+    const ctx = () => {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC || !allowed()) return null;
+      if (!ac) {
+        ac = new AC();
+        const comp = ac.createDynamicsCompressor();
+        comp.threshold.value = -20; comp.ratio.value = 4;
+        out = ac.createGain(); out.gain.value = 0.8;
+        out.connect(comp); comp.connect(ac.destination);
+        noiseBuf = ac.createBuffer(1, ac.sampleRate, ac.sampleRate);
+        const d = noiseBuf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      }
+      if (ac.state === 'suspended') ac.resume();
+      return ac;
+    };
+    const env = (g, t, vol, a, dur) => {
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + a);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    };
+    const tone = (f, { at = 0, dur = 0.08, vol = 0.1, type = 'sine', to = 0, a = 0.004 } = {}) => {
+      const t = ac.currentTime + at, o = ac.createOscillator(), g = ac.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(f, t);
+      if (to) o.frequency.exponentialRampToValueAtTime(to, t + dur);
+      env(g, t, vol, a, dur);
+      o.connect(g); g.connect(out);
+      o.start(t); o.stop(t + dur + 0.03);
+    };
+    const hiss = ({ at = 0, dur = 0.2, vol = 0.06, f = 2000, to = 0, q = 1, type = 'bandpass', a = 0.005 } = {}) => {
+      const t = ac.currentTime + at, s = ac.createBufferSource(), fl = ac.createBiquadFilter(), g = ac.createGain();
+      s.buffer = noiseBuf; s.loop = true;
+      fl.type = type; fl.Q.value = q;
+      fl.frequency.setValueAtTime(f, t);
+      if (to) fl.frequency.exponentialRampToValueAtTime(to, t + dur);
+      env(g, t, vol, a, dur);
+      s.connect(fl); fl.connect(g); g.connect(out);
+      s.start(t); s.stop(t + dur + 0.03);
+    };
+    const SOUNDS = {
+      // a two-pip lock tone as the reticle locks on
+      lock: () => { tone(1480, { dur: 0.03, vol: 0.03, type: 'square' }); tone(1976, { at: 0.045, dur: 0.03, vol: 0.025, type: 'square' }); },
+      click: () => { tone(900, { dur: 0.05, vol: 0.06, type: 'triangle', to: 1400 }); hiss({ dur: 0.03, vol: 0.025, f: 5000 }); },
+      on: () => [660, 990, 1320].forEach((f, i) => tone(f, { at: i * 0.07, dur: 0.2, vol: 0.07, type: 'triangle' })),
+      off: () => [990, 660].forEach((f, i) => tone(f, { at: i * 0.07, dur: 0.15, vol: 0.05, type: 'triangle' })),
+      // the screen collapsing to a line, then coming back
+      crtOff: () => { tone(1700, { dur: 0.26, vol: 0.05, to: 70 }); hiss({ dur: 0.22, vol: 0.04, f: 4000, to: 300 }); },
+      crtOn: () => { tone(80, { dur: 0.38, vol: 0.05, to: 1500, type: 'triangle' }); hiss({ dur: 0.32, vol: 0.03, f: 300, to: 6000 }); },
+      // systems arming one by one, then a chord
+      arm: () => {
+        for (let k = 0; k < 9; k++) tone(700 + k * 60, { at: k * 0.045, dur: 0.03, vol: 0.04, type: 'square' });
+        [1046.5, 1318.5, 1568].forEach((f) => tone(f, { at: 0.46, dur: 1, vol: 0.04, a: 0.01 }));
+      },
+      disarm: () => { for (let k = 0; k < 5; k++) tone(1100 - k * 100, { at: k * 0.04, dur: 0.03, vol: 0.035, type: 'square' }); },
+      // a short fanfare that climbs with the rank
+      promote: (j = 0) => {
+        const b = 523.25 * 2 ** ((j * 1.5) / 12);
+        [1, 1.26, 1.5, 2].forEach((m, i) => tone(b * m, { at: i * 0.075, dur: 0.34, vol: 0.06, type: 'triangle' }));
+        hiss({ at: 0.22, dur: 0.5, vol: 0.02, f: 7000, type: 'highpass' });
+      },
+      open: () => tone(520, { dur: 0.08, vol: 0.045, to: 880, type: 'triangle' }),
+      close: () => tone(880, { dur: 0.08, vol: 0.035, to: 520, type: 'triangle' }),
+      // radar ping with a faint echo, as a new section comes up
+      ping: () => { tone(1568, { dur: 0.45, vol: 0.02, a: 0.002 }); tone(1568, { at: 0.17, dur: 0.35, vol: 0.008, a: 0.002 }); },
+      shift: () => { hiss({ dur: 0.05, vol: 0.05, f: 1800, q: 2 }); tone(190, { dur: 0.06, vol: 0.05, type: 'square', to: 120 }); },
+      call: () => { tone(880, { dur: 0.11, vol: 0.04, type: 'square' }); tone(660, { at: 0.13, dur: 0.15, vol: 0.04, type: 'square' }); },
+      cleared: () => [784, 1046.5, 1568].forEach((f, i) => tone(f, { at: i * 0.09, dur: 0.45, vol: 0.05, type: 'triangle' })),
+    };
+    let lastPlay = 0;
+    const play = (name, arg) => {
+      if (!on || !ctx()) return;
+      if (name === 'lock') { const n = performance.now(); if (n - lastPlay < 70) return; lastPlay = n; }
+      SOUNDS[name](arg);
+    };
+    const set = (v) => {
+      on = v;
+      try { localStorage.setItem('f43-sound', v ? '1' : '0'); } catch (e) { /* storage blocked */ }
+      if (ctx()) SOUNDS[v ? 'on' : 'off']();
+      subs.forEach((f) => f(v));
+    };
+    return {
+      get on() { return on; },
+      get out() { return out; },
+      get noise() { return noiseBuf; },
+      ready: () => on && !!ctx(),
+      ctx, play, set,
+      sub: (f) => subs.push(f),
+    };
+  })();
+  const sfxBtn = $('#sfx');
+  const showSfx = (v) => {
+    sfxBtn.setAttribute('aria-pressed', String(v));
+    sfxBtn.title = v ? 'Sound on' : 'Sound off';
+    $('#sfxLbl').textContent = v ? 'Turn sound off' : 'Turn sound on';
+  };
+  sfx.sub(showSfx);
+  showSfx(sfx.on);
+  sfxBtn.addEventListener('click', (e) => { e.f43 = 1; sfx.set(!sfx.on); });
+  // every other link and button gets a click; the ones with their own sound mark the event
+  document.addEventListener('click', (e) => {
+    if (e.f43) return;
+    const el = e.target.closest && e.target.closest('a, button');
+    if (el && !el.closest('#throttle')) sfx.play('click');
+  });
+
   // ── text effects ──
   $$('.split').forEach((el) => {
     let i = 0;
@@ -175,9 +289,12 @@
     const max = Math.max(1, root.scrollHeight - innerHeight);
     SECS.forEach((s) => { s.mark.style.top = (clamp((s.el.getBoundingClientRect().top + scrollY) / max) * 100).toFixed(2) + '%'; });
   };
+  let curSec = null;
   const secIO = new IntersectionObserver((es) => es.forEach((e) => {
     if (!e.isIntersecting) return;
     const id = e.target.id;
+    if (curSec && id !== curSec) sfx.play('ping');
+    curSec = id;
     navLinks.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + id));
     SECS.forEach((s) => s.mark.classList.toggle('on', s.id === id));
   }), { rootMargin: '-45% 0px -50% 0px' });
@@ -231,7 +348,9 @@
       if (e.pointerType !== 'mouse') return;
       px = e.clientX; py = e.clientY;
       const t = e.target.closest && e.target.closest(LOCK);
-      lockEl = t && !t.closest('.boot, .menu') ? t : null;
+      const next = t && !t.closest('.boot, .menu') ? t : null;
+      if (next && next !== lockEl) sfx.play('lock');
+      lockEl = next;
       ret.classList.add('on');
       ret.classList.toggle('lock', !!lockEl);
       ret.classList.toggle('gold', !!(e.target.closest && e.target.closest('#pro, #ranks')));
@@ -397,13 +516,12 @@
       });
     }
 
-    // engine sound: a small synth, off until asked for
-    let ac = null, eng = null, soundOn = false;
-    const startSound = () => {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return false;
-      if (!ac) {
-        ac = new AC();
+    // engine sound: a small synth on the page's sound switch
+    let eng = null;
+    const build = () => {
+      const ac = sfx.ctx();
+      if (!ac) return;
+      {
         const o1 = ac.createOscillator(), o2 = ac.createOscillator(), o3 = ac.createOscillator();
         o1.type = 'sawtooth'; o2.type = 'square'; o3.type = 'triangle';
         const g1 = ac.createGain(), g2 = ac.createGain(), g3 = ac.createGain();
@@ -416,30 +534,28 @@
         const master = ac.createGain(); master.gain.value = 0;
         o1.connect(g1); o2.connect(g2); o3.connect(g3);
         [g1, g2, g3].forEach((g) => g.connect(ws));
-        ws.connect(f); f.connect(master); master.connect(ac.destination);
+        ws.connect(f); f.connect(master); master.connect(sfx.out);
         [o1, o2, o3].forEach((o) => o.start());
-        eng = { o1, o2, o3, f, master };
+        eng = { ac, o1, o2, o3, f, master };
       }
-      ac.resume();
-      return true;
     };
     const tuneSound = () => {
-      if (!eng) return;
-      const now = ac.currentTime, fire = S.rpm / 30;
+      const live = visible && !still && sfx.ready();
+      if (!eng) { if (!live) return; build(); if (!eng) return; }
+      const now = eng.ac.currentTime, fire = S.rpm / 30;
       eng.o1.frequency.setTargetAtTime(fire, now, 0.03);
       eng.o2.frequency.setTargetAtTime(fire * 0.5, now, 0.03);
       eng.o3.frequency.setTargetAtTime(fire * 2.01, now, 0.03);
       eng.f.frequency.setTargetAtTime(260 + S.rpm * 0.2 + S.thr * 900, now, 0.05);
-      eng.master.gain.setTargetAtTime(soundOn && visible && !still ? 0.045 + 0.08 * S.thr : 0, now, 0.08);
+      eng.master.gain.setTargetAtTime(live ? 0.04 + 0.07 * S.thr : 0, now, 0.08);
     };
-    soundBtn.addEventListener('click', () => {
-      soundOn = !soundOn;
-      if (soundOn && !startSound()) soundOn = false;
-      soundBtn.setAttribute('aria-pressed', String(soundOn));
-      soundBtn.querySelector('b').textContent = soundOn ? 'On' : 'Off';
-      tuneSound();
-      wakeHud();
-    });
+    const showEng = (v) => {
+      soundBtn.setAttribute('aria-pressed', String(v));
+      soundBtn.querySelector('b').textContent = v ? 'On' : 'Off';
+    };
+    showEng(sfx.on);
+    sfx.sub((v) => { showEng(v); tuneSound(); });
+    soundBtn.addEventListener('click', (e) => { e.f43 = 1; sfx.set(!sfx.on); wakeHud(); });
 
     const step = (dt) => {
       t += dt;
@@ -466,7 +582,7 @@
       S.rpm = Math.min(RED, S.rpm + (target - S.rpm) * Math.min(1, dt * 12));
       S.cd -= dt;
       if (S.cd <= 0) {
-        if (S.rpm > 8350 && g < 6) { S.g++; S.cut = 0.14; S.cd = 0.5; S.flash = 1; }
+        if (S.rpm > 8350 && g < 6) { S.g++; S.cut = 0.14; S.cd = 0.5; S.flash = 1; sfx.play('shift'); }
         else if (g > 1 && rpmV < 2600 && (S.v / RATIO[g - 1]) * 1000 < 7000 && S.thr < 0.5) { S.g--; S.cd = 0.4; }
       }
       S.flash = Math.max(0, S.flash - dt * 3);
@@ -520,6 +636,7 @@
         const fade = clamp(y / (f * 0.35)) * clamp((f * 1.15 - y) / (f * 0.5));
         ctx.strokeStyle = `rgba(${CY},${(fade * 0.2).toFixed(3)})`;
         line(-diag, y, diag, y);
+        if (z < 3.5) continue; // a dash this close would fill half the screen
         const z2 = z + 3, y2 = (f * camH) / z2;
         ctx.fillStyle = `rgba(${TX},${(fade * 0.45).toFixed(3)})`;
         ctx.beginPath();
@@ -791,9 +908,11 @@
       setTab(i);
       if (user) tabs[i].scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduce ? 'auto' : 'smooth' });
       if (reduce || !loaded) { load(i); return; }
+      if (user) sfx.play('crtOff');
       screen.classList.remove('on');
       screen.classList.add('off');
       setTimeout(() => {
+        if (user) sfx.play('crtOn');
         load(i);
         screen.classList.remove('off');
         screen.classList.add('on');
@@ -801,7 +920,7 @@
       }, 280);
     };
     tabs.forEach((b, i) => {
-      b.addEventListener('click', () => select(i, true));
+      b.addEventListener('click', (e) => { e.f43 = 1; select(i, true); });
       b.addEventListener('keydown', (e) => {
         const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
         if (!d) return;
@@ -939,10 +1058,12 @@
     const btns = $$('.seg button', box);
     $$('.cmp-list li[data-t=pro]', box).forEach((li, k) => li.style.setProperty('--k', k));
     let cur = 10, timer = 0;
-    btns.forEach((b) => b.addEventListener('click', () => {
+    btns.forEach((b) => b.addEventListener('click', (e) => {
+      e.f43 = 1;
       const mode = b.dataset.mode;
       if (box.dataset.mode === mode) return;
       box.dataset.mode = mode;
+      sfx.play(mode === 'pro' ? 'arm' : 'disarm');
       btns.forEach((x) => x.setAttribute('aria-checked', String(x === b)));
       const to = mode === 'pro' ? 19 : 10;
       clearInterval(timer);
@@ -1021,6 +1142,7 @@
           promo.classList.remove('on'); void promo.offsetWidth; promo.classList.add('on');
           scramble(nowEl, 500);
           sparks(R[j].li);
+          sfx.play('promote', j);
         }
         const n = R[j + 1];
         nextEl.textContent = n ? `Next: ${n.name} at ${fmt(n.km)} km and ${n.r} rides` : 'Top of the service. Blue skies, Air Marshal.';
@@ -1092,6 +1214,7 @@
       none.hidden = shown > 0;
     };
     q.addEventListener('input', apply);
+    items.forEach((d) => d.addEventListener('toggle', () => { if (!d.hidden) sfx.play(d.open ? 'open' : 'close'); }));
     cats.forEach((b) => b.addEventListener('click', () => {
       cat = b.dataset.c;
       cats.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
@@ -1120,7 +1243,33 @@
       lastCall = s;
       call.textContent = s;
       callBox.classList.toggle('amber', s === 'V1' || s === 'Rotate' || s === 'Afterburner');
+      if (s === 'V1' || s === 'Rotate') sfx.play('call');
+      else if (s.startsWith('Cleared')) sfx.play('cleared');
     };
+    // rushing air that rises with the warp, and an afterburner rumble under it
+    let wind = null;
+    const windTune = (live) => {
+      live = live && sfx.ready();
+      if (!wind) {
+        if (!live) return;
+        const ac = sfx.ctx();
+        const s = ac.createBufferSource(), bp = ac.createBiquadFilter(), lp = ac.createBiquadFilter();
+        const g1 = ac.createGain(), g2 = ac.createGain();
+        s.buffer = sfx.noise; s.loop = true;
+        bp.type = 'bandpass'; bp.Q.value = 0.7;
+        lp.type = 'lowpass'; lp.frequency.value = 150;
+        g1.gain.value = 0; g2.gain.value = 0;
+        s.connect(bp); bp.connect(g1); g1.connect(sfx.out);
+        s.connect(lp); lp.connect(g2); g2.connect(sfx.out);
+        s.start();
+        wind = { ac, bp, g1, g2 };
+      }
+      const t = wind.ac.currentTime;
+      wind.g1.gain.setTargetAtTime(live ? 0.012 + speed * 0.045 : 0, t, 0.15);
+      wind.bp.frequency.setTargetAtTime(500 + speed * 2200, t, 0.15);
+      wind.g2.gain.setTargetAtTime(live ? boostT * 0.55 : 0, t, 0.1);
+    };
+    sfx.sub(() => windTune(vis && !still));
     scrollHooks.push(() => {
       const r = sec.getBoundingClientRect();
       prog = clamp((innerHeight - r.top) / innerHeight);
@@ -1139,10 +1288,11 @@
     pad.addEventListener('focusout', off);
 
     const loop = (dt) => {
-      if (!vis || still) return false;
+      if (!vis || still) { windTune(false); return false; }
       boostT = lerp(boostT, boost, Math.min(1, dt * 3));
       const target = 0.06 + prog * 0.32 + boostT * 1.1 + Math.min(0.5, svel / 3000);
       speed = lerp(speed, target, Math.min(1, dt * 2));
+      windTune(true);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = 'rgba(7,11,15,0.32)';
       ctx.fillRect(0, 0, W, H);

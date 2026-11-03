@@ -70,6 +70,10 @@ kbd{font:600 .8em/1 var(--num);border:1px solid var(--line-2);border-bottom-widt
 .icon-btn .i-play{display:none}
 .still .icon-btn .i-play{display:block}.still .icon-btn .i-pause{display:none}
 .menu-btn svg{fill:none;stroke:currentColor;stroke-width:2}
+#sfx .i-wave,#sfx .i-x{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+#sfx .i-wave{display:none}
+#sfx[aria-pressed=true]{color:var(--accent);border-color:rgba(53,224,240,.5)}
+#sfx[aria-pressed=true] .i-wave{display:block}#sfx[aria-pressed=true] .i-x{display:none}
 
 /* ───────── boot: the power-on self-test ───────── */
 .boot{display:none}
