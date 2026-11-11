@@ -219,12 +219,16 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
       <button type="button" role="tab" aria-selected="false" data-v="apex" data-t="pro" data-d="A swept-wing rev band across the top and ground speed in the middle, for the open road.">Apex<em>Pro</em><i></i></button>
       <button type="button" role="tab" aria-selected="false" data-v="twinspool" data-t="pro" data-d="A jet rev ring with the full flight data stack beside it.">Twin Spool<em>Pro</em><i></i></button>
       <button type="button" role="tab" aria-selected="false" data-v="dogfight" data-t="pro" data-d="Twin needle dials, speed and revs, with the engine data between them.">Dogfight<em>Pro</em><i></i></button>
-      <button type="button" role="tab" aria-selected="false" data-v="collection" data-t="all" data-d="Ten RIDE faces in all. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free; the other five come with Pro.">All ten<em>10</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="bank" data-t="pro" data-d="A lean arc with your deepest lean each way, a G plot, and race-style gear and revs.">Bank Angle<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="stealth" data-t="pro" data-d="Night blackout: speed, gear and a rev line on black. The rest wakes only when something needs you.">Stealth<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="tourer" data-t="pro" data-d="Heading, trip, range and arrival time. On a route it shows the next turn, and whether your range reaches the end.">Tourer<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="roadbook" data-t="pro" data-d="A rally trip meter you can nudge with + and −, a leg counter, heading and speed.">Roadbook<em>Pro</em><i></i></button>
+      <button type="button" role="tab" aria-selected="false" data-v="collection" data-t="all" data-d="Fourteen RIDE faces in all. BLADES, CLUSTER, MONOLITH, STRIP and CLASSIC are free; the other nine come with Pro.">All fourteen<em>14</em><i></i></button>
     </div>
     <div class="face-cap" aria-live="polite"><b id="faceName">Cluster</b><span class="pill free" id="facePill">Free</span><p id="faceDesc">Compressor RPM and a split flight display. Above walking pace, the cockpit declutters to this.</p></div>
   </div>
   <ul class="stats" data-reveal>
-    <li><b data-count="10">10</b><span>RIDE faces · 5 free</span></li>
+    <li><b data-count="14">14</b><span>RIDE faces · 5 free</span></li>
     <li><b data-count="11">11</b><span>Rev gauges · 6 free</span></li>
     <li><b data-count="90">90</b><span>Bike presets</span></li>
     <li><b>0</b><span>Accounts, clouds or ads</span></li>
@@ -236,7 +240,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
   <div class="sec-head" data-reveal>
     <p class="tag" data-scramble><span class="tk">//</span>03 · Systems</p>
     <h2 id="sys-h" class="split">Everything a rider needs. Free.</h2>
-    <p>Safety features, fault codes and the full live dashboard are free for every rider. Nothing here needs an account.</p>
+    <p>Safety features, reading and clearing fault codes, and the full live dashboard are free for every rider. Nothing here needs an account.</p>
   </div>
   <div class="bento">
     <article class="card span2 row2" data-reveal data-glow>
@@ -253,7 +257,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
           <p class="t-txt" id="tTxt">System voltage low</p>
           <p class="t-fix" id="tFix">Check the charging system: battery, regulator, connections.</p>
         </div>
-        <div class="txt"><p class="kicker">Diagnostics</p><h3>Fault codes, in plain language</h3><p>Read and clear stored faults, with freeze frame, readiness monitors and Bus Scan. Clearing refuses to run while the bike is moving.</p></div>
+        <div class="txt"><p class="kicker">Diagnostics</p><h3>Fault codes, in plain language</h3><p>Read and clear stored faults. Each standard code comes with its name, what it means and whether it's safe to ride on. Clearing refuses to run while the bike is moving.</p></div>
       </div>
     </article>
     <article class="card" data-reveal data-glow>
@@ -263,7 +267,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
           <p class="att-read"><span class="att-n"></span>°</p>
           <p class="att-lvl">Levelled</p>
         </div>
-        <div class="txt"><p class="kicker">Sensors <span class="new">Next update</span></p><h3>Lean, levelled</h3><p>Bank, pitch and heading from the phone. Phone mounted crooked? Level it once and lean reads true.</p></div>
+        <div class="txt"><p class="kicker">Sensors</p><h3>Lean, levelled</h3><p>Bank, pitch and heading from the phone. Phone mounted crooked? Level it once and lean reads true.</p></div>
       </div>
     </article>
     <article class="card" data-reveal data-glow>
@@ -273,13 +277,13 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
           <p class="heat-read"><span class="heat-n"></span>°C</p>
           <p class="toast"><b>Phone hot</b>Shade it from the sun</p>
         </div>
-        <div class="txt"><p class="kicker amber">Phone <span class="new">Next update</span></p><h3>Heat warnings</h3><p>Sun, screen, charging and GPS add up. F-43 tells you when the phone on your mount runs warm, so you can shade it before Android steps in.</p></div>
+        <div class="txt"><p class="kicker amber">Phone</p><h3>Heat warnings</h3><p>Sun, screen, charging and GPS add up. F-43 tells you when the phone on your mount runs warm, so you can shade it before Android steps in.</p></div>
       </div>
     </article>
     <article class="card span2" data-reveal data-glow>
       <div class="ci">
         <div class="media vid"><video muted playsinline loop preload="none" poster="assets/video/caution.webp" data-src="assets/video/caution.mp4" aria-hidden="true"></video></div>
-        <div class="txt"><p class="kicker amber">Warnings</p><h3>Master caution, with a diagnosis</h3><p>Priority warnings tell you the probable cause, what to check, and whether it's safe to ride on. Guided multimeter tests show where the probes go.</p></div>
+        <div class="txt"><p class="kicker amber">Warnings</p><h3>Master caution, with a diagnosis</h3><p>Priority warnings tell you what's wrong and whether it's safe to ride on, and the urgent ones say what to do now. Spoken callouts mean you don't have to look down.</p></div>
       </div>
     </article>
     <article class="card span2" data-reveal data-glow>
@@ -304,7 +308,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
           <p class="odo-d" id="odo"></p>
           <ul class="odo-chips"><li>Fuel</li><li>Service</li><li>Chain</li></ul>
         </div>
-        <div class="txt"><p class="kicker">Logs</p><h3>Your bike's logbook</h3><p>Fuel, service and chain reminders tied to your odometer, a trip computer and personal bests.</p></div>
+        <div class="txt"><p class="kicker">Logs</p><h3>Your bike's logbook</h3><p>Fuel, service and chain reminders tied to your odometer, a trip computer and personal bests. Where we've mapped a bike's data bus, the odometer comes straight from the bike.</p></div>
       </div>
     </article>
     <article class="card" data-reveal data-glow>
@@ -312,7 +316,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
         <div class="media fit" aria-hidden="true">
           <div class="fit-phone"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i></div>
         </div>
-        <div class="txt"><p class="kicker">Display <span class="new">Next update</span></p><h3>Fits your phone</h3><p>The cockpit lays itself out for your screen, big or small. Want it a step larger? One setting.</p></div>
+        <div class="txt"><p class="kicker">Display</p><h3>Fits your phone</h3><p>The cockpit lays itself out for your screen, big or small. Want it a step larger? One setting.</p></div>
       </div>
     </article>
     <article class="card" data-reveal data-glow>
@@ -351,6 +355,12 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
         <div class="txt"><h3>Learn your bike</h3><p>Finds what your bike broadcasts on its CAN bus, one signal at a time, and shows you before it saves. The CAN sniffer shows every ID and byte.</p></div>
       </div>
     </article>
+    <article class="pcard" data-reveal data-glow>
+      <div class="ci">
+        <div class="media vid"><video muted playsinline preload="none" poster="assets/video/checkup.webp" aria-hidden="true"></video></div>
+        <div class="txt"><h3>Bike Checkup</h3><p>A one-minute health check, parked: the fault memory and sensors at rest, the battery under the starter, then the idle and the charging at 3,000 rpm. A score and what to do next.</p></div>
+      </div>
+    </article>
   </div>
 
   <div class="compare" id="compare" data-mode="free" data-reveal>
@@ -361,27 +371,29 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
         <button type="button" role="radio" aria-checked="false" data-mode="pro">With Pro</button>
         <i class="seg-thumb" aria-hidden="true"></i>
       </div>
-      <p class="cmp-count" aria-live="polite"><b id="cmpN">10</b> / 19 systems armed</p>
+      <p class="cmp-count" aria-live="polite"><b id="cmpN">10</b> / 21 systems armed</p>
     </div>
     <ul class="cmp-list">
       <li data-t="free"><i class="ic"></i><b>Cockpit</b><span>Speed, gear, engine tiles, six rev gauge styles</span></li>
       <li data-t="free"><i class="ic"></i><b>Horizon and compass</b><span>Bank, pitch and heading, no adapter needed</span></li>
       <li data-t="free"><i class="ic"></i><b>RIDE mode</b><span>Declutters above walking pace. Five faces</span></li>
-      <li data-t="free"><i class="ic"></i><b>Fault codes</b><span>Read and clear, freeze frame, readiness, Bus Scan</span></li>
+      <li data-t="free"><i class="ic"></i><b>Fault codes</b><span>Read and clear, with what each means and if it's safe to ride</span></li>
       <li data-t="free"><i class="ic"></i><b>Crash detection</b><span>Countdown, then a ready-to-send SOS text</span></li>
-      <li data-t="free"><i class="ic"></i><b>Mayday and warnings</b><span>Priority warnings and guided multimeter tests</span></li>
+      <li data-t="free"><i class="ic"></i><b>Mayday and warnings</b><span>Priority warnings, spoken callouts, one-tap Mayday</span></li>
       <li data-t="free"><i class="ic"></i><b>Logs and navigation</b><span>Fuel, service, chain, trip computer, OpenStreetMap</span></li>
       <li data-t="free"><i class="ic"></i><b>Mission Complete</b><span>Your route draws itself after every ride</span></li>
-      <li data-t="free"><i class="ic"></i><b>Pilot ranks</b><span>Cadet to Air Marshal, for everyone · next update</span></li>
-      <li data-t="free"><i class="ic"></i><b>Phone heat warnings</b><span>Warm and hot alerts on the mount · next update</span></li>
+      <li data-t="free"><i class="ic"></i><b>Pilot ranks</b><span>Cadet to Air Marshal, for everyone</span></li>
+      <li data-t="free"><i class="ic"></i><b>Phone heat warnings</b><span>Warm and hot alerts on the mount</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Bike Health and Checkup</b><span>A one-minute checkup: battery, cranking, idle, charging</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Full fault detail</b><span>Causes, checks, freeze frame, history, multimeter tests</span></li>
       <li data-t="pro"><i class="ic"></i><b>ECU Report</b><span>Misfires, O2 response, fuelling and charging</span></li>
       <li data-t="pro"><i class="ic"></i><b>Live Analysis</b><span>Long-window wear checks and a guided idle test</span></li>
       <li data-t="pro"><i class="ic"></i><b>Mechanical Lab</b><span>The 3D engine, with a fault map</span></li>
       <li data-t="pro"><i class="ic"></i><b>Learn your bike</b><span>Finds your bike's own CAN signals</span></li>
       <li data-t="pro"><i class="ic"></i><b>CAN sniffer</b><span>Every ID and byte, with mark, filter and save</span></li>
-      <li data-t="pro"><i class="ic"></i><b>More instruments</b><span>Five RIDE faces, five rev gauges, six HYPER colourways</span></li>
+      <li data-t="pro"><i class="ic"></i><b>More instruments</b><span>Nine RIDE faces, five rev gauges, six HYPER colourways</span></li>
       <li data-t="pro"><i class="ic"></i><b>Flight Debrief</b><span>A share card for every ride, Dyno and Flight Recorder</span></li>
-      <li data-t="pro"><i class="ic"></i><b>Voice guidance</b><span>Spoken navigation and the nav radar scope</span></li>
+      <li data-t="pro"><i class="ic"></i><b>Voice and callouts</b><span>Spoken navigation, tower clearance, engine callouts, radar scope</span></li>
       <li data-t="pro"><i class="ic"></i><b>Garage</b><span>More than one bike, each with its own logs</span></li>
     </ul>
     <p class="terms">Engine data, fault codes and the ECU Report need an OBD-II adapter. What Learn your bike can find depends on what your bike broadcasts. Navigation and weather need a data connection.</p>
@@ -391,7 +403,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
 <!-- ═════════ 05 · pilot ranks ═════════ -->
 <section class="sec ranks" id="ranks" aria-labelledby="ranks-h">
   <div class="sec-head center" data-reveal>
-    <p class="tag gold" data-scramble><span class="tk">//</span>05 · Pilot ranks <span class="new">Next update</span></p>
+    <p class="tag gold" data-scramble><span class="tk">//</span>05 · Pilot ranks</p>
     <h2 id="ranks-h" class="split">Earn your wings.</h2>
     <p>Every ride with F-43 counts toward your rank, Cadet to Air Marshal. Distance and rides both count. Speed and lean never do: a rank that rewarded them would be a reason to ride harder.</p>
   </div>
@@ -449,7 +461,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
     <p class="faq-none" id="faqNone" hidden>No question matches that. Ask us at <a href="mailto:f43moto@gmail.com">f43moto@gmail.com</a>.</p>
   </div>
   <div class="faq-list" id="faqList">
-    <details data-c="start"><summary><span>Is F-43 Moto OS free?</span></summary><div class="a"><p>Yes. The download is free, and the safety features, fault codes and the full live dashboard stay free. F-43 Pro is a one-time unlock with no subscription, and a 7-day trial of everything starts the first time your bike connects.</p></div></details>
+    <details data-c="start"><summary><span>Is F-43 Moto OS free?</span></summary><div class="a"><p>Yes. The download is free, and the safety features, reading and clearing fault codes, and the full live dashboard stay free. Bike Health, Bike Checkup and the full detail behind each fault come with F-43 Pro: a one-time unlock with no subscription. A 7-day trial of everything starts the first time your bike connects.</p></div></details>
     <details data-c="start"><summary><span>Does it work without an OBD-II adapter?</span></summary><div class="a"><p>Partly. Speed, lean, heading, crash detection, navigation and the logs work from the phone alone. Engine data, fault codes and the ECU Report need an OBD-II Bluetooth adapter in your bike's diagnostic port.</p></div></details>
     <details data-c="start"><summary><span>Can I try it before I buy an adapter?</span></summary><div class="a"><p>Yes. Demo mode runs a simulated bike, so you can try every screen first. Demo rides never count toward your rank or your logs.</p></div></details>
     <details data-c="ecu"><summary><span>Will using F-43 for hours on a long ride harm my ECU?</span></summary><div class="a"><p>No. F-43 only reads. It asks the ECU for one reading at a time (revs, speed, coolant temperature), waits for the answer, then asks for the next, about ten times a second. That's the same diagnostic link a service-centre scan tool uses, and BS6 bikes are required to support it. If your ECU doesn't report a reading, F-43 stops asking for it.</p><p>Reading doesn't write anything to the ECU's memory, so a ten-hour ride wears it no more than a ten-minute one.</p></div></details>
@@ -464,7 +476,7 @@ setTimeout(function(){if(!window.__f43){d.classList.remove('booting');d.classLis
     <details data-c="wire"><summary><span>Can I ride in the rain with the adapter plugged in?</span></summary><div class="a"><p>Most adapters aren't waterproof, and while one is plugged in the port's rubber cap is off. Keep the adapter tucked under the seat, out of spray. Before a wash, or if the bike will stand in the rain, unplug it and refit the cap.</p></div></details>
     <details data-c="wire"><summary><span>Will using F-43 void my warranty?</span></summary><div class="a"><p>F-43 plugs into the bike's own diagnostic socket, the one the service centre uses, with no cutting, splicing or extra wiring. Apart from clearing codes when you ask, it changes nothing on the ECU. We can't speak for every maker's warranty terms, so check your booklet if you're unsure, and unplug the adapter before a service visit.</p></div></details>
     <details data-c="phone"><summary><span>Will F-43 drain my phone's battery?</span></summary><div class="a"><p>F-43 keeps the screen on while it's open, because it's a mounted dashboard. Plan for it the way you would for navigation with the screen on, and on long rides power the phone from a USB charger on the bike. RIDE mode shows the phone's battery level.</p></div></details>
-    <details data-c="phone"><summary><span>My phone gets hot on the mount. Is that a problem?</span></summary><div class="a"><p>Direct sun, a bright screen, charging and GPS together make any phone hot, and Android protects itself by dimming, slowing charging or closing apps. Mount the phone where air reaches the back, use a sun visor, and let it cool if Android warns about temperature. The next update adds F-43's own phone heat warnings.</p></div></details>
+    <details data-c="phone"><summary><span>My phone gets hot on the mount. Is that a problem?</span></summary><div class="a"><p>Direct sun, a bright screen, charging and GPS together make any phone hot, and Android protects itself by dimming, slowing charging or closing apps. Mount the phone where air reaches the back, use a sun visor, and let it cool if Android warns about temperature. F-43 warns you itself when the phone on your mount runs warm.</p></div></details>
     <details data-c="phone"><summary><span>Does it keep working if I switch apps or the screen turns off?</span></summary><div class="a"><p>Yes, while it's connected to a real adapter. A "bike link" notification keeps readings, the trip computer and ride recording running in the background. Exempt F-43 from Android battery optimisation, or some phones stop it anyway.</p></div></details>
     <details data-c="phone"><summary><span>Does it need internet or use my mobile data?</span></summary><div class="a"><p>The dashboard, warnings, fault scans and ride log work with no internet. Crash SOS opens a text message, so it needs mobile signal, not data. Searching for a place, planning a route, weather, and map areas you haven't viewed before use mobile data.</p></div></details>
     <details data-c="safe"><summary><span>Is it safe to use while riding?</span></summary><div class="a"><p>F-43 is built to be read at a glance, never operated on the move. Pair the adapter, pick your bike and set up routes while parked. With RIDE auto-engage on, the screen clears down to speed, lean, vitals and the ride clock above 8 km/h. Fault scans and clearing refuse to run while the bike is moving.</p></div></details>

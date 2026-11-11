@@ -1057,7 +1057,9 @@
     const box = $('#compare'), n = $('#cmpN');
     const btns = $$('.seg button', box);
     $$('.cmp-list li[data-t=pro]', box).forEach((li, k) => li.style.setProperty('--k', k));
-    let cur = 10, timer = 0;
+    const free = $$('.cmp-list li[data-t=free]', box).length;
+    const all = $$('.cmp-list li', box).length;
+    let cur = free, timer = 0;
     btns.forEach((b) => b.addEventListener('click', (e) => {
       e.f43 = 1;
       const mode = b.dataset.mode;
@@ -1065,7 +1067,7 @@
       box.dataset.mode = mode;
       sfx.play(mode === 'pro' ? 'arm' : 'disarm');
       btns.forEach((x) => x.setAttribute('aria-checked', String(x === b)));
-      const to = mode === 'pro' ? 19 : 10;
+      const to = mode === 'pro' ? all : free;
       clearInterval(timer);
       if (reduce) { n.textContent = cur = to; return; }
       timer = setInterval(() => {
