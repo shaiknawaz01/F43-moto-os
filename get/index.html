@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Get F-43 Moto OS on Google Play</title>
+<meta name="description" content="F-43 Moto OS, the bike dashboard app for Android. This page opens it on Google Play.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#070B0F">
+<meta property="og:type" content="website">
+<meta property="og:title" content="F-43 Moto OS on Google Play">
+<meta property="og:description" content="Bike dashboard app for Android: OBD2 fault codes, live engine data, lean angle, crash SOS.">
+<meta property="og:image" content="https://f43moto.in/assets/og.png">
+<meta property="og:url" content="https://f43moto.in/get/">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<style>
+@font-face{font-family:"Rajdhani";src:url(../assets/fonts/Rajdhani-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Inter";src:url(../assets/fonts/Inter-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--bg:#070B0F;--surface:#0F171E;--line:#22303C;--text:#E8EEF4;--text-2:#93A3B3;--accent:#35E0F0}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Inter",system-ui,sans-serif}
+main{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px 16px;text-align:center}
+.icon{width:96px;height:96px;border-radius:22px}
+h1{margin:0;font:700 2rem/1.1 "Rajdhani",system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+p{margin:0;color:var(--text-2);max-width:30em}
+.go{display:block;width:100%;max-width:340px;margin-top:8px;padding:18px 20px;border-radius:12px;background:var(--accent);color:#04161A;font:700 1.25rem/1 "Rajdhani",system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.go:active{transform:translateY(1px)}
+.help{max-width:340px;font-size:.9rem;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.help a,.site a{color:var(--text-2)}
+.site{font-size:.9rem}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <img class="icon" src="../assets/apple-touch-icon.png" alt="" width="96" height="96">
+  <h1>F-43 Moto OS</h1>
+  <p id="lead">Bike dashboard app for Android.</p>
+  <a class="go" id="go" href="https://play.google.com/store/apps/details?id=in.nawaz.f43moto">Open Google Play</a>
+  <p class="help" id="help" hidden>Didn't open? <a id="retry" href="#">Try again</a>, or tap <b>&#8942;</b> at the top right and choose <b>Open in Chrome</b> (or <b>Open in browser</b>).</p>
+  <p class="help" id="ios" hidden>F-43 Moto OS runs on Android phones. Open this page on an Android phone to install it.</p>
+  <p class="site"><a href="../">f43moto.in</a></p>
+</main>
+<script>
+(function () {
+  var ID = 'in.nawaz.f43moto';
+  var q = new URLSearchParams(location.search);
+  function clean(v) { return (v || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 32); }
+
+  // ?s=<source>&m=<medium>, or the tags Instagram adds to bio links.
+  var s = clean(q.get('s') || q.get('utm_source'));
+  if (s === 'ig') s = 'instagram';
+  var m = clean(q.get('m') || (q.get('utm_content') === 'link_in_bio' ? 'bio' : q.get('utm_medium')));
+  var ref = 'utm_source%3D' + (s || 'website') + '%26utm_medium%3D' + (m || 'get');
+
+  var tail = 'details?id=' + ID + '&referrer=' + ref;
+  var web = 'https://play.google.com/store/apps/' + tail;
+  var ua = navigator.userAgent || '';
+  var go = document.getElementById('go');
+  go.href = web;
+
+  if (/Android/i.test(ua)) {
+    // In-app browsers (Instagram, Facebook and other WebViews) show Play's
+    // website, where nobody can install. A tap on an intent link hands off to
+    // the Play Store app instead.
+    var inApp = /; wv\)|Instagram|FBAN|FBAV|FB_IAB|Line\/|Snapchat|musical_ly|BytedanceWebview/i.test(ua);
+    if (inApp) {
+      go.href = 'intent://' + tail + '#Intent;scheme=market;package=com.android.vending;' +
+        'S.browser_fallback_url=' + encodeURIComponent(web) + ';end';
+      document.getElementById('retry').href = 'market://' + tail;
+      go.addEventListener('click', function () {
+        setTimeout(function () { document.getElementById('help').hidden = false; }, 1200);
+      });
+    } else {
+      location.replace(web); // Chrome and other browsers hand Play links to the Play Store app.
+    }
+  } else if (/iPhone|iPad|iPod/i.test(ua)) {
+    document.getElementById('ios').hidden = false;
+  } else {
+    location.replace(web);
+  }
+})();
+</script>
+</body>
+</html>
